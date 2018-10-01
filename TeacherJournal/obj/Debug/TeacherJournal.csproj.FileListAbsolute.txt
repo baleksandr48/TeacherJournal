@@ -1,0 +1,1 @@
+B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.exe.config
