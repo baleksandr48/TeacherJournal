@@ -5,8 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Журнал викладача" Height="450" Width="625"
+        FontSize="16"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="#ffffcc">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="Padding" Value="5 3"/>
+                    <Setter Property="FontSize" Value="16"/>
+                </Style>
+            </Grid.Resources>
+            <TextBlock Grid.Row="0" Margin="10 10 10 3" Text="Семестр:"/>
+            <ComboBox Grid.Row="1" Margin="10 0 10 10" x:Name="semesterList" SelectedIndex="0" IsEditable="False">
+                <TextBlock>I семестр 2017</TextBlock>
+                <TextBlock>II семестр 2017</TextBlock>
+                <TextBlock>I семестр 2018</TextBlock>
+            </ComboBox>
+            <Button Grid.Row="2" Content="Семестри">
+            </Button>
+            <Button Grid.Row="3" Content="Предмети" />
+            <Button Grid.Row="4" Content="Групи" />
+            <Button x:Name="btnSchedule" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click"/>
+            <Button Grid.Row="6" Content="Заняття" />
+        </Grid>
+        <Border BorderBrush="#cccccc" BorderThickness="1"/>
+        <Grid Grid.Column="1" Background="#e6f2ff">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition ></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Заняття" HorizontalAlignment="Center" FontWeight="Bold"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 10 15">
+                <TextBlock Text="Дата з " VerticalAlignment="Center" />
+                <DatePicker MinWidth="150"></DatePicker>
+                <TextBlock Text="по " Margin="10 0 0 0" VerticalAlignment="Center"/>
+                <DatePicker MinWidth="150"></DatePicker>
+            </StackPanel>
+            <DataGrid Grid.Row="2" x:Name="dataGrid" Margin="10 0 10 15">
+            </DataGrid>
+        </Grid>
     </Grid>
 </Window>

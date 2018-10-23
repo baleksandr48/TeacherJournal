@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TeacherJournal.view;
 
 namespace TeacherJournal
 {
@@ -23,6 +24,19 @@ namespace TeacherJournal
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnSchedule_Click(object sender, RoutedEventArgs e)
+        {
+            AddSchedule addSchedule = new AddSchedule();
+            try
+            {
+                addSchedule.Show();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception cought", ex);
+            }
         }
     }
 }

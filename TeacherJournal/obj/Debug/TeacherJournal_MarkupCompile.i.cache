@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\
 TeacherJournal
 none
 false
 DEBUG;TRACE
-B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\App.xaml
-11151548125
+A:\TeacherJournal\TeacherJournal\TeacherJournal\App.xaml
+2201070501
 
-14-1993686216
+10-1609957005
 13738642453
-MainWindow.xaml;
+MainWindow.xaml;view\AddSchedule.xaml;
 
-False
+True
 
