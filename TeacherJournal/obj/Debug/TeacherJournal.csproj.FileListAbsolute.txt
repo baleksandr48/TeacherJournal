@@ -16,3 +16,12 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csproj.
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csproj.CoreCompileInputs.cache
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.exe
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.pdb
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.dll
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.SqlServer.dll
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.dll
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.EF6.dll
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.Linq.dll
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.xml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.SqlServer.xml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.xml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.dll.config
