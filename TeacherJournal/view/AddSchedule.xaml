@@ -12,8 +12,20 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Text="Заповніть розклад" HorizontalContentAlignment="Center" Padding="10" FontSize="18" FontWeight="Bold"/>
+        <Grid Grid.Row="0" >
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox Grid.Column="0" Text="Розклад" HorizontalContentAlignment="Left" Padding="10" FontSize="18" FontWeight="Bold"/>
+            <Button x:Name="btnAddNewScheduleRow" Grid.Column="1" Width="Auto"  MinWidth="100px" Margin="10 5 " FontSize="18" HorizontalAlignment="Right" Click="btnAddNewScheduleRow_Click">Додати</Button>
+            
+        </Grid>
+        
         <DataGrid Grid.Row="1" Margin="10 0 10 10" />
+        
         <StackPanel Orientation="Horizontal" Grid.Row="2" FlowDirection="RightToLeft">
             <Button x:Name="btnFillSchedule" Content="Заповнити" Margin="10 0 10 10" FontSize="18" Padding="15 5 15 5" Click="btnFillSchedule_Click"></Button>
         </StackPanel>

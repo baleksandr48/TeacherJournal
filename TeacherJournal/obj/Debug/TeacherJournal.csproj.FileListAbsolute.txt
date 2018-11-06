@@ -2,7 +2,6 @@ B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.exe.config
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.exe
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.pdb
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csprojResolveAssemblyReference.cache
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\MainWindow.g.cs
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\AddSchedule.g.cs
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\App.g.cs
@@ -25,3 +24,7 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.SqlServer.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.dll.config
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\AddScheduleItem.g.cs
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\AddScheduleItem.baml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.exe.CodeAnalysisLog.xml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.exe.lastcodeanalysissucceeded

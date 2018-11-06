@@ -91,6 +91,9 @@
     <Compile Include="view\AddSchedule.xaml.cs">
       <DependentUpon>AddSchedule.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\AddScheduleItem.xaml.cs">
+      <DependentUpon>AddScheduleItem.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,6 +107,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="view\AddSchedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\AddScheduleItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -29,5 +29,19 @@ namespace TeacherJournal.view
             /// Use date from table to fill schedule
             this.Close();
         }
+
+        private void btnAddNewScheduleRow_Click(object sender, RoutedEventArgs e)
+        {
+            AddScheduleItem addScheduleItem = new AddScheduleItem();
+            try
+            {
+                addScheduleItem.Show();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception cought", ex);
+            }
+
+        }
     }
 }

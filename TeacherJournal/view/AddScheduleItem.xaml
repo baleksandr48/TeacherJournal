@@ -1,0 +1,76 @@
+﻿<Window x:Class="TeacherJournal.view.AddScheduleItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TeacherJournal.view"
+        mc:Ignorable="d"
+        Title="AddScheduleItem" Height="337.359" Width="492.41">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" ShowGridLines="True">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Padding" Value="5 3"/>
+                    <Setter Property="FontSize" Value="16"/>
+                </Style>
+            </Grid.Resources>
+
+            <TextBlock Grid.Row="0" Grid.Column="0">Тип неділі</TextBlock>
+            <ComboBox Grid.Row="0" Grid.Column="1"></ComboBox>
+            <TextBlock Grid.Row="1" Grid.Column="0">День неділі</TextBlock>
+            <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
+            <TextBlock Grid.Row="2" Grid.Column="0">№ пари</TextBlock>
+            <ComboBox Grid.Row="2" Grid.Column="1"></ComboBox>
+            <TextBlock Grid.Row="3" Grid.Column="0">Предмет</TextBlock>
+            <ComboBox Grid.Row="3" Grid.Column="1"></ComboBox>
+            <TextBlock Grid.Row="4" Grid.Column="0">Тип заняття</TextBlock>
+            <ComboBox Grid.Row="4" Grid.Column="1"></ComboBox>
+            <TextBlock Grid.Row="5" Grid.Column="0">Аудиторія</TextBlock>
+            <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
+            <TextBlock Grid.Row="6" Grid.Column="0">Группа</TextBlock>
+
+            <Grid Grid.Row="6" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0"></ComboBox>
+                <Button Grid.Column="1" Margin="5 0 0 0">Del</Button>
+            </Grid>
+            
+            <Button x:Name="btnAddNewGroup" Grid.Row="6" Grid.Column="2" Width="Auto" HorizontalAlignment="Left" Margin="10 0" Padding="10 0" Click="btnAddNewGroup_Click">+</Button>
+            
+        </Grid>
+        <Grid Grid.Row="1">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Button x:Name="btnAccept" Grid.Column="2" Width="Auto" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="10" Click="btnAccept_Click">Принять</Button>
+        </Grid>
+    </Grid>
+</Window>
