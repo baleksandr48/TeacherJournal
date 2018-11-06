@@ -30,5 +30,27 @@ namespace TeacherJournal.model
             this.classroom = classroom;
             this.groups = groups;
         }
+
+        public static bool isSchedulesCorrect(List<Schedule> schedules)
+        {
+            for (int i = 0; i < schedules.Count; i++)
+            {
+                Schedule s1 = schedules[i];
+                for (int j = i + 1; j < schedules.Count; j++)
+                {
+                    Schedule s2 = schedules[j];
+
+                    if (s1.numOfLesson == s2.numOfLesson &&
+                        s1.dayOfWeek.id == s2.dayOfWeek.id &&
+                        (s1.typeOfWeek.id == s2.typeOfWeek.id ||
+                        s1.typeOfWeek.id == 3 ||
+                        s2.typeOfWeek.id == 3))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 }

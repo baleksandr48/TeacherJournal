@@ -83,6 +83,7 @@
     <Compile Include="model\Classroom.cs" />
     <Compile Include="model\DayOfWeek.cs" />
     <Compile Include="model\Group.cs" />
+    <Compile Include="model\Lesson.cs" />
     <Compile Include="model\Schedule.cs" />
     <Compile Include="model\Subject.cs" />
     <Compile Include="model\Term.cs" />

@@ -45,8 +45,9 @@ namespace TeacherJournal.database
         {
             String term = "CREATE TABLE Term (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
                 "name TEXT NOT NULL, " +
-                "beginDate TEXT NOT NULL, " +
-                "endDate TEXT NOT NULL);";
+                "beginDate INTEGER NOT NULL, " +
+                "endDate INTEGER NOT NULL," +
+                "startFromNumerator INTEGER NOT NULL);";
             String group = "CREATE TABLE _Group (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
                 "idTerm INTEGER NOT NULL," +
                 "name TEXT NOT NULL," +
@@ -90,7 +91,7 @@ namespace TeacherJournal.database
                 "idSubject INTEGER NOT NULL," +
                 "idGroup INTEGER NOT NULL," +
                 "idTypeOfLesson INTEGER NOT NULL," +
-                "theme TEXT NOT NULL," +
+                "theme TEXT," +
                 "FOREIGN KEY(idTerm) REFERENCES Term(id) ON DELETE CASCADE," +
                 "FOREIGN KEY(idClassroom) REFERENCES Classroom(id) ON DELETE CASCADE," +
                 "FOREIGN KEY(idSubject) REFERENCES Subject(id) ON DELETE CASCADE," +
@@ -122,6 +123,7 @@ namespace TeacherJournal.database
             //Заполняем словарь типов недель
             new SQLiteCommand("INSERT INTO TypeOfWeek (name) VALUES ('Чисельник')", connection).ExecuteNonQuery();
             new SQLiteCommand("INSERT INTO TypeOfWeek (name) VALUES ('Знаменник')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfWeek (name) VALUES ('Щотижня')", connection).ExecuteNonQuery();
 
             //Заполняем словарь видов занятий
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Лекція')", connection).ExecuteNonQuery();
