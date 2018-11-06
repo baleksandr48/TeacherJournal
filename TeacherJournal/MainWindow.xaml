@@ -41,8 +41,9 @@
             </Button>
             <Button Grid.Row="3" Content="Предмети" />
             <Button Grid.Row="4" Content="Групи" />
-            <Button x:Name="btnSchedule" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click"/>
-            <Button Grid.Row="6" Content="Заняття" />
+            <Button Grid.Row="5" Content="Аудиторії" />
+            <Button x:Name="btnSchedule" Grid.Row="6" Content="Розклад" Click="btnSchedule_Click"/>
+            
         </Grid>
         <Border BorderBrush="#cccccc" BorderThickness="1"/>
         <Grid Grid.Column="1" Background="#e6f2ff">
