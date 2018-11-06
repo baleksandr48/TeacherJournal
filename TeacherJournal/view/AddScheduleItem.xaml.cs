@@ -31,7 +31,24 @@ namespace TeacherJournal.view
 
         private void btnAddNewGroup_Click(object sender, RoutedEventArgs e)
         {
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Orientation = Orientation.Horizontal;
+            ComboBox comboBox = new ComboBox();
+            comboBox.Width = 130;
+            Button btn = new Button();
+            btn.Content = "Del";
+            btn.Margin = new Thickness(5, 0, 0, 0);
+            btn.Width = 30;
+            btn.Click += new RoutedEventHandler(btnDeleteGroup_Click);
+            stackPanel.Children.Add(comboBox);
+            stackPanel.Children.Add(btn);
 
+            GroupVerticalPanel.Children.Add(stackPanel);
+        }
+        private void btnDeleteGroup_Click(object sender, RoutedEventArgs e)
+        {
+            StackPanel stackPanel = (StackPanel)((Button)sender).Parent;
+            GroupVerticalPanel.Children.Remove(stackPanel);
         }
     }
 }

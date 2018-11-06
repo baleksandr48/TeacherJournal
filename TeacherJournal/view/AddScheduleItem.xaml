@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="AddScheduleItem" Height="337.359" Width="492.41">
+        Title="AddScheduleItem" Height="340" Width="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -50,16 +50,14 @@
             <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
             <TextBlock Grid.Row="6" Grid.Column="0">Группа</TextBlock>
 
-            <Grid Grid.Row="6" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0"></ComboBox>
-                <Button Grid.Column="1" Margin="5 0 0 0">Del</Button>
-            </Grid>
+            <StackPanel x:Name="GroupVerticalPanel" Grid.Row="6" Grid.Column="1"  HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Width="130"></ComboBox>
+                    <Button Margin="5 0 0 0" Width="30">Del</Button>
+                </StackPanel>
+            </StackPanel>
             
-            <Button x:Name="btnAddNewGroup" Grid.Row="6" Grid.Column="2" Width="Auto" HorizontalAlignment="Left" Margin="10 0" Padding="10 0" Click="btnAddNewGroup_Click">+</Button>
+            <Button x:Name="btnAddNewGroup" Grid.Row="6" Grid.Column="2" MaxHeight="40" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0" Padding="10 2" Click="btnAddNewGroup_Click">+</Button>
             
         </Grid>
         <Grid Grid.Row="1">
