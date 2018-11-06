@@ -22,7 +22,6 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.Resources>
                 <Style TargetType="{x:Type Button}">
@@ -37,12 +36,10 @@
                 <TextBlock>II семестр 2017</TextBlock>
                 <TextBlock>I семестр 2018</TextBlock>
             </ComboBox>
-            <Button Grid.Row="2" Content="Семестри">
-            </Button>
-            <Button Grid.Row="3" Content="Предмети" />
-            <Button Grid.Row="4" Content="Групи" />
-            <Button Grid.Row="5" Content="Аудиторії" />
-            <Button x:Name="btnSchedule" Grid.Row="6" Content="Розклад" Click="btnSchedule_Click"/>
+            <Button x:Name="btnSubject" Grid.Row="2" Content="Предмети" Click="openVocabulary" />
+            <Button x:Name="btnGroup" Grid.Row="3" Content="Групи" Click="openVocabulary"/>
+            <Button x:Name="btnClassroom" Grid.Row="4" Content="Аудиторії" Click="openVocabulary"/>
+            <Button x:Name="btnSchedule" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click"/>
             
         </Grid>
         <Border BorderBrush="#cccccc" BorderThickness="1"/>

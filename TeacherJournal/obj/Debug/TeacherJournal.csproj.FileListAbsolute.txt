@@ -52,3 +52,5 @@ B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\view\AddSchedu
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.g.resources
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.Properties.Resources.resources
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csproj.GenerateResource.Cache
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\Vocabulary.g.cs
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\Vocabulary.baml

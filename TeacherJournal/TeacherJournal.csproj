@@ -95,6 +95,9 @@
     <Compile Include="view\AddScheduleItem.xaml.cs">
       <DependentUpon>AddScheduleItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\Vocabulary.xaml.cs">
+      <DependentUpon>Vocabulary.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\AddScheduleItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\Vocabulary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

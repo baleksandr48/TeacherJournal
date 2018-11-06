@@ -38,5 +38,27 @@ namespace TeacherJournal
                 Console.WriteLine("{0} Exception cought", ex);
             }
         }
+
+        private void openVocabulary(object sender, RoutedEventArgs e)
+        {
+            var btnName = ((Button)sender).Name;
+            int vocabularyId = 0;
+            switch (btnName)
+            {
+                case "btnSubject": vocabularyId = Vocabulary.SUBJECT; break;
+                case "btnClassroom": vocabularyId = Vocabulary.CLASSROOM; break;
+                case "btnGroup": vocabularyId = Vocabulary.GROUP; break;
+            }
+
+            Vocabulary vocabulary = new Vocabulary(vocabularyId);
+            try
+            {
+                vocabulary.Show();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception cought", ex);
+            }
+        }
     }
 }
