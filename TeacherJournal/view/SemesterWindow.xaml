@@ -22,11 +22,11 @@
         <TextBlock Grid.Row="0" Grid.Column="0">Назва</TextBlock>
         <TextBox x:Name="tbxSemesterName" Grid.Row="0" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="1" Grid.Column="0">Початок</TextBlock>
-        <DatePicker x:Name="tbxSemesterStartDate" Grid.Row="1" Grid.Column="1"></DatePicker>
+        <DatePicker x:Name="dpSemesterStartDate" Grid.Row="1" Grid.Column="1"></DatePicker>
         <TextBlock Grid.Row="2" Grid.Column="0">Кінець</TextBlock>
-        <DatePicker x:Name="tbxSemesterEndDate" Grid.Row="2" Grid.Column="1"></DatePicker>
+        <DatePicker x:Name="dpSemesterEndDate" Grid.Row="2" Grid.Column="1"></DatePicker>
         <TextBlock Grid.Row="3" Grid.Column="0">Починається з чисельника</TextBlock>
-        <CheckBox x:Name="chbStartWithNumerator" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" ></CheckBox>
+        <CheckBox x:Name="chbStartWithNumerator" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" />
         <Button x:Name="btnAccept" Grid.Row="4" Grid.Column="1" Width="Auto" HorizontalAlignment="Right" Click="btnAccept_Click">Прийняти</Button>
     </Grid>
 </Window>

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace TeacherJournal.model
 {
-    class Term
+    public class Term
     {
+        public static int ID_FOR_WRITING = 1001;
+
         public long id { get; set; }
         public String name { get; set; }
         public DateTime beginDate { get; set; }

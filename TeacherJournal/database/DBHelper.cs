@@ -56,6 +56,13 @@ namespace TeacherJournal.database
 
             return terms;
         }
+
+        public static Term getLastTerm()
+        {
+            List<Term> terms = selectTerms();
+            Term lastTerm = terms.ElementAt(terms.Count - 1);
+            return lastTerm;
+        }
         //-----Group-----
         public static void addGroup(Group group)
         {

@@ -22,6 +22,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.Resources>
                 <Style TargetType="{x:Type Button}">
@@ -37,11 +38,7 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="cbSemesterList" Grid.Column="0" Margin="10 5 5 5"  SelectedIndex="0" IsEditable="False">
-                    <TextBlock>I семестр 2017</TextBlock>
-                    <TextBlock>II семестр 2017</TextBlock>
-                    <TextBlock>I семестр 2018</TextBlock>
-                </ComboBox>
+                <ComboBox x:Name="cbSemesterList" Grid.Column="0" Margin="10 5 5 5"  SelectedIndex="0" IsEditable="False" MinWidth="140" DisplayMemberPath="name" SelectionChanged="cbSemesterList_SelectionChanged"/>
                 <Button x:Name="btnAddNewSemester" Grid.Column="1" Margin="0 5 10 5" Click="btnAddNewSemester_Click">+</Button>
             </Grid>
             
@@ -49,7 +46,7 @@
             <Button x:Name="btnGroup" Grid.Row="3" Content="Групи" Click="openVocabulary"/>
             <Button x:Name="btnClassroom" Grid.Row="4" Content="Аудиторії" Click="openVocabulary"/>
             <Button x:Name="btnSchedule" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click"/>
-            
+            <Button x:Name="btnToPdf" Grid.Row="6" Content="В PDF"/>
         </Grid>
         <Border BorderBrush="#cccccc" BorderThickness="1"/>
         <Grid Grid.Column="1" Background="#AFA7CD">

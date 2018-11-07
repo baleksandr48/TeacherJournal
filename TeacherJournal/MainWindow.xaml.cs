@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TeacherJournal.view;
+using TeacherJournal.database;
+using TeacherJournal.model;
+using System.Collections.ObjectModel;
 
 namespace TeacherJournal
 {
@@ -21,9 +24,18 @@ namespace TeacherJournal
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<Term> termList;
+
         public MainWindow()
         {
             InitializeComponent();
+            DBSetuper.setup();
+
+            // привязываем коллекцию семестров к cbSemesterList
+            termList = new ObservableCollection<Term>(DBHelper.selectTerms());
+            cbSemesterList.ItemsSource = termList;
+
+            
         }
 
         private void btnSchedule_Click(object sender, RoutedEventArgs e)
@@ -63,7 +75,7 @@ namespace TeacherJournal
 
         private void btnAddNewSemester_Click(object sender, RoutedEventArgs e)
         {
-            SemesterWindow semester = new SemesterWindow();
+            SemesterWindow semester = new SemesterWindow(this);
             try
             {
                 semester.Show();
@@ -72,6 +84,13 @@ namespace TeacherJournal
             {
                 Console.WriteLine("{0} Exception cought", ex);
             }
+        }
+
+        // При выборе семестра возвращаем выбранный айтем и приводим тип к Term. Узнаем id. 
+        private void cbSemesterList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Term term = (Term)cbSemesterList.SelectedItem;
+            Console.WriteLine("Term id: " + term.id);
         }
     }
 }
