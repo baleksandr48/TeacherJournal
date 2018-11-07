@@ -3,12 +3,10 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.exe.con
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.exe
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.pdb
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\MainWindow.g.cs
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\AddSchedule.g.cs
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\App.g.cs
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal_MarkupCompile.cache
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal_MarkupCompile.lref
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\MainWindow.baml
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\AddSchedule.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.g.resources
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.Properties.Resources.resources
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csproj.GenerateResource.Cache
@@ -24,8 +22,6 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.SqlServer.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.dll.config
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\AddScheduleItem.g.cs
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\AddScheduleItem.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csprojResolveAssemblyReference.cache
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.exe
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.pdb
@@ -52,5 +48,11 @@ B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\view\AddSchedu
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.g.resources
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.Properties.Resources.resources
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csproj.GenerateResource.Cache
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\Vocabulary.g.cs
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\Vocabulary.baml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\VocabularyWindow.g.cs
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\VocabularyWindow.baml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleWindow.g.cs
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleItemWindow.g.cs
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\SemesterWindow.g.cs
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleWindow.baml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleItemWindow.baml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\SemesterWindow.baml

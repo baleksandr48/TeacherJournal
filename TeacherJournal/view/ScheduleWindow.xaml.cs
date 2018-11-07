@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TeacherJournal.view
 {
     /// <summary>
-    /// Логика взаимодействия для AddSchedule.xaml
+    /// Логика взаимодействия для ScheduleWindow.xaml
     /// </summary>
-    public partial class AddSchedule : Window
+    public partial class ScheduleWindow : Window
     {
-        public AddSchedule()
+        public ScheduleWindow()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace TeacherJournal.view
 
         private void btnAddNewScheduleRow_Click(object sender, RoutedEventArgs e)
         {
-            AddScheduleItem addScheduleItem = new AddScheduleItem();
+            ScheduleItemWindow addScheduleItem = new ScheduleItemWindow();
             try
             {
                 addScheduleItem.Show();

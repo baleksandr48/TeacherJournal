@@ -14,7 +14,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Background="#ffffcc">
+        <Grid Grid.Column="0" Background="#E4ECBB">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -28,14 +28,23 @@
                     <Setter Property="Margin" Value="10"/>
                     <Setter Property="Padding" Value="5 3"/>
                     <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Background" Value="#F0BEBE"/>
                 </Style>
             </Grid.Resources>
             <TextBlock Grid.Row="0" Margin="10 10 10 3" Text="Семестр:"/>
-            <ComboBox Grid.Row="1" Margin="10 0 10 10" x:Name="semesterList" SelectedIndex="0" IsEditable="False">
-                <TextBlock>I семестр 2017</TextBlock>
-                <TextBlock>II семестр 2017</TextBlock>
-                <TextBlock>I семестр 2018</TextBlock>
-            </ComboBox>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="cbSemesterList" Grid.Column="0" Margin="10 5 5 5"  SelectedIndex="0" IsEditable="False">
+                    <TextBlock>I семестр 2017</TextBlock>
+                    <TextBlock>II семестр 2017</TextBlock>
+                    <TextBlock>I семестр 2018</TextBlock>
+                </ComboBox>
+                <Button x:Name="btnAddNewSemester" Grid.Column="1" Margin="0 5 10 5" Click="btnAddNewSemester_Click">+</Button>
+            </Grid>
+            
             <Button x:Name="btnSubject" Grid.Row="2" Content="Предмети" Click="openVocabulary" />
             <Button x:Name="btnGroup" Grid.Row="3" Content="Групи" Click="openVocabulary"/>
             <Button x:Name="btnClassroom" Grid.Row="4" Content="Аудиторії" Click="openVocabulary"/>
@@ -43,7 +52,7 @@
             
         </Grid>
         <Border BorderBrush="#cccccc" BorderThickness="1"/>
-        <Grid Grid.Column="1" Background="#e6f2ff">
+        <Grid Grid.Column="1" Background="#AFA7CD">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>

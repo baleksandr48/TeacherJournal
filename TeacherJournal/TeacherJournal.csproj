@@ -89,14 +89,17 @@
     <Compile Include="model\Term.cs" />
     <Compile Include="model\TypeOfLesson.cs" />
     <Compile Include="model\TypeOfWeek.cs" />
-    <Compile Include="view\AddSchedule.xaml.cs">
-      <DependentUpon>AddSchedule.xaml</DependentUpon>
+    <Compile Include="view\ScheduleWindow.xaml.cs">
+      <DependentUpon>ScheduleWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\AddScheduleItem.xaml.cs">
-      <DependentUpon>AddScheduleItem.xaml</DependentUpon>
+    <Compile Include="view\ScheduleItemWindow.xaml.cs">
+      <DependentUpon>ScheduleItemWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\Vocabulary.xaml.cs">
-      <DependentUpon>Vocabulary.xaml</DependentUpon>
+    <Compile Include="view\SemesterWindow.xaml.cs">
+      <DependentUpon>SemesterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\VocabularyWindow.xaml.cs">
+      <DependentUpon>VocabularyWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -110,15 +113,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="view\AddSchedule.xaml">
+    <Page Include="view\ScheduleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\AddScheduleItem.xaml">
+    <Page Include="view\ScheduleItemWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\Vocabulary.xaml">
+    <Page Include="view\SemesterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\VocabularyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -15,9 +15,9 @@ using System.Windows.Shapes;
 namespace TeacherJournal.view
 {
     /// <summary>
-    /// Логика взаимодействия для Vocabulary.xaml
+    /// Логика взаимодействия для VocabularyWindow.xaml
     /// </summary>
-    public partial class Vocabulary : Window
+    public partial class VocabularyWindow : Window
     {
         // константы для определения отображения окна словаря
         public const int SUBJECT = 1001;
@@ -27,11 +27,11 @@ namespace TeacherJournal.view
         List<int> vocabularyTypes = new List<int>() { SUBJECT, GROUP, CLASSROOM };
         int currentType;
 
-        public Vocabulary()
+        public VocabularyWindow()
         {
             InitializeComponent();
         }
-        public Vocabulary(int vocabularyType)
+        public VocabularyWindow(int vocabularyType)
         {
             InitializeComponent();
             if (vocabularyTypes.Contains(vocabularyType))

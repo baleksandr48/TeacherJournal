@@ -1,0 +1,32 @@
+﻿<Window x:Class="TeacherJournal.view.SemesterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TeacherJournal.view"
+        mc:Ignorable="d"
+        Title="SemesterWindow" Height="164.179" Width="406.716">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0">Назва</TextBlock>
+        <TextBox x:Name="tbxSemesterName" Grid.Row="0" Grid.Column="1"></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="0">Початок</TextBlock>
+        <DatePicker x:Name="tbxSemesterStartDate" Grid.Row="1" Grid.Column="1"></DatePicker>
+        <TextBlock Grid.Row="2" Grid.Column="0">Кінець</TextBlock>
+        <DatePicker x:Name="tbxSemesterEndDate" Grid.Row="2" Grid.Column="1"></DatePicker>
+        <TextBlock Grid.Row="3" Grid.Column="0">Починається з чисельника</TextBlock>
+        <CheckBox x:Name="chbStartWithNumerator" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" ></CheckBox>
+        <Button x:Name="btnAccept" Grid.Row="4" Grid.Column="1" Width="Auto" HorizontalAlignment="Right" Click="btnAccept_Click">Прийняти</Button>
+    </Grid>
+</Window>

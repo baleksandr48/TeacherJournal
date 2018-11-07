@@ -28,7 +28,7 @@ namespace TeacherJournal
 
         private void btnSchedule_Click(object sender, RoutedEventArgs e)
         {
-            AddSchedule addSchedule = new AddSchedule();
+            ScheduleWindow addSchedule = new ScheduleWindow();
             try
             {
                 addSchedule.Show();
@@ -45,15 +45,28 @@ namespace TeacherJournal
             int vocabularyId = 0;
             switch (btnName)
             {
-                case "btnSubject": vocabularyId = Vocabulary.SUBJECT; break;
-                case "btnClassroom": vocabularyId = Vocabulary.CLASSROOM; break;
-                case "btnGroup": vocabularyId = Vocabulary.GROUP; break;
+                case "btnSubject": vocabularyId = VocabularyWindow.SUBJECT; break;
+                case "btnClassroom": vocabularyId = VocabularyWindow.CLASSROOM; break;
+                case "btnGroup": vocabularyId = VocabularyWindow.GROUP; break;
             }
 
-            Vocabulary vocabulary = new Vocabulary(vocabularyId);
+            VocabularyWindow vocabulary = new VocabularyWindow(vocabularyId);
             try
             {
                 vocabulary.Show();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception cought", ex);
+            }
+        }
+
+        private void btnAddNewSemester_Click(object sender, RoutedEventArgs e)
+        {
+            SemesterWindow semester = new SemesterWindow();
+            try
+            {
+                semester.Show();
             }
             catch (Exception ex)
             {

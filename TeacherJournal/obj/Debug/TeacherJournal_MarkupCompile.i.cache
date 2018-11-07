@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 A:\TeacherJournal\TeacherJournal\TeacherJournal\App.xaml
-4-84722000
+5-752216978
 
-23-565343055
+24-534512537
 19-2059753488
-MainWindow.xaml;view\AddSchedule.xaml;view\AddScheduleItem.xaml;view\Vocabulary.xaml;
+MainWindow.xaml;view\ScheduleWindow.xaml;view\ScheduleItemWindow.xaml;view\SemesterWindow.xaml;view\VocabularyWindow.xaml;
 
 True
 
