@@ -63,6 +63,7 @@ namespace TeacherJournal.database
             Term lastTerm = terms.ElementAt(terms.Count - 1);
             return lastTerm;
         }
+
         //-----Group-----
         public static void addGroup(Group group)
         {
@@ -183,6 +184,24 @@ namespace TeacherJournal.database
 
             return classrooms;
         }
+
+        public static List<Classroom> selectAllClassrooms()
+        {
+            connection.Open();
+            List<Classroom> classrooms = new List<Classroom>();
+            SQLiteDataReader reader = execute("SELECT * FROM Classroom");
+
+            foreach (DbDataRecord record in reader)
+            {
+                classrooms.Add(new Classroom(record.GetInt64(0),
+                    record.GetInt64(1),
+                    record.GetString(2)));
+            }
+            connection.Close();
+
+            return classrooms;
+        }
+
         //-----Schedule-----
         public static void addShedule(Schedule schedule)
         {

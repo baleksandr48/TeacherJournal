@@ -34,16 +34,14 @@ namespace TeacherJournal
             // привязываем коллекцию семестров к cbSemesterList
             termList = new ObservableCollection<Term>(DBHelper.selectTerms());
             cbSemesterList.ItemsSource = termList;
-
-            
         }
 
         private void btnSchedule_Click(object sender, RoutedEventArgs e)
         {
-            ScheduleWindow addSchedule = new ScheduleWindow();
+            ScheduleWindow Schedule = new ScheduleWindow();
             try
             {
-                addSchedule.Show();
+                Schedule.Show();
             }
             catch (Exception ex)
             {
@@ -51,10 +49,16 @@ namespace TeacherJournal
             }
         }
 
+        /// <summary>
+        /// Метод который срабатывает при нажатии на кнопки: аудитории, группы, предметы. 
+        /// Узнаем что это за кнопка, и передаем соответствующую константу окну VocabularyWindow для построения соответствующего интерфейса.
+        /// </summary>
         private void openVocabulary(object sender, RoutedEventArgs e)
         {
             var btnName = ((Button)sender).Name;
             int vocabularyId = 0;
+            Term currentTerm = (Term)cbSemesterList.SelectedItem;
+
             switch (btnName)
             {
                 case "btnSubject": vocabularyId = VocabularyWindow.SUBJECT; break;
@@ -62,7 +66,7 @@ namespace TeacherJournal
                 case "btnGroup": vocabularyId = VocabularyWindow.GROUP; break;
             }
 
-            VocabularyWindow vocabulary = new VocabularyWindow(vocabularyId);
+            VocabularyWindow vocabulary = new VocabularyWindow(vocabularyId, currentTerm);
             try
             {
                 vocabulary.Show();
@@ -73,6 +77,7 @@ namespace TeacherJournal
             }
         }
 
+        // Открываем окно для добавления нового семестра
         private void btnAddNewSemester_Click(object sender, RoutedEventArgs e)
         {
             SemesterWindow semester = new SemesterWindow(this);

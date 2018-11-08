@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TeacherJournal.database;
+using TeacherJournal.model;
 
 namespace TeacherJournal.view
 {
@@ -27,17 +29,23 @@ namespace TeacherJournal.view
         List<int> vocabularyTypes = new List<int>() { SUBJECT, GROUP, CLASSROOM };
         int currentType;
 
+        List<Classroom> classroomList;
+
         public VocabularyWindow()
         {
             InitializeComponent();
         }
-        public VocabularyWindow(int vocabularyType)
+        public VocabularyWindow(int vocabularyType, Term currentTerm)
         {
             InitializeComponent();
             if (vocabularyTypes.Contains(vocabularyType))
             {
                 currentType = vocabularyType;
                 textBlock.Text = currentType.ToString();
+
+                classroomList = new List<Classroom>(DBHelper.selectClassroom(currentTerm));
+                VocabularyGrid.ItemsSource = classroomList;
+            
             }
         }
     }
