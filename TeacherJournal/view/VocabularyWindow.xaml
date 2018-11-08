@@ -12,7 +12,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="textBlock"/>
+        <TextBlock Grid.Row="0" x:Name="tbVocabularyName"/>
         <DataGrid x:Name="VocabularyGrid" Grid.Row="1" AutoGenerateColumns="True">
         </DataGrid>
         <Button Grid.Row="2" HorizontalAlignment="Right">Закрити</Button>

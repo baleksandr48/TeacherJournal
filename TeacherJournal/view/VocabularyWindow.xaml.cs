@@ -26,10 +26,18 @@ namespace TeacherJournal.view
         public const int GROUP = 1002;
         public const int CLASSROOM = 1003;
 
-        List<int> vocabularyTypes = new List<int>() { SUBJECT, GROUP, CLASSROOM };
+        // словарь Словарных типов( лол )
+        Dictionary<int, String> vocabularyTypes = new Dictionary<int, string>() {
+            { SUBJECT, "Словар предметів"},
+            { GROUP, "Словар груп"},
+            { CLASSROOM, "Словар аудиторій"}
+        };
+
         int currentType;
 
         List<Classroom> classroomList;
+        List<Group> groupList;
+        List<Subject> subjectList;
 
         public VocabularyWindow()
         {
@@ -38,14 +46,29 @@ namespace TeacherJournal.view
         public VocabularyWindow(int vocabularyType, Term currentTerm)
         {
             InitializeComponent();
-            if (vocabularyTypes.Contains(vocabularyType))
+            if (vocabularyTypes.ContainsKey(vocabularyType))
             {
                 currentType = vocabularyType;
-                textBlock.Text = currentType.ToString();
+                tbVocabularyName.Text = vocabularyTypes[currentType];
 
-                classroomList = new List<Classroom>(DBHelper.selectClassroom(currentTerm));
-                VocabularyGrid.ItemsSource = classroomList;
-            
+                if (currentType == SUBJECT)
+                {
+                    // если словарь предметов
+                    subjectList = new List<Subject>(DBHelper.selectSubject(currentTerm));
+                    VocabularyGrid.ItemsSource = subjectList;
+                }
+                else if (currentType == GROUP)
+                {
+                    // если словарь групп
+                    groupList = new List<Group>(DBHelper.selectGroups(currentTerm));
+                    VocabularyGrid.ItemsSource = groupList;
+                }
+                else if (currentType == CLASSROOM)
+                {
+                    // если словарь аудиторий
+                    List<Classroom> classroomList = new List<Classroom>(DBHelper.selectClassroom(currentTerm));
+                    VocabularyGrid.ItemsSource = classroomList;
+                }
             }
         }
     }
