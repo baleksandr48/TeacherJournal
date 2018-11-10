@@ -56,3 +56,4 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\SemesterWindow.g.
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleWindow.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleItemWindow.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\SemesterWindow.baml
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\GeneratedInternalTypeHelper.g.cs

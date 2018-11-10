@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace TeacherJournal.view
 
         int currentType;
 
-        List<Classroom> classroomList;
+        public ObservableCollection<Classroom> classroomList;
         List<Group> groupList;
         List<Subject> subjectList;
 
@@ -46,6 +47,7 @@ namespace TeacherJournal.view
         public VocabularyWindow(int vocabularyType, Term currentTerm)
         {
             InitializeComponent();
+
             if (vocabularyTypes.ContainsKey(vocabularyType))
             {
                 currentType = vocabularyType;
@@ -66,9 +68,60 @@ namespace TeacherJournal.view
                 else if (currentType == CLASSROOM)
                 {
                     // если словарь аудиторий
-                    List<Classroom> classroomList = new List<Classroom>(DBHelper.selectClassroom(currentTerm));
+                    classroomList = new ObservableCollection<Classroom>(DBHelper.selectClassroom(currentTerm));
                     VocabularyGrid.ItemsSource = classroomList;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Обработка закрытия формы через кнопку Сохранить и закрыть
+        /// Берем нашу коллекцию и передаем её в соответсвующий метод DBHelper-a
+        /// </summary>
+        private void btnAcceptClose_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentType == SUBJECT)
+            {
+                // если словарь предметов
+            }
+            else if (currentType == GROUP)
+            {
+                // если словарь групп
+                Console.WriteLine(groupList.Count);
+            }
+            else if (currentType == CLASSROOM)
+            {
+                // если словарь аудиторий
+                Console.WriteLine(classroomList.Count);
+            }
+        }
+
+        // Удаляем строку в таблице удаляя объект из коллекции
+        private void DeleteRow_Click(object sender, RoutedEventArgs e)
+        {
+            try {
+                if (currentType == SUBJECT)
+                {
+                    // если словарь предметов
+                    Subject obj = ((FrameworkElement)sender).DataContext as Subject;
+                    Console.WriteLine("Name:" + obj.name);
+                }
+                else if (currentType == GROUP)
+                {
+                    // если словарь групп
+                    Group obj = ((FrameworkElement)sender).DataContext as Group;
+                    Console.WriteLine("Name:" + obj.name);
+                }
+                else if (currentType == CLASSROOM)
+                {
+                    // если словарь аудиторий
+                    Classroom obj = ((FrameworkElement)sender).DataContext as Classroom;
+                    Console.WriteLine("Name:" + obj.name);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception cought", ex);
             }
         }
     }

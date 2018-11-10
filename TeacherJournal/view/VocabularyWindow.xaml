@@ -3,18 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TeacherJournal.view"
+        xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="VocabularyWindow" Height="398.969" Width="382.732">
+        Title="VocabularyWindow" Height="381.105" Width="264.629"
+        WindowStartupLocation="CenterScreen" WindowState="Normal">
+    <Window.Resources>
+        <local:VisibilityConverter x:Key="VisibilityConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="tbVocabularyName"/>
-        <DataGrid x:Name="VocabularyGrid" Grid.Row="1" AutoGenerateColumns="True">
+        <TextBlock Grid.Row="0" x:Name="tbVocabularyName" TextAlignment="Center" FontSize="16" FontWeight="Black" Padding="10 5"/>
+        <DataGrid x:Name="VocabularyGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Назва" Binding="{Binding Path=name}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="DeleteRow_Click" Visibility="{Binding Path=id, Converter={StaticResource VisibilityConverter}}">Видалити</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="2" HorizontalAlignment="Right">Закрити</Button>
+        <Button x:Name="btnAcceptClose" Grid.Row="2" HorizontalAlignment="Right" Click="btnAcceptClose_Click" Margin="10" Padding="10 5">Зберегти та закрити</Button>
     </Grid>
 </Window>

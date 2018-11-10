@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters.cs" />
     <Compile Include="database\DBHelper.cs" />
     <Compile Include="database\DBSetuper.cs" />
     <Compile Include="model\Classroom.cs" />

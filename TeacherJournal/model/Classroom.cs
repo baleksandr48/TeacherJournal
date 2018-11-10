@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace TeacherJournal.model
 {
-    class Classroom
+    public class Classroom
     {
         public long id { get; set; }
         public long idTerm { get; set; }
         public String name { get; set; }
+
+        public Classroom() { }
 
         public Classroom(long id, long idTerm, string name)
         {
@@ -18,5 +20,6 @@ namespace TeacherJournal.model
             this.idTerm = idTerm;
             this.name = name;
         }
+        
     }
 }

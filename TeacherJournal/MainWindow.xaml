@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Журнал викладача" Height="450" Width="625"
         FontSize="16"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -46,7 +46,7 @@
             <Button x:Name="btnGroup" Grid.Row="3" Content="Групи" Click="openVocabulary"/>
             <Button x:Name="btnClassroom" Grid.Row="4" Content="Аудиторії" Click="openVocabulary"/>
             <Button x:Name="btnSchedule" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click"/>
-            <Button x:Name="btnToPdf" Grid.Row="6" Content="В PDF"/>
+            <Button x:Name="btnToDoc" Grid.Row="6" Content="В DOC"/>
         </Grid>
         <Border BorderBrush="#cccccc" BorderThickness="1"/>
         <Grid Grid.Column="1" Background="#AFA7CD">
