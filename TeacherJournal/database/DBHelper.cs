@@ -154,14 +154,14 @@ namespace TeacherJournal.database
             connection.Close();
         }
 
-        public static void updateSubject(Classroom classroom)
+        public static void updateClassroom(Classroom classroom)
         {
             connection.Open();
             execute("UPDATE Classroom SET name = '{0}' WHERE id = {1};", classroom.name, classroom.id);
             connection.Close();
         }
 
-        public static void deleteSubject(Classroom classroom)
+        public static void deleteClassroom(Classroom classroom)
         {
             connection.Open();
             execute("DELETE FROM Classroom WHERE id = {0};", classroom.id);

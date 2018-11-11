@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace TeacherJournal.model
 {
-    public class Subject
+    public class Subject : VocabularyEntity
     {
-        public long id { get; set; }
-        public long idTerm { get; set; }
-        public String name { get; set; }
-
         public Subject() { }
 
         public Subject(long id, long idTerm, string name)

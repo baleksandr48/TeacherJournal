@@ -90,6 +90,7 @@
     <Compile Include="model\Term.cs" />
     <Compile Include="model\TypeOfLesson.cs" />
     <Compile Include="model\TypeOfWeek.cs" />
+    <Compile Include="model\VocabularyEntity.cs" />
     <Compile Include="view\ScheduleWindow.xaml.cs">
       <DependentUpon>ScheduleWindow.xaml</DependentUpon>
     </Compile>

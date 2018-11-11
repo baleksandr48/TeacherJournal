@@ -34,44 +34,22 @@ namespace TeacherJournal.view
             { CLASSROOM, "Словар аудиторій"}
         };
 
-        int currentType;
+        private int currentType;
+        private Term currentTerm;
 
-        public ObservableCollection<Classroom> classroomList;
-        List<Group> groupList;
-        List<Subject> subjectList;
+        public ObservableCollection<VocabularyEntity> list;
 
         public VocabularyWindow()
         {
             InitializeComponent();
         }
+
         public VocabularyWindow(int vocabularyType, Term currentTerm)
         {
             InitializeComponent();
-
-            if (vocabularyTypes.ContainsKey(vocabularyType))
-            {
-                currentType = vocabularyType;
-                tbVocabularyName.Text = vocabularyTypes[currentType];
-
-                if (currentType == SUBJECT)
-                {
-                    // если словарь предметов
-                    subjectList = new List<Subject>(DBHelper.selectSubject(currentTerm));
-                    VocabularyGrid.ItemsSource = subjectList;
-                }
-                else if (currentType == GROUP)
-                {
-                    // если словарь групп
-                    groupList = new List<Group>(DBHelper.selectGroups(currentTerm));
-                    VocabularyGrid.ItemsSource = groupList;
-                }
-                else if (currentType == CLASSROOM)
-                {
-                    // если словарь аудиторий
-                    classroomList = new ObservableCollection<Classroom>(DBHelper.selectClassroom(currentTerm));
-                    VocabularyGrid.ItemsSource = classroomList;
-                }
-            }
+            this.currentType = vocabularyType;
+            this.currentTerm = currentTerm;
+            tbVocabularyName.Text = vocabularyTypes[currentType];
         }
 
         /// <summary>
@@ -80,48 +58,47 @@ namespace TeacherJournal.view
         /// </summary>
         private void btnAcceptClose_Click(object sender, RoutedEventArgs e)
         {
-            if (currentType == SUBJECT)
-            {
-                // если словарь предметов
-            }
-            else if (currentType == GROUP)
-            {
-                // если словарь групп
-                Console.WriteLine(groupList.Count);
-            }
-            else if (currentType == CLASSROOM)
-            {
-                // если словарь аудиторий
-                Console.WriteLine(classroomList.Count);
-            }
+            Console.WriteLine(list.Count);
         }
 
         // Удаляем строку в таблице удаляя объект из коллекции
         private void DeleteRow_Click(object sender, RoutedEventArgs e)
         {
-            try {
+            try
+            {
+                VocabularyEntity obj = ((FrameworkElement)sender).DataContext as VocabularyEntity;
+                Console.WriteLine("Name:" + obj.name);
+                list.Remove(obj);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception caught", ex);
+            }
+        }
+
+        /// <summary>
+        /// Обработчик загрузки окна
+        /// </summary>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (vocabularyTypes.ContainsKey(currentType))
+            {
                 if (currentType == SUBJECT)
                 {
                     // если словарь предметов
-                    Subject obj = ((FrameworkElement)sender).DataContext as Subject;
-                    Console.WriteLine("Name:" + obj.name);
+                    list = new ObservableCollection<VocabularyEntity>(DBHelper.selectSubject(currentTerm));
                 }
                 else if (currentType == GROUP)
                 {
                     // если словарь групп
-                    Group obj = ((FrameworkElement)sender).DataContext as Group;
-                    Console.WriteLine("Name:" + obj.name);
+                    list = new ObservableCollection<VocabularyEntity>(DBHelper.selectGroups(currentTerm));
                 }
                 else if (currentType == CLASSROOM)
                 {
                     // если словарь аудиторий
-                    Classroom obj = ((FrameworkElement)sender).DataContext as Classroom;
-                    Console.WriteLine("Name:" + obj.name);
+                    list = new ObservableCollection<VocabularyEntity>(DBHelper.selectClassroom(currentTerm));
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("{0} Exception cought", ex);
+                VocabularyGrid.ItemsSource = list;
             }
         }
     }
