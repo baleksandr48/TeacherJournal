@@ -38,7 +38,8 @@ namespace TeacherJournal
 
         private void btnSchedule_Click(object sender, RoutedEventArgs e)
         {
-            ScheduleWindow Schedule = new ScheduleWindow();
+            Term currentTerm = (Term)cbSemesterList.SelectedItem;
+            ScheduleWindow Schedule = new ScheduleWindow(currentTerm);
             try
             {
                 Schedule.Show();

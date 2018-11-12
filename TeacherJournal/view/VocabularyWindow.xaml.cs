@@ -28,7 +28,7 @@ namespace TeacherJournal.view
         public const int CLASSROOM = 1003;
 
         // словарь Словарных типов( лол )
-        Dictionary<int, String> vocabularyTypes = new Dictionary<int, string>() {
+        public Dictionary<int, String> vocabularyTypes = new Dictionary<int, string>() {
             { SUBJECT, "Словар предметів"},
             { GROUP, "Словар груп"},
             { CLASSROOM, "Словар аудиторій"}
@@ -58,7 +58,45 @@ namespace TeacherJournal.view
         /// </summary>
         private void btnAcceptClose_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(list.Count);
+            Console.WriteLine("list.Count: {0}", list.Count);
+
+            try
+            {              
+                if (currentType == SUBJECT)
+                {
+                    // если словарь предметов
+                    DBHelper.clearSubject(currentTerm);
+                    foreach (VocabularyEntity item in list)
+                    {
+                        DBHelper.addSubject(item as Subject);
+                    }                   
+                }
+                else if (currentType == GROUP)
+                {
+                    // если словарь групп
+                    DBHelper.clearGroup(currentTerm);
+                    foreach (VocabularyEntity item in list)
+                    {
+                        DBHelper.addGroup(item as Group);
+                    }
+                }                    
+                else if (currentType == CLASSROOM)
+                {
+                    // если словарь аудиторий
+                    DBHelper.clearClassroom(currentTerm);
+                    foreach (VocabularyEntity item in list)
+                    {
+                        DBHelper.addClassroom(item as Classroom);
+                    }                    
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("{0} Exception caught", ex);
+            }
+
+            this.Close();
         }
 
         // Удаляем строку в таблице удаляя объект из коллекции
@@ -67,7 +105,7 @@ namespace TeacherJournal.view
             try
             {
                 VocabularyEntity obj = ((FrameworkElement)sender).DataContext as VocabularyEntity;
-                Console.WriteLine("Name:" + obj.name);
+                Console.WriteLine("Name: {0}", obj.name);
                 list.Remove(obj);
             }
             catch (Exception ex)
@@ -99,6 +137,25 @@ namespace TeacherJournal.view
                     list = new ObservableCollection<VocabularyEntity>(DBHelper.selectClassroom(currentTerm));
                 }
                 VocabularyGrid.ItemsSource = list;
+            }
+        }
+
+        private void btnAddRow_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentType == SUBJECT)
+            {
+                // если словарь предметов
+                list.Add(new Subject(this.currentTerm.id));
+            }
+            else if (currentType == GROUP)
+            {
+                // если словарь групп
+                list.Add(new Group(this.currentTerm.id));
+            }
+            else if (currentType == CLASSROOM)
+            {
+                // если словарь аудиторий
+                list.Add(new Classroom(this.currentTerm.id));
             }
         }
     }

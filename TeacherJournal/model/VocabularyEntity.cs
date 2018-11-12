@@ -17,6 +17,11 @@ namespace TeacherJournal.model
 
         public VocabularyEntity() { }
 
+        public VocabularyEntity(long idTerm)
+        {
+            this.idTerm = idTerm;
+        }
+
         public VocabularyEntity(long id, long idTerm, string name)
         {
             this.id = id;

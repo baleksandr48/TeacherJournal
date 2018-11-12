@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TeacherJournal.model;
 
 namespace TeacherJournal.view
 {
@@ -19,9 +20,17 @@ namespace TeacherJournal.view
     /// </summary>
     public partial class ScheduleWindow : Window
     {
+        private Term currentTerm;
+
         public ScheduleWindow()
         {
             InitializeComponent();
+        }
+
+        public ScheduleWindow(Term term)
+        {
+            InitializeComponent();
+            this.currentTerm = term;
         }
 
         private void btnFillSchedule_Click(object sender, RoutedEventArgs e)
@@ -32,7 +41,7 @@ namespace TeacherJournal.view
 
         private void btnAddNewScheduleRow_Click(object sender, RoutedEventArgs e)
         {
-            ScheduleItemWindow addScheduleItem = new ScheduleItemWindow();
+            ScheduleItemWindow addScheduleItem = new ScheduleItemWindow(currentTerm);
             try
             {
                 addScheduleItem.Show();

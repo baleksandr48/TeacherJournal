@@ -10,6 +10,11 @@ namespace TeacherJournal.model
     {
         public Group() { }
 
+        public Group(long idTerm)
+        {
+            this.idTerm = idTerm;
+        }
+
         public Group(long id, long idTerm, String name)
         {
             this.id = id;

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="SemesterWindow" Height="164.179" Width="406.716">
+        Title="SemesterWindow" Height="164.179" Width="406.716"
+        WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -26,7 +27,7 @@
         <TextBlock Grid.Row="2" Grid.Column="0">Кінець</TextBlock>
         <DatePicker x:Name="dpSemesterEndDate" Grid.Row="2" Grid.Column="1"></DatePicker>
         <TextBlock Grid.Row="3" Grid.Column="0">Починається з чисельника</TextBlock>
-        <CheckBox x:Name="chbStartWithNumerator" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" />
+        <CheckBox x:Name="chbStartWithNumerator" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="True" />
         <Button x:Name="btnAccept" Grid.Row="4" Grid.Column="1" Width="Auto" HorizontalAlignment="Right" Click="btnAccept_Click">Прийняти</Button>
     </Grid>
 </Window>

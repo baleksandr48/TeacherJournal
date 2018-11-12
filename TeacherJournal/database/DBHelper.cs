@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeacherJournal.model;
+using TeacherJournal.view;
 
 namespace TeacherJournal.database
 {
@@ -88,6 +89,13 @@ namespace TeacherJournal.database
             connection.Close();
         }
 
+        public static void clearGroup(Term term)
+        {
+            connection.Open();
+            execute("DELETE FROM _Group WHERE idTerm = {0};", term.id);
+            connection.Close();
+        }
+
         public static List<Group> selectGroups(Term term)
         {
             connection.Open();
@@ -129,6 +137,13 @@ namespace TeacherJournal.database
             connection.Close();
         }
 
+        public static void clearSubject(Term term)
+        {
+            connection.Open();
+            execute("DELETE FROM Subject WHERE idTerm = {0};", term.id);
+            connection.Close();
+        }
+
         public static List<Subject> selectSubject(Term term)
         {
             connection.Open();
@@ -165,6 +180,13 @@ namespace TeacherJournal.database
         {
             connection.Open();
             execute("DELETE FROM Classroom WHERE id = {0};", classroom.id);
+            connection.Close();
+        }
+
+        public static void clearClassroom(Term term)
+        {
+            connection.Open();
+            execute("DELETE FROM Classroom WHERE idTerm = {0};", term.id);
             connection.Close();
         }
 
@@ -462,5 +484,6 @@ namespace TeacherJournal.database
             DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);// 1970/1/1 00:00:00 
             return dt.AddDays(days);
         }
+
     }
 }

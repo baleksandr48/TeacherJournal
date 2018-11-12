@@ -22,7 +22,6 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\EntityFramework.SqlServer.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.xml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\bin\Debug\System.Data.SQLite.dll.config
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csprojResolveAssemblyReference.cache
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.exe
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.pdb
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\bin\Debug\TeacherJournal.exe
@@ -57,3 +56,4 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleWindow.ba
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleItemWindow.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\SemesterWindow.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\GeneratedInternalTypeHelper.g.cs
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csprojResolveAssemblyReference.cache

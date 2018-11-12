@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="ScheduleItemWindow" Height="340" Width="500">
+        Title="ScheduleItemWindow" Height="340" Width="500" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -37,24 +38,20 @@
             </Grid.Resources>
 
             <TextBlock Grid.Row="0" Grid.Column="0">Тип неділі</TextBlock>
-            <ComboBox Grid.Row="0" Grid.Column="1"></ComboBox>
+            <ComboBox x:Name="cbTypeOfWeek" Grid.Row="0" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
             <TextBlock Grid.Row="1" Grid.Column="0">День неділі</TextBlock>
-            <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
+            <ComboBox x:Name="cbDayOfWeek" Grid.Row="1" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
             <TextBlock Grid.Row="2" Grid.Column="0">№ пари</TextBlock>
-            <ComboBox Grid.Row="2" Grid.Column="1"></ComboBox>
+            <TextBox x:Name="tbNumberOfLesson" Grid.Row="2" Grid.Column="1"></TextBox>
             <TextBlock Grid.Row="3" Grid.Column="0">Предмет</TextBlock>
-            <ComboBox Grid.Row="3" Grid.Column="1"></ComboBox>
+            <ComboBox x:Name="cbSubject" Grid.Row="3" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
             <TextBlock Grid.Row="4" Grid.Column="0">Тип заняття</TextBlock>
-            <ComboBox Grid.Row="4" Grid.Column="1"></ComboBox>
+            <ComboBox x:Name="cbTypeOfLesson" Grid.Row="4" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
             <TextBlock Grid.Row="5" Grid.Column="0">Аудиторія</TextBlock>
-            <ComboBox Grid.Row="5" Grid.Column="1"></ComboBox>
+            <ComboBox x:Name="cbClassroom" Grid.Row="5" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
             <TextBlock Grid.Row="6" Grid.Column="0">Группа</TextBlock>
 
             <StackPanel x:Name="GroupVerticalPanel" Grid.Row="6" Grid.Column="1"  HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal">
-                    <ComboBox Width="130"></ComboBox>
-                    <Button Margin="5 0 0 0" Width="30">Del</Button>
-                </StackPanel>
             </StackPanel>
             
             <Button x:Name="btnAddNewGroup" Grid.Row="6" Grid.Column="2" MaxHeight="40" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0" Padding="10 2" Click="btnAddNewGroup_Click">+</Button>

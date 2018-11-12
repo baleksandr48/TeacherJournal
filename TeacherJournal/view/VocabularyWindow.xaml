@@ -17,8 +17,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" x:Name="tbVocabularyName" TextAlignment="Center" FontSize="16" FontWeight="Black" Padding="10 5"/>
-        <DataGrid x:Name="VocabularyGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16">
+        
+        <DataGrid x:Name="VocabularyGrid" Grid.Row="1" AutoGenerateColumns="False" RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="id семестра" Binding="{Binding Path=idTerm}"/>
                 <DataGridTextColumn Header="Назва" Binding="{Binding Path=name}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
@@ -29,6 +31,13 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnAcceptClose" Grid.Row="2" HorizontalAlignment="Right" Click="btnAcceptClose_Click" Margin="10" Padding="10 5">Зберегти та закрити</Button>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnAddRow" Grid.Column="0" HorizontalAlignment="Left" Margin="10" Padding="10 5" Click="btnAddRow_Click">Добавити</Button>
+            <Button x:Name="btnAcceptClose" Grid.Column="1" HorizontalAlignment="Right" Click="btnAcceptClose_Click" Margin="10" Padding="10 5">Зберегти та закрити</Button>
+        </Grid>
     </Grid>
 </Window>

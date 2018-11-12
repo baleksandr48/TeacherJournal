@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="ScheduleWindow" Height="500" Width="750">
+        Title="ScheduleWindow" Height="500" Width="750"
+        WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -19,7 +20,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
-            <TextBox Grid.Column="0" Text="Розклад" HorizontalContentAlignment="Left" Padding="10" FontSize="18" FontWeight="Bold"/>
+            <TextBlock Grid.Column="0" Text="Розклад" Padding="10" FontSize="18" FontWeight="Bold"/>
             <Button x:Name="btnAddNewScheduleRow" Grid.Column="1" Width="Auto"  MinWidth="100px" Margin="10 5 " FontSize="18" HorizontalAlignment="Right" Click="btnAddNewScheduleRow_Click">Додати</Button>
             
         </Grid>
