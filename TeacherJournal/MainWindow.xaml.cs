@@ -39,14 +39,20 @@ namespace TeacherJournal
         private void btnSchedule_Click(object sender, RoutedEventArgs e)
         {
             Term currentTerm = (Term)cbSemesterList.SelectedItem;
-            ScheduleWindow Schedule = new ScheduleWindow(currentTerm);
-            try
+            if (currentTerm != null)
             {
-                Schedule.Show();
+                ScheduleWindow Schedule = new ScheduleWindow(currentTerm);
+                try
+                {
+                    Schedule.Show();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("{0} Exception cought", ex);
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("{0} Exception cought", ex);
+            else {
+                openAddTermWindow();
             }
         }
 
@@ -60,26 +66,31 @@ namespace TeacherJournal
             int vocabularyId = 0;
             Term currentTerm = (Term)cbSemesterList.SelectedItem;
 
-            switch (btnName)
+            if (currentTerm != null)
             {
-                case "btnSubject": vocabularyId = VocabularyWindow.SUBJECT; break;
-                case "btnClassroom": vocabularyId = VocabularyWindow.CLASSROOM; break;
-                case "btnGroup": vocabularyId = VocabularyWindow.GROUP; break;
-            }
+                switch (btnName)
+                {
+                    case "btnSubject": vocabularyId = VocabularyWindow.SUBJECT; break;
+                    case "btnClassroom": vocabularyId = VocabularyWindow.CLASSROOM; break;
+                    case "btnGroup": vocabularyId = VocabularyWindow.GROUP; break;
+                }
 
-            VocabularyWindow vocabulary = new VocabularyWindow(vocabularyId, currentTerm);
-            try
-            {
-                vocabulary.Show();
+                VocabularyWindow vocabulary = new VocabularyWindow(vocabularyId, currentTerm);
+                try
+                {
+                    vocabulary.Show();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("{0} Exception cought", ex);
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("{0} Exception cought", ex);
+            else {
+                openAddTermWindow();
             }
         }
 
-        // Открываем окно для добавления нового семестра
-        private void btnAddNewSemester_Click(object sender, RoutedEventArgs e)
+        private void openAddTermWindow()
         {
             SemesterWindow semester = new SemesterWindow(this);
             try
@@ -90,6 +101,12 @@ namespace TeacherJournal
             {
                 Console.WriteLine("{0} Exception cought", ex);
             }
+        }
+
+        // Открываем окно для добавления нового семестра
+        private void btnAddNewSemester_Click(object sender, RoutedEventArgs e)
+        {
+            openAddTermWindow();
         }
 
         // При выборе семестра возвращаем выбранный айтем и приводим тип к Term. Узнаем id. 

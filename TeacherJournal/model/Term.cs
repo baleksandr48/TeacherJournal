@@ -8,6 +8,7 @@ namespace TeacherJournal.model
 {
     public class Term
     {
+        // заглушка id для записи. 
         public static int ID_FOR_WRITING = 1001;
 
         public long id { get; set; }
