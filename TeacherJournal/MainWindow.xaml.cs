@@ -115,5 +115,5 @@ namespace TeacherJournal
             Term term = (Term)cbSemesterList.SelectedItem;
             Console.WriteLine("Term id: " + term.id);
         }
-    }
+    }  
 }

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TeacherJournal.model;
+using TeacherJournal.database;
+using System.Collections.ObjectModel;
 
 namespace TeacherJournal.view
 {
@@ -21,6 +23,7 @@ namespace TeacherJournal.view
     public partial class ScheduleWindow : Window
     {
         private Term currentTerm;
+        private ObservableCollection<Schedule> scheduleList;
 
         public ScheduleWindow()
         {
@@ -31,6 +34,8 @@ namespace TeacherJournal.view
         {
             InitializeComponent();
             this.currentTerm = term;
+
+            scheduleList = new ObservableCollection<Schedule>(DBHelper.selectSchedules(currentTerm));
         }
 
         private void btnFillSchedule_Click(object sender, RoutedEventArgs e)
@@ -50,7 +55,35 @@ namespace TeacherJournal.view
             {
                 Console.WriteLine("{0} Exception cought", ex);
             }
+        }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ScheduleGrid.ItemsSource = scheduleList;
+        }
+
+        // Удаляем объект Schedule со scheduleList
+        private void DeleteRow_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Schedule obj = ((FrameworkElement)sender).DataContext as Schedule;
+                scheduleList.Remove(obj);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception caught", ex);
+            }
+        }
+        // Редактируем объект Schedule
+        private void EditeRow_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RandScheduleItem_Click(object sender, RoutedEventArgs e)
+        {
+            scheduleList.Add(DBHelper.AddRandomSchedule(currentTerm));
         }
     }
 }

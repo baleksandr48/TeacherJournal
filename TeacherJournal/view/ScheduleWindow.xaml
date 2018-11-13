@@ -3,10 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TeacherJournal.view"
+        xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
         Title="ScheduleWindow" Height="500" Width="750"
-        WindowStartupLocation="CenterScreen" WindowState="Normal">
+        WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:ListToStringConverter x:Key="ListToStringConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -14,21 +17,51 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" >
-            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
             <TextBlock Grid.Column="0" Text="Розклад" Padding="10" FontSize="18" FontWeight="Bold"/>
             <Button x:Name="btnAddNewScheduleRow" Grid.Column="1" Width="Auto"  MinWidth="100px" Margin="10 5 " FontSize="18" HorizontalAlignment="Right" Click="btnAddNewScheduleRow_Click">Додати</Button>
-            
+        </Grid>
+
+        <DataGrid x:Name="ScheduleGrid" Grid.Row="1" Margin="10 0 10 10" AutoGenerateColumns="False" RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип неділі" Binding="{Binding Path=typeOfWeek.name}"/>
+                <DataGridTextColumn Header="День неділі" Binding="{Binding Path=dayOfWeek.name}"/>
+                <DataGridTextColumn Header="Номер заняття" Binding="{Binding Path=numOfLesson}"/>
+                <DataGridTextColumn Header="Предмет" Binding="{Binding Path=subject.name}"/>
+                <DataGridTextColumn Header="Тип заняття" Binding="{Binding Path=typeOfLesson.name}"/>
+                <DataGridTextColumn Header="Аудиторія" Binding="{Binding Path=classroom.name}"/>
+                <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button >Редагувати</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="DeleteRow_Click" >Видалити</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" x:Name="RandScheduleItem" Width="Auto" HorizontalAlignment="Left" Content="RandScheduleItem" Margin="10" FontSize="18" Padding="15 5 15 5" Click="RandScheduleItem_Click"></Button>
+            <Button Grid.Column="1" x:Name="btnFillSchedule" Width="Auto" HorizontalAlignment="Right" Content="Заповнити" Margin="10" FontSize="18" Padding="15 5 15 5" Click="btnFillSchedule_Click"></Button>
         </Grid>
         
-        <DataGrid Grid.Row="1" Margin="10 0 10 10" />
-        
         <StackPanel Orientation="Horizontal" Grid.Row="2" FlowDirection="RightToLeft">
-            <Button x:Name="btnFillSchedule" Content="Заповнити" Margin="10 0 10 10" FontSize="18" Padding="15 5 15 5" Click="btnFillSchedule_Click"></Button>
+            
         </StackPanel>
     </Grid>
 </Window>

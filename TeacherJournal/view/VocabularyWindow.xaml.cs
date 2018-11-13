@@ -36,6 +36,7 @@ namespace TeacherJournal.view
 
         private int currentType;
         private Term currentTerm;
+        private VocabularyEntity currentEntity;
 
         public ObservableCollection<VocabularyEntity> list;
 
@@ -61,33 +62,26 @@ namespace TeacherJournal.view
             Console.WriteLine("list.Count: {0}", list.Count);
 
             try
-            {              
+            {
                 if (currentType == SUBJECT)
                 {
                     // если словарь предметов
-                    DBHelper.clearSubject(currentTerm);
-                    foreach (VocabularyEntity item in list)
-                    {
-                        DBHelper.addSubject(item as Subject);
-                    }                   
+                    DBHelper.ClearVocabulary(new Subject(), currentTerm);
                 }
                 else if (currentType == GROUP)
                 {
                     // если словарь групп
-                    DBHelper.clearGroup(currentTerm);
-                    foreach (VocabularyEntity item in list)
-                    {
-                        DBHelper.addGroup(item as Group);
-                    }
-                }                    
+                    DBHelper.ClearVocabulary(new Group(), currentTerm);
+                }
                 else if (currentType == CLASSROOM)
                 {
                     // если словарь аудиторий
-                    DBHelper.clearClassroom(currentTerm);
-                    foreach (VocabularyEntity item in list)
-                    {
-                        DBHelper.addClassroom(item as Classroom);
-                    }                    
+                    DBHelper.ClearVocabulary(new Classroom(), currentTerm);
+                }
+                
+                foreach (VocabularyEntity item in list)
+                {
+                    DBHelper.AddVocabularyItem(item);
                 }
             }
             catch (Exception ex)
@@ -105,7 +99,7 @@ namespace TeacherJournal.view
             try
             {
                 VocabularyEntity obj = ((FrameworkElement)sender).DataContext as VocabularyEntity;
-                Console.WriteLine("Name: {0}", obj.name);
+                Console.WriteLine("Name of deleted row: {0}", obj.name);
                 list.Remove(obj);
             }
             catch (Exception ex)

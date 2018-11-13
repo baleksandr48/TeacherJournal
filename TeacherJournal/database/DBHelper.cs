@@ -285,12 +285,12 @@ namespace TeacherJournal.database
                 {
                     Schedule s = schedules[schedules.Count() - 1];
                     if (s.idTerm == idTerm &&
-                        s.typeOfWeek == typeOfWeek &&
-                        s.dayOfWeek == dayOfWeek &&
+                        s.typeOfWeek.id == typeOfWeek.id &&
+                        s.dayOfWeek.id == dayOfWeek.id &&
                         s.numOfLesson == numOfLesson &&
-                        s.subject == subject &&
-                        s.typeOfLesson == typeOfLesson &&
-                        s.classroom == classroom)
+                        s.subject.id == subject.id &&
+                        s.typeOfLesson.id == typeOfLesson.id &&
+                        s.classroom.id == classroom.id)
                     {
                         schedules[schedules.Count() - 1].groups.Add(group);
                     }
@@ -305,6 +305,13 @@ namespace TeacherJournal.database
             connection.Close();
 
             return schedules;
+        }
+
+        public static Schedule getLastSchedule(Term term)
+        {
+            List<Schedule> schedule = selectSchedules(term);
+            Schedule lastschedule = schedule.ElementAt(schedule.Count - 1);
+            return lastschedule;
         }
 
         //-----Lesson-----
@@ -484,6 +491,78 @@ namespace TeacherJournal.database
             DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);// 1970/1/1 00:00:00 
             return dt.AddDays(days);
         }
+        public static void ClearVocabulary(VocabularyEntity obj, Term term)
+        {
+            if (obj.GetType().Name == "Subject")
+            {
+                clearSubject(term);
+            }
+            else if (obj.GetType().Name == "Group")
+            {
+                clearGroup(term);
+            }
+            else if (obj.GetType().Name == "Classroom")
+            {
+                clearClassroom(term);
+            }
+        }
 
+        public static void AddVocabularyItem(VocabularyEntity obj)
+        {
+            if (obj.GetType().Name == "Subject")
+            {
+                addSubject(obj as Subject);
+            }
+            else if (obj.GetType().Name == "Group")
+            {
+                addGroup(obj as Group);
+            }
+            else if (obj.GetType().Name == "Classroom")
+            {
+                addClassroom(obj as Classroom);
+            }
+        }
+
+        public static Schedule AddRandomSchedule(Term term)
+        {
+           // List<Term> term = new List<Term>(DBHelper.selectTerms());
+            List<Group> groups = new List<Group>(DBHelper.selectGroups(term));
+            List<TypeOfWeek> typeOfWeek = new List<TypeOfWeek>(DBHelper.selectTypesOfWeek());
+            List<model.DayOfWeek> dayOfWeek = new List<model.DayOfWeek>(DBHelper.selectDaysOfWeek());
+            List<TypeOfLesson> typeOfLesson = new List<TypeOfLesson>(DBHelper.selectTypesOfLesson());
+            List<Subject> subject = new List<Subject>(DBHelper.selectSubject(term));
+            List<Classroom> classroom = new List<Classroom>(DBHelper.selectClassroom(term));
+
+            if (groups.Count != 0)
+            {
+                Random rnd = new Random();
+                int rndSize = rnd.Next(1, groups.Count); // ранд. значение списка групп
+                List<Group> groupsTemp = new List<Group>();
+                for (int i = 0; i <= rndSize - 1; i++)
+                {
+                    groupsTemp.Add(EnumerableExtension.PickRandom(groups)); // добавляем ранд. айтем с groups в groupsTemp
+                }
+                groupsTemp.Distinct().ToList(); // удаляем дубликаты
+
+                Schedule schedule = new Schedule(1, term.id, // ранд. семестр 
+                                                    EnumerableExtension.PickRandom(typeOfWeek), // ...
+                                                    EnumerableExtension.PickRandom(dayOfWeek),
+                                                    rnd.Next(1, 6),
+                                                    EnumerableExtension.PickRandom(subject),
+                                                    EnumerableExtension.PickRandom(typeOfLesson),
+                                                    EnumerableExtension.PickRandom(classroom), groupsTemp);
+
+                try
+                {
+                   // DBHelper.addShedule(schedule);
+                    return schedule;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("{0} Exception cought", ex);
+                }
+            }
+            return null;
+        }
     }
 }

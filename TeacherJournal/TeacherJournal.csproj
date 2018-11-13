@@ -81,6 +81,7 @@
     <Compile Include="Converters.cs" />
     <Compile Include="database\DBHelper.cs" />
     <Compile Include="database\DBSetuper.cs" />
+    <Compile Include="EnumerableExtension.cs" />
     <Compile Include="model\Classroom.cs" />
     <Compile Include="model\DayOfWeek.cs" />
     <Compile Include="model\Group.cs" />
