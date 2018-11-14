@@ -13,6 +13,7 @@ namespace TeacherJournal.model
         public Classroom(long idTerm)
         {
             this.idTerm = idTerm;
+            this.id = 0;
         }
 
         public Classroom(long id, long idTerm, string name)

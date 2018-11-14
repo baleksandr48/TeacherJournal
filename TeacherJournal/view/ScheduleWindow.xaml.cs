@@ -41,12 +41,23 @@ namespace TeacherJournal.view
         private void btnFillSchedule_Click(object sender, RoutedEventArgs e)
         {
             /// Use date from table to fill schedule
+            try
+            {
+                DBHelper.ClearSchedule(currentTerm);
+                DBHelper.addSchedules(scheduleList.ToList());
+                DBHelper.addLessons(Lesson.generateLessons(scheduleList.ToList(), currentTerm));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception cought", ex);
+            }
+
             this.Close();
         }
 
         private void btnAddNewScheduleRow_Click(object sender, RoutedEventArgs e)
         {
-            ScheduleItemWindow addScheduleItem = new ScheduleItemWindow(currentTerm);
+            ScheduleItemWindow addScheduleItem = new ScheduleItemWindow(currentTerm, this);
             try
             {
                 addScheduleItem.Show();

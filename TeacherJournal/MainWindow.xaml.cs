@@ -16,6 +16,7 @@ using TeacherJournal.view;
 using TeacherJournal.database;
 using TeacherJournal.model;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace TeacherJournal
 {
@@ -25,6 +26,9 @@ namespace TeacherJournal
     public partial class MainWindow : Window
     {
         public ObservableCollection<Term> termList;
+        private ObservableCollection<Lesson> lessonList;
+
+        Term currentTerm;
 
         public MainWindow()
         {
@@ -33,12 +37,11 @@ namespace TeacherJournal
 
             // привязываем коллекцию семестров к cbSemesterList
             termList = new ObservableCollection<Term>(DBHelper.selectTerms());
-            cbSemesterList.ItemsSource = termList;
         }
 
         private void btnSchedule_Click(object sender, RoutedEventArgs e)
         {
-            Term currentTerm = (Term)cbSemesterList.SelectedItem;
+         //   Term currentTerm = (Term)cbSemesterList.SelectedItem;
             if (currentTerm != null)
             {
                 ScheduleWindow Schedule = new ScheduleWindow(currentTerm);
@@ -64,7 +67,7 @@ namespace TeacherJournal
         {
             var btnName = ((Button)sender).Name;
             int vocabularyId = 0;
-            Term currentTerm = (Term)cbSemesterList.SelectedItem;
+          //  Term currentTerm = (Term)cbSemesterList.SelectedItem;
 
             if (currentTerm != null)
             {
@@ -113,7 +116,35 @@ namespace TeacherJournal
         private void cbSemesterList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Term term = (Term)cbSemesterList.SelectedItem;
-            Console.WriteLine("Term id: " + term.id);
+            currentTerm = term;
+            if (currentTerm != null)
+            {
+                updateDatePickers();
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbSemesterList.ItemsSource = termList;
+            lessonList = new ObservableCollection<Lesson>(DBHelper.selectLessons(currentTerm, dpStartDate.SelectedDate.Value.Date, dpEndDate.SelectedDate.Value.Date));
+            lessonsGrid.ItemsSource = lessonList;
+
+            //---- СОРТИРОВКА ПО ДАТЕ
+            //create a collection view for the datasoruce binded with grid
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(lessonsGrid.ItemsSource);
+            //clear the existing sort order
+            dataView.SortDescriptions.Clear();
+            //create a new sort order for the sorting that is done lastly
+            dataView.SortDescriptions.Add(new SortDescription("date", System.ComponentModel.ListSortDirection.Ascending));
+            //refresh the view which in turn refresh the grid
+            dataView.Refresh();
+            //---- СОРТИРОВКА ПО ДАТЕ
+        }
+
+        private void updateDatePickers()
+        {
+            dpStartDate.SelectedDate = currentTerm.beginDate;
+            dpEndDate.SelectedDate = currentTerm.endDate;
         }
     }  
 }

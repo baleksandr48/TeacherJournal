@@ -225,7 +225,7 @@ namespace TeacherJournal.database
         }
 
         //-----Schedule-----
-        public static void addShedule(Schedule schedule)
+        public static void addSchedule(Schedule schedule)
         {
             connection.Open();
             for (int i = 0; i < schedule.groups.Count(); i++)
@@ -236,7 +236,7 @@ namespace TeacherJournal.database
             connection.Close();
         }
 
-        public static void addShedules(List<Schedule> schedules)
+        public static void addSchedules(List<Schedule> schedules)
         {
             connection.Open();
             foreach (Schedule schedule in schedules)
@@ -312,6 +312,13 @@ namespace TeacherJournal.database
             List<Schedule> schedule = selectSchedules(term);
             Schedule lastschedule = schedule.ElementAt(schedule.Count - 1);
             return lastschedule;
+        }
+
+        public static void ClearSchedule(Term term)
+        {
+            connection.Open();
+            execute("DELETE FROM Schedule WHERE idTerm = {0};", term.id);
+            connection.Close();
         }
 
         //-----Lesson-----
@@ -403,9 +410,9 @@ namespace TeacherJournal.database
                         l.date == date &&
                         l.countOfHours == countOfHours &&
                         l.numOfLesson == numOfLesson &&
-                        l.subject == subject &&
-                        l.typeOfLesson == typeOfLesson &&
-                        l.classroom == classroom &&
+                        l.subject.id == subject.id &&
+                        l.typeOfLesson.id == typeOfLesson.id &&
+                        l.classroom.id == classroom.id &&
                         l.theme == theme)
                     {
                         lessons[lessons.Count() - 1].groups.Add(group);
@@ -491,6 +498,7 @@ namespace TeacherJournal.database
             DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);// 1970/1/1 00:00:00 
             return dt.AddDays(days);
         }
+
         public static void ClearVocabulary(VocabularyEntity obj, Term term)
         {
             if (obj.GetType().Name == "Subject")
@@ -523,6 +531,38 @@ namespace TeacherJournal.database
             }
         }
 
+        public static void UpdateVocabularyItem(VocabularyEntity obj)
+        {
+            if (obj.GetType().Name == "Subject")
+            {
+                updateSubject(obj as Subject);
+            }
+            else if (obj.GetType().Name == "Group")
+            {
+                updateGroup(obj as Group);
+            }
+            else if (obj.GetType().Name == "Classroom")
+            {
+                updateClassroom(obj as Classroom);
+            }
+        }
+
+        public static void DeleteVocabularyItem(VocabularyEntity obj)
+        {
+            if (obj.GetType().Name == "Subject")
+            {
+                deleteSubject(obj as Subject);
+            }
+            else if (obj.GetType().Name == "Group")
+            {
+                deleteGroup(obj as Group);
+            }
+            else if (obj.GetType().Name == "Classroom")
+            {
+                deleteClassroom(obj as Classroom);
+            }
+        }
+
         public static Schedule AddRandomSchedule(Term term)
         {
            // List<Term> term = new List<Term>(DBHelper.selectTerms());
@@ -536,13 +576,14 @@ namespace TeacherJournal.database
             if (groups.Count != 0)
             {
                 Random rnd = new Random();
-                int rndSize = rnd.Next(1, groups.Count); // ранд. значение списка групп
+                int rndSize = rnd.Next(1, groups.Count + 1); // ранд. значение размера списка групп
                 List<Group> groupsTemp = new List<Group>();
                 for (int i = 0; i <= rndSize - 1; i++)
                 {
                     groupsTemp.Add(EnumerableExtension.PickRandom(groups)); // добавляем ранд. айтем с groups в groupsTemp
                 }
-                groupsTemp.Distinct().ToList(); // удаляем дубликаты
+
+                groupsTemp = groupsTemp.GroupBy(x => x.id).Select(x => x.First()).ToList(); // убираем дубликаты
 
                 Schedule schedule = new Schedule(1, term.id, // ранд. семестр 
                                                     EnumerableExtension.PickRandom(typeOfWeek), // ...
@@ -554,7 +595,7 @@ namespace TeacherJournal.database
 
                 try
                 {
-                   // DBHelper.addShedule(schedule);
+                    //DBHelper.addSchedule(schedule);
                     return schedule;
                 }
                 catch (Exception ex)

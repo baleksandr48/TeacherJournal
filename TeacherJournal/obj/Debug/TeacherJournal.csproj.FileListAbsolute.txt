@@ -56,3 +56,4 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleWindow.ba
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleItemWindow.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\SemesterWindow.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\GeneratedInternalTypeHelper.g.cs
+A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csprojResolveAssemblyReference.cache

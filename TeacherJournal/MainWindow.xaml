@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="Журнал викладача" Height="450" Width="625"
+        Title="Журнал викладача" Height="626" Width="910"
         FontSize="16"
-        WindowStartupLocation="CenterScreen" WindowState="Normal">
+        WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:ListToStringConverter x:Key="ListToStringConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -41,7 +44,7 @@
                 <ComboBox x:Name="cbSemesterList" Grid.Column="0" Margin="10 5 5 5"  SelectedIndex="0" IsEditable="False" MinWidth="140" DisplayMemberPath="name" SelectionChanged="cbSemesterList_SelectionChanged"/>
                 <Button x:Name="btnAddNewSemester" Grid.Column="1" Margin="0 5 10 5" Click="btnAddNewSemester_Click">+</Button>
             </Grid>
-            
+
             <Button x:Name="btnSubject" Grid.Row="2" Content="Предмети" Click="openVocabulary" />
             <Button x:Name="btnGroup" Grid.Row="3" Content="Групи" Click="openVocabulary"/>
             <Button x:Name="btnClassroom" Grid.Row="4" Content="Аудиторії" Click="openVocabulary"/>
@@ -58,11 +61,35 @@
             <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Заняття" HorizontalAlignment="Center" FontWeight="Bold"/>
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 10 15">
                 <TextBlock Text="Дата з " VerticalAlignment="Center" />
-                <DatePicker MinWidth="150"></DatePicker>
+                <DatePicker x:Name="dpStartDate" MinWidth="150"></DatePicker>
                 <TextBlock Text="по " Margin="10 0 0 0" VerticalAlignment="Center"/>
-                <DatePicker MinWidth="150"></DatePicker>
+                <DatePicker x:Name="dpEndDate" MinWidth="150"></DatePicker>
             </StackPanel>
-            <DataGrid Grid.Row="2" x:Name="dataGrid" Margin="10 0 10 15">
+            <DataGrid Grid.Row="2" x:Name="lessonsGrid"
+                      CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False"
+                      RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" Margin="10 0 10 15">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Path=date, StringFormat=\{0:dd.MM\}}" Width="Auto"/>
+                    <DataGridTextColumn Header="№" Binding="{Binding Path=numOfLesson}" Width="Auto"/>
+                    <DataGridTextColumn Header="Аудиторія" Binding="{Binding Path=classroom.name}" Width="Auto"/>
+                    <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}" Width="Auto"/>
+                    <DataGridTextColumn Header="Предмет" Binding="{Binding Path=subject.name}" Width="Auto"/>
+                    <DataGridTextColumn Header="Тема" Binding="{Binding Path=theme}" Width="*"/>
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button >Ред</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button>X</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
             </DataGrid>
         </Grid>
     </Grid>

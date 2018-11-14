@@ -13,6 +13,7 @@ namespace TeacherJournal.model
         public Subject(long idTerm)
         {
             this.idTerm = idTerm;
+            this.id = 0;
         }
 
         public Subject(long id, long idTerm, string name)

@@ -36,7 +36,6 @@ namespace TeacherJournal.view
 
         private int currentType;
         private Term currentTerm;
-        private VocabularyEntity currentEntity;
 
         public ObservableCollection<VocabularyEntity> list;
 
@@ -50,7 +49,7 @@ namespace TeacherJournal.view
             InitializeComponent();
             this.currentType = vocabularyType;
             this.currentTerm = currentTerm;
-            tbVocabularyName.Text = vocabularyTypes[currentType];
+            tbVocabularyName.Text = vocabularyTypes[currentType]; // текст название окна
         }
 
         /// <summary>
@@ -61,27 +60,25 @@ namespace TeacherJournal.view
         {
             Console.WriteLine("list.Count: {0}", list.Count);
 
+            List<VocabularyEntity> tempList = new List<VocabularyEntity>(getVocabularyList()); 
+
+            List<VocabularyEntity> newItems = list.Where(c => c.id == 0).ToList();
+            List<VocabularyEntity> deletedItems = tempList.Where(c => !list.Any(d => c.id == d.id)).ToList();
+            List<VocabularyEntity> toBeUpdated = list.Where(c => tempList.Any(d => c.id == d.id)).ToList();
+
             try
             {
-                if (currentType == SUBJECT)
+                foreach (VocabularyEntity obj in deletedItems)
                 {
-                    // если словарь предметов
-                    DBHelper.ClearVocabulary(new Subject(), currentTerm);
+                    DBHelper.DeleteVocabularyItem(obj);
                 }
-                else if (currentType == GROUP)
+                foreach (VocabularyEntity obj in newItems)
                 {
-                    // если словарь групп
-                    DBHelper.ClearVocabulary(new Group(), currentTerm);
+                    DBHelper.AddVocabularyItem(obj);
                 }
-                else if (currentType == CLASSROOM)
+                foreach (VocabularyEntity obj in toBeUpdated)
                 {
-                    // если словарь аудиторий
-                    DBHelper.ClearVocabulary(new Classroom(), currentTerm);
-                }
-                
-                foreach (VocabularyEntity item in list)
-                {
-                    DBHelper.AddVocabularyItem(item);
+                    DBHelper.UpdateVocabularyItem(obj);
                 }
             }
             catch (Exception ex)
@@ -99,7 +96,7 @@ namespace TeacherJournal.view
             try
             {
                 VocabularyEntity obj = ((FrameworkElement)sender).DataContext as VocabularyEntity;
-                Console.WriteLine("Name of deleted row: {0}", obj.name);
+                Console.WriteLine($"Name of deleted row: {obj.name}");
                 list.Remove(obj);
             }
             catch (Exception ex)
@@ -113,25 +110,32 @@ namespace TeacherJournal.view
         /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            list = getVocabularyList();
+            VocabularyGrid.ItemsSource = list;
+        }
+
+        private ObservableCollection<VocabularyEntity> getVocabularyList()
+        {
+            ObservableCollection<VocabularyEntity> temp = null;
             if (vocabularyTypes.ContainsKey(currentType))
             {
                 if (currentType == SUBJECT)
                 {
                     // если словарь предметов
-                    list = new ObservableCollection<VocabularyEntity>(DBHelper.selectSubject(currentTerm));
+                    temp = new ObservableCollection<VocabularyEntity>(DBHelper.selectSubject(currentTerm));
                 }
                 else if (currentType == GROUP)
                 {
                     // если словарь групп
-                    list = new ObservableCollection<VocabularyEntity>(DBHelper.selectGroups(currentTerm));
+                    temp = new ObservableCollection<VocabularyEntity>(DBHelper.selectGroups(currentTerm));
                 }
                 else if (currentType == CLASSROOM)
                 {
                     // если словарь аудиторий
-                    list = new ObservableCollection<VocabularyEntity>(DBHelper.selectClassroom(currentTerm));
-                }
-                VocabularyGrid.ItemsSource = list;
+                    temp = new ObservableCollection<VocabularyEntity>(DBHelper.selectClassroom(currentTerm));
+                }              
             }
+            return temp;
         }
 
         private void btnAddRow_Click(object sender, RoutedEventArgs e)
@@ -151,6 +155,58 @@ namespace TeacherJournal.view
                 // если словарь аудиторий
                 list.Add(new Classroom(this.currentTerm.id));
             }
+        }
+    }
+
+    public class IdComparer : IEqualityComparer<VocabularyEntity>
+    {
+        public int GetHashCode(VocabularyEntity co)
+        {
+            if (co == null)
+            {
+                return 0;
+            }
+            return co.id.GetHashCode();
+        }
+
+        public bool Equals(VocabularyEntity x1, VocabularyEntity x2)
+        {
+            if (object.ReferenceEquals(x1, x2))
+            {
+                return true;
+            }
+            if (object.ReferenceEquals(x1, null) ||
+                object.ReferenceEquals(x2, null))
+            {
+                return false;
+            }
+            return x1.id == x2.id;
+        }
+    }
+
+    public class NameComparer : IEqualityComparer<VocabularyEntity>
+    {
+        public int GetHashCode(VocabularyEntity co)
+        {
+            if (co == null)
+            {
+                return 0;
+            }
+            return co.name.GetHashCode();
+        }
+
+        public bool Equals(VocabularyEntity x1, VocabularyEntity x2)
+        {
+            if (object.ReferenceEquals(x1, x2))
+            {
+                return true;
+            }
+            if (object.ReferenceEquals(x1, null) ||
+                object.ReferenceEquals(x2, null))
+            {
+                return false;
+            }
+            return x1.name == x2.name;
         }
     }
 }

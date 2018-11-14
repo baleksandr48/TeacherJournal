@@ -31,15 +31,18 @@ namespace TeacherJournal.view
         private List<Classroom> classroom;
         private List<Group> groups;
 
+        private ScheduleWindow window;
+
         public ScheduleItemWindow()
         {
             InitializeComponent();
         }
 
-        public ScheduleItemWindow(Term term)
+        public ScheduleItemWindow(Term term, ScheduleWindow window)
         {
             InitializeComponent();
             this.currentTerm = term;
+            this.window = window; 
 
             try
             {
@@ -52,7 +55,6 @@ namespace TeacherJournal.view
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("{0} Exception caught", ex);
             }
         }
