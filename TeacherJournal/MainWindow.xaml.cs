@@ -17,6 +17,7 @@ using TeacherJournal.database;
 using TeacherJournal.model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading;
 
 namespace TeacherJournal
 {
@@ -25,8 +26,14 @@ namespace TeacherJournal
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Список семестров. Используем его так же из окна SemesterWindow.
         public ObservableCollection<Term> termList;
+        // Список для хранения занятий.
         private ObservableCollection<Lesson> lessonList;
+        // Сеременная хранит текущую начальную дату.
+        private DateTime startDateValue;
+        // Сонечную дату ---- нужны из-за того, что обработчик dp_SelectedDateChanged местами вызывается дважды подряд.
+        private DateTime endDateValue; 
 
         Term currentTerm;
 
@@ -35,13 +42,12 @@ namespace TeacherJournal
             InitializeComponent();
             DBSetuper.setup();
 
-            // привязываем коллекцию семестров к cbSemesterList
+            // Привязываем коллекцию семестров к cbSemesterList.
             termList = new ObservableCollection<Term>(DBHelper.selectTerms());
         }
 
         private void btnSchedule_Click(object sender, RoutedEventArgs e)
         {
-         //   Term currentTerm = (Term)cbSemesterList.SelectedItem;
             if (currentTerm != null)
             {
                 ScheduleWindow Schedule = new ScheduleWindow(currentTerm);
@@ -55,7 +61,7 @@ namespace TeacherJournal
                 }
             }
             else {
-                openAddTermWindow();
+                OpenAddTermWindow();
             }
         }
 
@@ -63,11 +69,10 @@ namespace TeacherJournal
         /// Метод который срабатывает при нажатии на кнопки: аудитории, группы, предметы. 
         /// Узнаем что это за кнопка, и передаем соответствующую константу окну VocabularyWindow для построения соответствующего интерфейса.
         /// </summary>
-        private void openVocabulary(object sender, RoutedEventArgs e)
+        private void OpenVocabulary(object sender, RoutedEventArgs e)
         {
             var btnName = ((Button)sender).Name;
             int vocabularyId = 0;
-          //  Term currentTerm = (Term)cbSemesterList.SelectedItem;
 
             if (currentTerm != null)
             {
@@ -89,11 +94,11 @@ namespace TeacherJournal
                 }
             }
             else {
-                openAddTermWindow();
+                OpenAddTermWindow();
             }
         }
 
-        private void openAddTermWindow()
+        private void OpenAddTermWindow()
         {
             SemesterWindow semester = new SemesterWindow(this);
             try
@@ -106,10 +111,10 @@ namespace TeacherJournal
             }
         }
 
-        // Открываем окно для добавления нового семестра
+        // Открываем окно для добавления нового семестра.
         private void btnAddNewSemester_Click(object sender, RoutedEventArgs e)
         {
-            openAddTermWindow();
+            OpenAddTermWindow();
         }
 
         // При выборе семестра возвращаем выбранный айтем и приводим тип к Term. Узнаем id. 
@@ -119,32 +124,79 @@ namespace TeacherJournal
             currentTerm = term;
             if (currentTerm != null)
             {
-                updateDatePickers();
+                // Задаем датапикерам дату начала и конца выбранного семестра.
+                dpStartDate.SelectedDate = currentTerm.beginDate;
+                dpEndDate.SelectedDate = currentTerm.endDate;
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            cbSemesterList.ItemsSource = termList;
-            lessonList = new ObservableCollection<Lesson>(DBHelper.selectLessons(currentTerm, dpStartDate.SelectedDate.Value.Date, dpEndDate.SelectedDate.Value.Date));
-            lessonsGrid.ItemsSource = lessonList;
-
-            //---- СОРТИРОВКА ПО ДАТЕ
-            //create a collection view for the datasoruce binded with grid
-            ICollectionView dataView = CollectionViewSource.GetDefaultView(lessonsGrid.ItemsSource);
-            //clear the existing sort order
-            dataView.SortDescriptions.Clear();
-            //create a new sort order for the sorting that is done lastly
-            dataView.SortDescriptions.Add(new SortDescription("date", System.ComponentModel.ListSortDirection.Ascending));
-            //refresh the view which in turn refresh the grid
-            dataView.Refresh();
-            //---- СОРТИРОВКА ПО ДАТЕ
+            cbSemesterList.ItemsSource = termList;    
         }
 
-        private void updateDatePickers()
+        // Обновляем список занятий с помощью повторного запроса в бд и, если, результат больше нуля - обновляем ItemSource нашего lessonGrid.
+        private void UpdateLessonList()
         {
-            dpStartDate.SelectedDate = currentTerm.beginDate;
-            dpEndDate.SelectedDate = currentTerm.endDate;
+            if (currentTerm != null)
+            {
+                lessonList = new ObservableCollection<Lesson>(DBHelper.selectLessons(currentTerm, dpStartDate.SelectedDate.Value.Date, dpEndDate.SelectedDate.Value.Date));
+                if ((lessonList != null) && (lessonList.Count != 0))
+                {
+                    lessonsGrid.ItemsSource = lessonList;
+                    SortLessonGridByPropertyName("date", ListSortDirection.Ascending);
+                }
+                else {
+                    lessonsGrid.ItemsSource = null;
+                }
+            }
+        }
+
+        // Сортировка lessonGrid по указанному названию столбца и в указанном направлении.
+        private void SortLessonGridByPropertyName(string propertyName, ListSortDirection direction)
+        {
+            if (propertyName != "")
+            {
+                //create a collection view for the datasoruce binded with grid
+                ICollectionView dataView = CollectionViewSource.GetDefaultView(lessonsGrid.ItemsSource);
+                //clear the existing sort order
+                dataView.SortDescriptions.Clear();
+                //create a new sort order for the sorting that is done lastly
+                dataView.SortDescriptions.Add(new SortDescription(propertyName, direction));
+                //refresh the view which in turn refresh the grid
+                dataView.Refresh();
+            }
+        }
+
+        private void DeleteRow_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Lesson obj = ((FrameworkElement)sender).DataContext as Lesson;
+                lessonList.Remove(obj);
+                DBHelper.deleteLesson(obj);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception caught", ex);
+            }
+        }
+
+        private void dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePicker = (DatePicker)sender;
+            String senderName = datePicker.Name;
+            DateTime dateValue = datePicker.SelectedDate.Value.Date;
+
+            if (senderName == "dpStartDate")
+            {
+                if (startDateValue != dateValue) { startDateValue = dateValue; if (endDateValue >= startDateValue && startDateValue != null) { UpdateLessonList(); } } 
+            }
+            else if (senderName == "dpEndDate")
+            {
+                if (endDateValue != dateValue) { endDateValue = dateValue; if (endDateValue >= startDateValue && startDateValue != null) { UpdateLessonList(); } }
+
+            }
         }
     }  
 }

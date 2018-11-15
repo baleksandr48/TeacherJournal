@@ -15,6 +15,8 @@ namespace TeacherJournal.database
         static private String dbName = System.IO.Path.Combine(Environment.CurrentDirectory, "journal.db");
         static private SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName));
 
+        static object locker = new object();
+
         //-----Term-----
         public static void addTerm(Term term)
         {
@@ -367,9 +369,12 @@ namespace TeacherJournal.database
 
         public static void deleteLesson(Lesson lesson)
         {
-            connection.Open();
-            execute("DELETE FROM Lesson WHERE id = {0};", lesson.id);
-            connection.Close();
+            lock(locker)
+            {
+                connection.Open();
+                execute("DELETE FROM Lesson WHERE id = {0};", lesson.id);
+                connection.Close();
+            }
         }
 
         public static List<Lesson> selectLessons(Term term, DateTime startDate, DateTime endDate)

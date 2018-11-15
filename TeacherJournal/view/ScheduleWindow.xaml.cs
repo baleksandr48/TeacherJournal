@@ -40,7 +40,7 @@ namespace TeacherJournal.view
 
         private void btnFillSchedule_Click(object sender, RoutedEventArgs e)
         {
-            /// Use date from table to fill schedule
+            // Use date from table to fill schedule.
             try
             {
                 DBHelper.ClearSchedule(currentTerm);
@@ -73,7 +73,7 @@ namespace TeacherJournal.view
             ScheduleGrid.ItemsSource = scheduleList;
         }
 
-        // Удаляем объект Schedule со scheduleList
+        // Удаляем объект Schedule со scheduleList.
         private void DeleteRow_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -86,7 +86,7 @@ namespace TeacherJournal.view
                 Console.WriteLine("{0} Exception caught", ex);
             }
         }
-        // Редактируем объект Schedule
+        // Редактируем объект Schedule.
         private void EditeRow_Click(object sender, RoutedEventArgs e)
         {
 
