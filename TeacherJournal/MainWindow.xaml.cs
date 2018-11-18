@@ -36,7 +36,7 @@ namespace TeacherJournal
         private DateTime endDateValue; 
 
         Term currentTerm;
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -172,16 +172,19 @@ namespace TeacherJournal
         {
             try
             {
-                Lesson obj = ((FrameworkElement)sender).DataContext as Lesson;
-                lessonList.Remove(obj);
-                DBHelper.deleteLesson(obj);
+                if (MessageBox.Show("Ви впевненні, що хочете видалити цей запис?", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    Lesson obj = ((FrameworkElement)sender).DataContext as Lesson;
+                    lessonList.Remove(obj);
+                    DBHelper.deleteLesson(obj);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("{0} Exception caught", ex);
             }
         }
-
+        
         private void dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             DatePicker datePicker = (DatePicker)sender;
@@ -195,7 +198,6 @@ namespace TeacherJournal
             else if (senderName == "dpEndDate")
             {
                 if (endDateValue != dateValue) { endDateValue = dateValue; if (endDateValue >= startDateValue && startDateValue != null) { UpdateLessonList(); } }
-
             }
         }
     }  

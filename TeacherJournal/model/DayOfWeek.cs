@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeacherJournal.model
 {
-    class DayOfWeek
+    public class DayOfWeek
     {
         public long id { get; set; }
         public String name { get; set; }

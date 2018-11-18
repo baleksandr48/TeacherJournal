@@ -86,7 +86,6 @@ namespace TeacherJournal.view
 
                 Console.WriteLine("{0} Exception caught", ex);
             }
-
             this.Close();
         }
 
