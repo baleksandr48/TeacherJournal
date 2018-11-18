@@ -51,6 +51,7 @@ A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleWindow.ba
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleItemWindow.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\view\SemesterWindow.baml
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\GeneratedInternalTypeHelper.g.cs
+<<<<<<< HEAD
 A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\TeacherJournal.csprojResolveAssemblyReference.cache
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleWindow.g.cs
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleItemWindow.g.cs
@@ -61,3 +62,5 @@ B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleW
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\view\ScheduleItemWindow.baml
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\view\SemesterWindow.baml
 B:\Workspace\VisualStudio\TeacherJournal\TeacherJournal\obj\Debug\view\VocabularyWindow.baml
+=======
+>>>>>>> 3e2049225d74c7fb7398517a053af95c69fc4a9e

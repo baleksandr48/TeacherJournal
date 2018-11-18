@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TeacherJournal.model
 {
 
-    class Lesson
+    public class Lesson
     {
         public long id { get; set; }
         public DateTime date { get; set; }

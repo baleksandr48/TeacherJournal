@@ -64,8 +64,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
-            <Button x:Name="btnAccept" Grid.Column="2" Width="Auto" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="10" Click="btnAccept_Click">Принять</Button>
+
+            <Button x:Name="btnAccept" Grid.Column="2" Width="Auto" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="10" Click="AcceptAndSave">Додати</Button>
         </Grid>
     </Grid>
 </Window>

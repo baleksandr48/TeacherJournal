@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="ScheduleWindow" Height="500" Width="750"
+        Title="ScheduleWindow" Height="500" Width="924.927"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Window.Resources>
         <local:ListToStringConverter x:Key="ListToStringConverter"/>
@@ -37,7 +37,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button >Ред</Button>
+                            <Button Click="EditeRow_Click">Ред</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
