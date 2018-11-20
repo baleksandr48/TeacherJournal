@@ -396,6 +396,7 @@ namespace TeacherJournal.database
                         command.Transaction = transaction;
                         command.CommandText = pragmaKeyON;
                         command.ExecuteNonQuery();
+                        
 
                         foreach (Subject subject in subjects)
                         {

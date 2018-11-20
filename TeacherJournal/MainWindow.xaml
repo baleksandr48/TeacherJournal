@@ -51,7 +51,7 @@
             <Button x:Name="btnSchedule" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click"/>
             <Button x:Name="btnToDoc" Grid.Row="6" Content="В DOC"/>
         </Grid>
-        <Border BorderBrush="#cccccc" BorderThickness="1"/>
+        <Border BorderBrush="#cccccc" BorderThickness="1" Margin="-5,73,5,-73"/>
         <Grid Grid.Column="1" Background="#AFA7CD">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
