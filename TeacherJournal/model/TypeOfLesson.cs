@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeacherJournal.model
 {
-    class TypeOfLesson
+    public class TypeOfLesson
     {
         public long id { get; set; }
         public String name { get; set; }

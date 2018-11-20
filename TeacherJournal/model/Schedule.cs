@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeacherJournal.model
 {
-    class Schedule
+    public class Schedule
     {
         public long id { get; set; }
         public long idTerm { get; set; }
@@ -18,6 +18,7 @@ namespace TeacherJournal.model
         public Classroom classroom { get; set; }
         public List<Group> groups { get; set; }
 
+        public Schedule() { }
         public Schedule(long id, long idTerm, TypeOfWeek typeOfWeek, DayOfWeek dayOfWeek, int numOfLesson, Subject subject, TypeOfLesson typeOfLesson, Classroom classroom, List<Group> groups)
         {
             this.id = id;
