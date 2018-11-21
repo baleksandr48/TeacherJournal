@@ -20,6 +20,8 @@ namespace TeacherJournal.model
         public TypeOfLesson typeOfLesson { get; set; }
         public String theme { get; set; }
 
+        public Lesson() { }
+
         public Lesson(long id, DateTime date, int countOfHours, int numOfLesson,
             Classroom classroom, long idTerm, Subject subject, List<Group> groups, TypeOfLesson typeOfLesson, string theme)
         {

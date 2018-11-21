@@ -29,7 +29,7 @@ namespace TeacherJournal
         // Список семестров. Используем его так же из окна SemesterWindow.
         public ObservableCollection<Term> termList;
         // Список для хранения занятий.
-        private ObservableCollection<Lesson> lessonList;
+        public ObservableCollection<Lesson> lessonList;
         // Сеременная хранит текущую начальную дату.
         private DateTime startDateValue;
         // Сонечную дату ---- нужны из-за того, что обработчик dp_SelectedDateChanged местами вызывается дважды подряд.
@@ -168,23 +168,39 @@ namespace TeacherJournal
             }
         }
 
+        // Удаляем строку с таблицы и с бд.
         private void DeleteRow_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (MessageBox.Show("Ви впевненні, що хочете видалити цей запис?", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                if (MessageBox.Show("Ви впевненні, що хочете видалити цей запис?", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                try
                 {
                     Lesson obj = ((FrameworkElement)sender).DataContext as Lesson;
                     lessonList.Remove(obj);
                     DBHelper.deleteLesson(obj);
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("{0} Exception caught", ex);
+                }
+            }  
+        }
+
+        private void EditRow_Click(object sender, RoutedEventArgs e)
+        {
+            Lesson obj = ((FrameworkElement)sender).DataContext as Lesson;
+            LessonItemWindow window = new LessonItemWindow(obj, currentTerm, this);
+            try
+            {
+                window.Show();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("{0} Exception caught", ex);
+                Console.WriteLine("{0} Exception cought", ex);
             }
+
         }
-        
+
         private void dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             DatePicker datePicker = (DatePicker)sender;
