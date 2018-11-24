@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Win32;
+using System;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using System.Windows;
+using WPFCustomMessageBox;
+
 
 namespace TeacherJournal.database
 {
@@ -15,22 +16,52 @@ namespace TeacherJournal.database
 
         static public void setup()
         {
-            //Файл БД лежит в текущей директории
-            dbName = System.IO.Path.Combine(Environment.CurrentDirectory, "journal.db");
+            // Файл БД лежит в текущей директории.
+            dbName = Path.Combine(Environment.CurrentDirectory, "../../database/journal.db");
 
-            //Если БД существует, то действий не требуется
+            // Если БД существует, то действий не требуется.
             if (File.Exists(dbName))
                 return;
 
-            createDB();
+            MessageBoxResult result = CustomMessageBox.ShowYesNo("Не знайдено файл бази даних journal.db." +
+                                                                "\nВкажіть шлях до файлу journal.db або створіть новий файл.",
+                                                                "Попередження",
+                                                                "Вказати шлях",
+                                                                "Створити файл");
+            // Если создать файл.
+            if (result == MessageBoxResult.No)
+            {
+                createDB();
+            }
+            // Если указать путь к базе данных.
+            else if (result == MessageBoxResult.Yes)
+            {
+                OpenFileDialog fileDialog = new OpenFileDialog();
+                fileDialog.DefaultExt = "db";
+                fileDialog.AddExtension = true;
 
+                // Если указали файл, то копируем его в папку database.
+                if (fileDialog.ShowDialog() == true)
+                {
+                    var fileName = fileDialog.FileName;
+                    File.Copy(fileName, Path.Combine(Environment.CurrentDirectory, "../../database/journal.db"));
+                    return;
+                }
+                // Иначе - останавливаем выполнение программы.
+                else
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+
+            }
+            else return;
+            
             connection = new SQLiteConnection(String.Format("Data Source={0};", dbName));
             connection.Open();
 
             createTables();
             fillVocabularies();
-
-
             connection.Close();
         }
 

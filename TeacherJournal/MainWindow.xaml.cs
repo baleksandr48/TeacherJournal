@@ -18,6 +18,7 @@ using TeacherJournal.model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
+using WPFCustomMessageBox;
 
 namespace TeacherJournal
 {

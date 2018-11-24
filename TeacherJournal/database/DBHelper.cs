@@ -13,7 +13,7 @@ namespace TeacherJournal.database
 {
     static class DBHelper
     {
-        static private String dbName = System.IO.Path.Combine(Environment.CurrentDirectory, "journal.db");
+        static private String dbName = System.IO.Path.Combine(Environment.CurrentDirectory, "../../database/journal.db");
         static private SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName));
         static private String pragmaKeyON = "PRAGMA foreign_keys=ON;";
         
