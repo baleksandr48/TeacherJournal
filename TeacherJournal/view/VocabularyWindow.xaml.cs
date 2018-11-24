@@ -22,12 +22,12 @@ namespace TeacherJournal.view
     /// </summary>
     public partial class VocabularyWindow : Window
     {
-        // константы для определения отображения окна словаря
+        // Константы для определения отображения окна словаря
         public const int SUBJECT = 1001;
         public const int GROUP = 1002;
         public const int CLASSROOM = 1003;
 
-        // словарь Словарных типов( лол )
+        // Словарь Словарных типов( лол ).
         public Dictionary<int, String> vocabularyTypes = new Dictionary<int, string>() {
             { SUBJECT, "Словар предметів"},
             { GROUP, "Словар груп"},
@@ -49,7 +49,7 @@ namespace TeacherJournal.view
             InitializeComponent();
             this.currentType = vocabularyType;
             this.currentTerm = currentTerm;
-            tbVocabularyName.Text = vocabularyTypes[currentType]; // текст название окна
+            list = getVocabularyList();
         }
 
         /// <summary>
@@ -60,36 +60,41 @@ namespace TeacherJournal.view
         {
             Console.WriteLine("list.Count: {0}", list.Count);
 
-            List<VocabularyEntity> tempList = new List<VocabularyEntity>(getVocabularyList()); 
-
-            List<VocabularyEntity> newItems = list.Where(c => c.id == 0).ToList();
-            List<VocabularyEntity> deletedItems = tempList.Where(c => !list.Any(d => c.id == d.id)).ToList();
-            List<VocabularyEntity> toBeUpdated = list.Where(c => tempList.Any(d => c.id == d.id)).ToList();
-
-            try
+            if (MessageBox.Show("Ви підтверджуєте збереження нових даних?", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                foreach (VocabularyEntity obj in deletedItems)
+                // Список сущностей, который был при открытии окна. 
+                List<VocabularyEntity> tempList = new List<VocabularyEntity>(getVocabularyList());
+                // Список сущностей, которые добавили.
+                List<VocabularyEntity> newItems = list.Where(c => c.id == 0).ToList();
+                // Список сущностей, которые удалили
+                List<VocabularyEntity> deletedItems = tempList.Where(c => !list.Any(d => c.id == d.id)).ToList();
+                // Список сущностей, которые изменили
+                List<VocabularyEntity> toBeUpdated = list.Where(c => tempList.Any(d => c.id == d.id)).ToList();
+                try
                 {
-                    DBHelper.DeleteVocabularyItem(obj);
+                    foreach (VocabularyEntity obj in deletedItems)
+                    {
+                        DBHelper.DeleteVocabularyItem(obj);
+                    }
+                    foreach (VocabularyEntity obj in newItems)
+                    {
+                        DBHelper.AddVocabularyItem(obj);
+                    }
+                    foreach (VocabularyEntity obj in toBeUpdated)
+                    {
+                        DBHelper.UpdateVocabularyItem(obj);
+                    }
                 }
-                foreach (VocabularyEntity obj in newItems)
+                catch (Exception ex)
                 {
-                    DBHelper.AddVocabularyItem(obj);
+                    Console.WriteLine("{0} Exception caught", ex);
                 }
-                foreach (VocabularyEntity obj in toBeUpdated)
-                {
-                    DBHelper.UpdateVocabularyItem(obj);
-                }
+                this.Close();
             }
-            catch (Exception ex)
-            {
 
-                Console.WriteLine("{0} Exception caught", ex);
-            }
-            this.Close();
         }
 
-        // Удаляем строку в таблице удаляя объект из коллекции
+        // Удаляем строку в таблице удаляя объект из коллекции.
         private void DeleteRow_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -104,15 +109,14 @@ namespace TeacherJournal.view
             }
         }
 
-        /// <summary>
-        /// Обработчик загрузки окна
-        /// </summary>
+        // Обработчик загрузки окна.
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            list = getVocabularyList();
+            tbVocabularyName.Text = vocabularyTypes[currentType];
             VocabularyGrid.ItemsSource = list;
         }
 
+        // Получить список сущностей(группы/аудитории/предметы).
         private ObservableCollection<VocabularyEntity> getVocabularyList()
         {
             ObservableCollection<VocabularyEntity> temp = null;
@@ -137,6 +141,7 @@ namespace TeacherJournal.view
             return temp;
         }
 
+        // Обработка добавления новой сущности.
         private void btnAddRow_Click(object sender, RoutedEventArgs e)
         {
             if (currentType == SUBJECT)
@@ -156,7 +161,7 @@ namespace TeacherJournal.view
             }
         }
     }
-
+    /* Два класса для сравнивания сущностей словаря
     public class IdComparer : IEqualityComparer<VocabularyEntity>
     {
         public int GetHashCode(VocabularyEntity co)
@@ -207,5 +212,5 @@ namespace TeacherJournal.view
             }
             return x1.name == x2.name;
         }
-    }
+    }*/
 }

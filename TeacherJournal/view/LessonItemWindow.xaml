@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="LessonItemWindow" Height="300" Width="622.603"
+        Title="LessonItemWindow" Height="355.814" Width="658.882"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
-    <Grid>
+    <Grid Margin="15 10 15 0">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" ShowGridLines="True">
-
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -36,25 +35,25 @@
                 </Style>
             </Grid.Resources>
 
-            <TextBlock Grid.Row="0" Grid.Column="0">Тема</TextBlock>
-            <TextBox x:Name="tbLessonTheme" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" ></TextBox>
-            
-            <TextBlock Grid.Row="1" Grid.Column="0">Дата</TextBlock>
-            <DatePicker x:Name="dpLessonDate" Grid.Row="1" Grid.Column="1"></DatePicker>
-            
-            <TextBlock Grid.Row="2" Grid.Column="0">№ пари</TextBlock>
-            <TextBox x:Name="tbLessonNumber" Grid.Row="2" Grid.Column="1"></TextBox>
-            
-            <TextBlock Grid.Row="3" Grid.Column="0">Предмет</TextBlock>
-            <ComboBox x:Name="cbLessonSubject" Grid.Row="3" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
-            
-            
-            <TextBlock Grid.Row="4" Grid.Column="0">Аудиторія</TextBlock>
-            <ComboBox x:Name="cbLessonClassroom" Grid.Row="4" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="0 5" VerticalAlignment="Center">Тема</TextBlock>
+            <TextBox x:Name="tbLessonTheme" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center"></TextBox>
 
-            <TextBlock Grid.Row="5" Grid.Column="0">Группа</TextBlock>
-            <StackPanel x:Name="GroupVerticalPanel" Grid.Row="5" Grid.Column="1"  HorizontalAlignment="Center"/>
-            <Button x:Name="btnAddNewGroup" Grid.Row="5" Grid.Column="2" MaxHeight="40" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0" Padding="10 2" Click="btnAddNewGroup_Click">+</Button>
+            <TextBlock Grid.Row="1" Grid.Column="0" Margin="0 5" VerticalAlignment="Center">Дата</TextBlock>
+            <DatePicker x:Name="dpLessonDate" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></DatePicker>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="0 5" VerticalAlignment="Center">№ пари</TextBlock>
+            <TextBox x:Name="tbLessonNumber" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></TextBox>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Margin="0 5" VerticalAlignment="Center">Предмет</TextBlock>
+            <ComboBox x:Name="cbLessonSubject" Grid.Row="3" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" VerticalAlignment="Center"></ComboBox>
+
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Margin="0 5" VerticalAlignment="Center">Аудиторія</TextBlock>
+            <ComboBox x:Name="cbLessonClassroom" Grid.Row="4" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" VerticalAlignment="Center"></ComboBox>
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Margin="0 5" VerticalAlignment="Center">Группа</TextBlock>
+            <StackPanel x:Name="GroupVerticalPanel" Grid.Row="5" Grid.Column="1"  HorizontalAlignment="Center" CanVerticallyScroll="True"/>
+            <Button x:Name="btnAddNewGroup" Grid.Row="5" Grid.Column="2" MaxHeight="40" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0" Padding="10 2" Click="btnAddNewGroup_Click" >+</Button>
 
         </Grid>
         <Grid Grid.Row="1">

@@ -51,7 +51,7 @@
             <Button x:Name="btnSchedule" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click"/>
             <Button x:Name="btnToDoc" Grid.Row="6" Content="В DOC"/>
         </Grid>
-        <Border BorderBrush="#cccccc" BorderThickness="1" Margin="-5,73,5,-73"/>
+        <!--<Border BorderBrush="#cccccc" BorderThickness="1" Margin="10,75,5,-73"/>-->
         <Grid Grid.Column="1" Background="#AFA7CD">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -59,21 +59,31 @@
                 <RowDefinition ></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Заняття" HorizontalAlignment="Center" FontWeight="Bold"/>
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 10 15">
-                <TextBlock Text="Дата з " VerticalAlignment="Center" />
-                <DatePicker x:Name="dpStartDate" MinWidth="150" SelectedDateChanged="dp_SelectedDateChanged"/>
-                <TextBlock Text="по " Margin="10 0 0 0" VerticalAlignment="Center"/>
-                <DatePicker x:Name="dpEndDate" MinWidth="150" SelectedDateChanged="dp_SelectedDateChanged"></DatePicker>
-            </StackPanel>
+            <Grid Grid.Row="1" Margin="10 0 10 15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.75*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.25*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="Дата з " VerticalAlignment="Center" />
+                    <DatePicker x:Name="dpStartDate" MinWidth="150" SelectedDateChanged="dp_SelectedDateChanged" PreviewTextInput="dpPreviewTextInput"/>
+                    <TextBlock Text="по " Margin="10 0 0 0" VerticalAlignment="Center"/>
+                    <DatePicker x:Name="dpEndDate" MinWidth="150" SelectedDateChanged="dp_SelectedDateChanged" PreviewTextInput="dpPreviewTextInput"></DatePicker>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Click="ShowToday" Padding="5 0" Margin="0 0 10 0">Сьогодні</Button>
+                    <Button Click="ShowAllTerm" Padding="5 0">Семестр</Button>
+                </StackPanel>
+            </Grid>
             <DataGrid Grid.Row="2" x:Name="lessonsGrid"
                       CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False"
                       RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" Margin="10 0 10 15">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Дата" Binding="{Binding Path=date, StringFormat=\{0:dd.MM\}}" Width="Auto"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Path=date, StringFormat=\{0:dd.MM\}}" Width="*"/>
                     <DataGridTextColumn Header="№" Binding="{Binding Path=numOfLesson}" Width="Auto"/>
-                    <DataGridTextColumn Header="Аудиторія" Binding="{Binding Path=classroom.name}" Width="Auto"/>
-                    <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}" Width="Auto"/>
-                    <DataGridTextColumn Header="Предмет" Binding="{Binding Path=subject.name}" Width="Auto"/>
+                    <DataGridTextColumn Header="Аудиторія" Binding="{Binding Path=classroom.name}" Width="*"/>
+                    <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}" Width="*"/>
+                    <DataGridTextColumn Header="Предмет" Binding="{Binding Path=subject.name}" Width="*"/>
                     <DataGridTextColumn Header="Тема" Binding="{Binding Path=theme}" Width="*"/>
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>

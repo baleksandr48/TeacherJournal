@@ -7,25 +7,22 @@
         mc:Ignorable="d"
         Title="VocabularyWindow" Height="381.105" Width="264.629"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
-    <Window.Resources>
-        <local:VisibilityConverter x:Key="VisibilityConverter"/>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="tbVocabularyName" TextAlignment="Center" FontSize="16" FontWeight="Black" Padding="10 5"/>
+        <TextBlock Grid.Row="0" x:Name="tbVocabularyName" TextAlignment="Center" FontSize="16" FontWeight="Bold" Padding="10 5"/>
         
         <DataGrid x:Name="VocabularyGrid" Grid.Row="1" AutoGenerateColumns="False" RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="id семестра" Binding="{Binding Path=idTerm}"/>
-                <DataGridTextColumn Header="Назва" Binding="{Binding Path=name}"/>
-                <DataGridTemplateColumn>
+                <!--<DataGridTextColumn Header="id семестра" Binding="{Binding Path=idTerm}"/>-->
+                <DataGridTextColumn Header="Назва" Binding="{Binding Path=name}" Width="0.6*"/>
+                <DataGridTemplateColumn Width="0.4*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="DeleteRow_Click" Visibility="{Binding Path=id, Converter={StaticResource VisibilityConverter}}">Видалити</Button>
+                            <Button Click="DeleteRow_Click">Видалити</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -36,8 +33,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnAddRow" Grid.Column="0" HorizontalAlignment="Left" Margin="10" Padding="10 5" Click="btnAddRow_Click">Добавити</Button>
-            <Button x:Name="btnAcceptClose" Grid.Column="1" HorizontalAlignment="Right" Click="btnAcceptClose_Click" Margin="10" Padding="10 5">Зберегти та закрити</Button>
+            <Button x:Name="btnAddRow" Grid.Column="0" HorizontalAlignment="Left" Margin="10" Padding="10 5" Click="btnAddRow_Click">Додати</Button>
+            <Button x:Name="btnAcceptClose" Grid.Column="1" HorizontalAlignment="Right" Click="btnAcceptClose_Click" Margin="10" Padding="10 5">Зберегти</Button>
         </Grid>
     </Grid>
 </Window>

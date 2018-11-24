@@ -124,47 +124,78 @@ namespace TeacherJournal.view
         // Принимаем и сохраняем изменения в объекте Schedule и передаем его в scheduleList.
         private void AcceptAndSave(object sender, RoutedEventArgs e)
         {
-            Schedule schedule = new Schedule();
-            schedule.typeOfWeek = cbTypeOfWeek.SelectedItem as TypeOfWeek;
-            schedule.typeOfLesson = cbTypeOfLesson.SelectedItem as TypeOfLesson;
-            schedule.dayOfWeek = cbDayOfWeek.SelectedItem as model.DayOfWeek;
-            schedule.numOfLesson = int.Parse(tbNumberOfLesson.Text);
-            schedule.subject = cbSubject.SelectedItem as Subject;
-            schedule.classroom = cbClassroom.SelectedItem as Classroom;
-            schedule.idTerm = currentTerm.id;
-            schedule.groups = new List<Group>();
-
-            // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
-            foreach (StackPanel child in GroupVerticalPanel.Children)
+            if ((cbTypeOfWeek.SelectedItem != null) && (cbTypeOfLesson.SelectedItem != null) && (cbDayOfWeek.SelectedItem != null)
+                && (cbSubject.SelectedItem != null) && (cbClassroom.SelectedItem != null) && AreGroupsFilled())
             {
-                foreach (object _child in child.Children)
+                Schedule schedule = new Schedule();
+                schedule.typeOfWeek = cbTypeOfWeek.SelectedItem as TypeOfWeek;
+                schedule.typeOfLesson = cbTypeOfLesson.SelectedItem as TypeOfLesson;
+                schedule.dayOfWeek = cbDayOfWeek.SelectedItem as model.DayOfWeek;
+                schedule.numOfLesson = int.Parse(tbNumberOfLesson.Text);
+                schedule.subject = cbSubject.SelectedItem as Subject;
+                schedule.classroom = cbClassroom.SelectedItem as Classroom;
+                schedule.idTerm = currentTerm.id;
+                schedule.groups = new List<Group>();
+
+                // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
+                foreach (StackPanel child in GroupVerticalPanel.Children)
                 {
-                    if (_child.GetType().Name == "ComboBox")
+                    foreach (object _child in child.Children)
                     {
-                        Group group = ((ComboBox)_child).SelectedItem as Group;
-                        schedule.groups.Add(group);
-                        break;
+                        if (_child.GetType().Name == "ComboBox")
+                        {
+                            Group group = ((ComboBox)_child).SelectedItem as Group;
+                            schedule.groups.Add(group);
+                            break;
+                        }
                     }
                 }
-            }
 
-            var list = this.window.scheduleList;
-
-            if (currentSchedule == null)
-            {
-                list.Add(schedule);
+                var list = this.window.scheduleList;
+                if (currentSchedule == null)
+                {
+                    list.Add(schedule);
+                }
+                else
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list.ElementAt(i).id == currentSchedule.id)
+                        {
+                            list[i] = schedule;
+                        }
+                    }
+                }
+                this.Close();
             }
             else
             {
-                for (int i = 0; i < list.Count; i++)
+                MessageBox.Show("Заповніть всі необхідні поля!", "Попередження");
+            }
+
+        }
+
+        // Проверяем, заполнен ли список групп на форме.
+        private bool AreGroupsFilled()
+        {
+            if (GroupVerticalPanel.Children.Count != 0)
+            {
+                foreach (StackPanel child in GroupVerticalPanel.Children)
                 {
-                    if (list.ElementAt(i).id == currentSchedule.id)
+                    foreach (object _child in child.Children)
                     {
-                        list[i] = schedule;
+                        if (_child.GetType().Name == "ComboBox")
+                        {
+                            ComboBox cb = (ComboBox)_child;
+                            if (cb.SelectedItem == null)
+                                return false;
+                            break;
+                        }
                     }
                 }
+                return true;
             }
-            this.Close();
+            return false;
         }
 
         // Ивент нажатия хз зачем он тут вообще нужен, пока что подержу а там посмотрим.
@@ -212,6 +243,11 @@ namespace TeacherJournal.view
             stackPanel.Children.Add(btn);
 
             GroupVerticalPanel.Children.Add(stackPanel);
+        }
+
+        private void tbNumberOfLesson_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Validators.NumberValidation(sender, e);
         }
     }
 }

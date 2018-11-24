@@ -42,7 +42,7 @@
             <TextBlock Grid.Row="1" Grid.Column="0">День неділі</TextBlock>
             <ComboBox x:Name="cbDayOfWeek" Grid.Row="1" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
             <TextBlock Grid.Row="2" Grid.Column="0">№ пари</TextBlock>
-            <TextBox x:Name="tbNumberOfLesson" Grid.Row="2" Grid.Column="1"></TextBox>
+            <TextBox x:Name="tbNumberOfLesson" Grid.Row="2" Grid.Column="1" PreviewTextInput="tbNumberOfLesson_PreviewTextInput"></TextBox>
             <TextBlock Grid.Row="3" Grid.Column="0">Предмет</TextBlock>
             <ComboBox x:Name="cbSubject" Grid.Row="3" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
             <TextBlock Grid.Row="4" Grid.Column="0">Тип заняття</TextBlock>

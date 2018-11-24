@@ -92,6 +92,7 @@
     <Compile Include="model\TypeOfLesson.cs" />
     <Compile Include="model\TypeOfWeek.cs" />
     <Compile Include="model\VocabularyEntity.cs" />
+    <Compile Include="Validators.cs" />
     <Compile Include="view\LessonItemWindow.xaml.cs">
       <DependentUpon>LessonItemWindow.xaml</DependentUpon>
     </Compile>

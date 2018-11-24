@@ -47,18 +47,22 @@ namespace TeacherJournal.view
         // Используем данные с таблицы чтобы заполнить таблицу Lesson в бд.
         private void btnFillSchedule_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (MessageBox.Show("Ви підтверджуєте прийняття розкладу?\nУ разі, якщо існує розклад на цей семестр, " +
+                "він буде перезаписаний новими даними.", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                DBHelper.ClearSchedule(currentTerm);
-                DBHelper.addSchedules(scheduleList.ToList());
-                DBHelper.addLessons(Lesson.generateLessons(scheduleList.ToList(), currentTerm));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("{0} Exception cought", ex);
-            }
+                try
+                {
+                    DBHelper.ClearSchedule(currentTerm);
+                    DBHelper.addSchedules(scheduleList.ToList());
+                    DBHelper.addLessons(Lesson.generateLessons(scheduleList.ToList(), currentTerm));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("{0} Exception cought", ex);
+                }
 
-            this.Close();
+                this.Close();
+            }
         }
 
         // Добавляем объект Schedule.

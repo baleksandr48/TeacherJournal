@@ -135,6 +135,28 @@ namespace TeacherJournal
             cbSemesterList.ItemsSource = termList;    
         }
 
+        // Отобразить весь семестр в главной таблице посредством установления дат в даты начала и окончания семестра.
+        private void ShowAllTerm(object sender, RoutedEventArgs e)
+        {
+            if (currentTerm != null)
+            {
+                // Задаем датапикерам дату начала и конца выбранного семестра.
+                dpStartDate.SelectedDate = currentTerm.beginDate;
+                dpEndDate.SelectedDate = currentTerm.endDate;
+            }
+        }
+
+        private void ShowToday(object sender, RoutedEventArgs e)
+        {
+            if (currentTerm != null)
+            {
+                // Задаем датапикерам дату начала и конца выбранного семестра.
+                dpStartDate.SelectedDate = DateTime.Today;
+                dpEndDate.SelectedDate = DateTime.Today;
+            }
+        }
+        
+
         // Обновляем список занятий с помощью повторного запроса в бд и, если, результат больше нуля - обновляем ItemSource нашего lessonGrid.
         private void UpdateLessonList()
         {
@@ -215,6 +237,11 @@ namespace TeacherJournal
             {
                 if (endDateValue != dateValue) { endDateValue = dateValue; if (endDateValue >= startDateValue && startDateValue != null) { UpdateLessonList(); } }
             }
+        }
+
+        private void dpPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Validators.DatePickerValidation(sender, e);
         }
     }  
 }
