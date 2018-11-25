@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-A:\TeacherJournal\TeacherJournal\TeacherJournal\obj\Debug\
+E:\4curs\AV\TeacherJournal\TeacherJournal\obj\Debug\
 TeacherJournal
 none
 false
 DEBUG;TRACE
-A:\TeacherJournal\TeacherJournal\TeacherJournal\App.xaml
+E:\4curs\AV\TeacherJournal\TeacherJournal\App.xaml
 5-752216978
 
-271471301798
-19-2059753488
+28-807846491
+20-623801790
 MainWindow.xaml;view\ScheduleWindow.xaml;view\ScheduleItemWindow.xaml;view\SemesterWindow.xaml;view\VocabularyWindow.xaml;
 
 True

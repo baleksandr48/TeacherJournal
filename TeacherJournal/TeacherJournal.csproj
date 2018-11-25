@@ -45,6 +45,11 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -82,6 +87,7 @@
     <Compile Include="database\DBHelper.cs" />
     <Compile Include="database\DBSetuper.cs" />
     <Compile Include="EnumerableExtension.cs" />
+    <Compile Include="Export.cs" />
     <Compile Include="model\Classroom.cs" />
     <Compile Include="model\DayOfWeek.cs" />
     <Compile Include="model\Group.cs" />

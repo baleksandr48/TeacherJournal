@@ -117,6 +117,8 @@ namespace TeacherJournal
             OpenAddTermWindow();
         }
 
+        
+
         // При выборе семестра возвращаем выбранный айтем и приводим тип к Term. Узнаем id. 
         private void cbSemesterList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -197,6 +199,12 @@ namespace TeacherJournal
                 if (endDateValue != dateValue) { endDateValue = dateValue; if (endDateValue >= startDateValue && startDateValue != null) { UpdateLessonList(); } }
 
             }
+        }
+
+        private void btnToDoc_Click(object sender, RoutedEventArgs e)
+        {
+            Export ctw = new Export();
+            ctw.ConvertToWordSchedule(cbSemesterList.SelectedIndex);
         }
     }  
 }
