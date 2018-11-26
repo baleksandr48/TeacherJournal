@@ -244,5 +244,20 @@ namespace TeacherJournal
         {
             Validators.DatePickerValidation(sender, e);
         }
+
+        private void ClearTerms_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Ви впевненні, що хочете очистити файл бд?", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    DBHelper.ClearTerms();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("{0} Exception cought", ex);
+                }
+            }
+        }
     }  
 }

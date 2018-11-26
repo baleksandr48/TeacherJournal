@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="VocabularyWindow" Height="381.105" Width="264.629"
+        Title="VocabularyWindow" Height="408.105" Width="287.629"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>

@@ -12,12 +12,24 @@
         <local:ListToStringConverter x:Key="ListToStringConverter"/>
     </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Background="#E4ECBB">
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
+            <Menu>
+                <MenuItem Header="File">
+                    <MenuItem Header="Очистити файл бд" Click="ClearTerms_Click"></MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <Grid Grid.Row="1" Grid.Column="0" Background="#E4ECBB">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -52,7 +64,7 @@
             <Button x:Name="btnToDoc" Grid.Row="6" Content="В DOC"/>
         </Grid>
         <!--<Border BorderBrush="#cccccc" BorderThickness="1" Margin="10,75,5,-73"/>-->
-        <Grid Grid.Column="1" Background="#AFA7CD">
+        <Grid Grid.Row="1" Grid.Column="1" Background="#AFA7CD">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -81,7 +93,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Дата" Binding="{Binding Path=date, StringFormat=\{0:dd.MM\}}" Width="*"/>
                     <DataGridTextColumn Header="№" Binding="{Binding Path=numOfLesson}" Width="Auto"/>
-                    <DataGridTextColumn Header="Аудиторія" Binding="{Binding Path=classroom.name}" Width="*"/>
+                    <DataGridTextColumn Header="Аудиторія" Binding="{Binding Path=classroom.name}" Width="Auto"/>
                     <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}" Width="*"/>
                     <DataGridTextColumn Header="Предмет" Binding="{Binding Path=subject.name}" Width="*"/>
                     <DataGridTextColumn Header="Тема" Binding="{Binding Path=theme}" Width="*"/>

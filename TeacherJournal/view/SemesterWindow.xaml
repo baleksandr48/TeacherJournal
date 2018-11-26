@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="SemesterWindow" Height="164.179" Width="406.716"
+        Title="Новий семестр" Height="164.179" Width="406.716"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
     <Grid Margin="10">
         <Grid.RowDefinitions>

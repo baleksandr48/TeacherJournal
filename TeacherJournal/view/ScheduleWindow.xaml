@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="ScheduleWindow" Height="500" Width="924.927"
+        Title="Семестр" Height="500" Width="924.927"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Window.Resources>
         <local:ListToStringConverter x:Key="ListToStringConverter"/>
@@ -22,18 +22,20 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="Розклад" Padding="10" FontSize="18" FontWeight="Bold"/>
-            <Button x:Name="btnAddNewScheduleRow" Grid.Column="1" Width="Auto"  MinWidth="100px" Margin="10 5 " FontSize="18" HorizontalAlignment="Right" Click="btnAddNewScheduleRow_Click">Додати</Button>
+            <Button x:Name="btnAddNewScheduleRow" Grid.Column="1" Width="Auto"  MinWidth="100px" Margin="10 5" 
+                    FontSize="18" HorizontalAlignment="Right" Click="btnAddNewScheduleRow_Click">Додати</Button>
         </Grid>
 
-        <DataGrid x:Name="ScheduleGrid" Grid.Row="1" Margin="10 0 10 10" AutoGenerateColumns="False" RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False">
+        <DataGrid x:Name="ScheduleGrid" Grid.Row="1" Margin="10 0 10 10" AutoGenerateColumns="False" 
+                  RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False" CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Тип неділі" Binding="{Binding Path=typeOfWeek.name}"/>
                 <DataGridTextColumn Header="День неділі" Binding="{Binding Path=dayOfWeek.name}"/>
                 <DataGridTextColumn Header="Номер заняття" Binding="{Binding Path=numOfLesson}"/>
                 <DataGridTextColumn Header="Предмет" Binding="{Binding Path=subject.name}"/>
-                <DataGridTextColumn Header="Тип заняття" Binding="{Binding Path=typeOfLesson.name}"/>
+                <DataGridTextColumn Header="Тип заняття" Binding="{Binding Path=typeOfLesson.name}" Width="*"/>
                 <DataGridTextColumn Header="Аудиторія" Binding="{Binding Path=classroom.name}"/>
-                <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}"/>
+                <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}" Width="*"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

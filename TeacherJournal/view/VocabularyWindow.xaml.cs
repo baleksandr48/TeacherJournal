@@ -48,14 +48,20 @@ namespace TeacherJournal.view
         {
             InitializeComponent();
             this.currentType = vocabularyType;
+            this.Title = vocabularyTypes[currentType];
             this.currentTerm = currentTerm;
             list = getVocabularyList();
         }
 
-        /// <summary>
-        /// Обработка закрытия формы через кнопку Сохранить и закрыть
-        /// Берем нашу коллекцию и передаем её в соответсвующий метод DBHelper-a
-        /// </summary>
+        // Обработчик загрузки окна.
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbVocabularyName.Text = vocabularyTypes[currentType];
+            VocabularyGrid.ItemsSource = list;
+        }
+
+        // Обработка закрытия формы через кнопку Сохранить и закрыть.
+        // Берем нашу коллекцию и передаем её в соответсвующий метод DBHelper-a.
         private void btnAcceptClose_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("list.Count: {0}", list.Count);
@@ -107,13 +113,6 @@ namespace TeacherJournal.view
             {
                 Console.WriteLine("{0} Exception caught", ex);
             }
-        }
-
-        // Обработчик загрузки окна.
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            tbVocabularyName.Text = vocabularyTypes[currentType];
-            VocabularyGrid.ItemsSource = list;
         }
 
         // Получить список сущностей(группы/аудитории/предметы).

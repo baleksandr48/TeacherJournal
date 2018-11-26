@@ -196,6 +196,28 @@ namespace TeacherJournal.database
             return lastTerm;
         }
 
+        public static void ClearTerms()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                {
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.Transaction = transaction;
+                        command.CommandText = pragmaKeyON;
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = String.Format("DELETE * Term");
+                        command.ExecuteNonQuery();
+                    }
+                    transaction.Commit();
+                }
+                connection.Close();
+            }
+        }
+
         //-----Group-----
         public static void addGroup(Group group)
         {

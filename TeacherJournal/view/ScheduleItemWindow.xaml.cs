@@ -23,6 +23,9 @@ namespace TeacherJournal.view
     {
         private Term currentTerm;
 
+        private const String EDIT_TITLE = "Редагування предмету";
+        private const String ADD_TITLE = "Новий предмет";
+
         // Переменные - будущие источники данных для комбобоксов.
         private List<TypeOfWeek> typeOfWeek;
         private List<model.DayOfWeek> dayOfWeek;
@@ -43,6 +46,7 @@ namespace TeacherJournal.view
         public ScheduleItemWindow(Term term, ScheduleWindow window, Schedule schedule = null)
         {
             InitializeComponent();
+            this.Title = ADD_TITLE;
             this.currentTerm = term;
             this.window = window;
             this.currentSchedule = schedule;
@@ -73,6 +77,8 @@ namespace TeacherJournal.view
 
             if (currentSchedule != null)
             {
+                this.Title = EDIT_TITLE;
+
                 foreach (model.DayOfWeek item in cbDayOfWeek.Items)
                 {
                     if (item.id == currentSchedule.dayOfWeek.id)
@@ -125,48 +131,55 @@ namespace TeacherJournal.view
         private void AcceptAndSave(object sender, RoutedEventArgs e)
         {
             if ((cbTypeOfWeek.SelectedItem != null) && (cbTypeOfLesson.SelectedItem != null) && (cbDayOfWeek.SelectedItem != null)
-                && (cbSubject.SelectedItem != null) && (cbClassroom.SelectedItem != null) && AreGroupsFilled())
+                && (cbSubject.SelectedItem != null) && (cbClassroom.SelectedItem != null) && AreGroupsFilled() && (tbNumberOfLesson.Text != ""))
             {
-                Schedule schedule = new Schedule();
-                schedule.typeOfWeek = cbTypeOfWeek.SelectedItem as TypeOfWeek;
-                schedule.typeOfLesson = cbTypeOfLesson.SelectedItem as TypeOfLesson;
-                schedule.dayOfWeek = cbDayOfWeek.SelectedItem as model.DayOfWeek;
-                schedule.numOfLesson = int.Parse(tbNumberOfLesson.Text);
-                schedule.subject = cbSubject.SelectedItem as Subject;
-                schedule.classroom = cbClassroom.SelectedItem as Classroom;
-                schedule.idTerm = currentTerm.id;
-                schedule.groups = new List<Group>();
-
-                // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
-                foreach (StackPanel child in GroupVerticalPanel.Children)
+                if (int.TryParse(tbNumberOfLesson.Text, out int numOfLesson))
                 {
-                    foreach (object _child in child.Children)
+                    Schedule schedule = new Schedule();
+                    schedule.typeOfWeek = cbTypeOfWeek.SelectedItem as TypeOfWeek;
+                    schedule.typeOfLesson = cbTypeOfLesson.SelectedItem as TypeOfLesson;
+                    schedule.dayOfWeek = cbDayOfWeek.SelectedItem as model.DayOfWeek;
+                    schedule.numOfLesson = numOfLesson;
+                    schedule.subject = cbSubject.SelectedItem as Subject;
+                    schedule.classroom = cbClassroom.SelectedItem as Classroom;
+                    schedule.idTerm = currentTerm.id;
+                    schedule.groups = new List<Group>();
+
+                    // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
+                    foreach (StackPanel child in GroupVerticalPanel.Children)
                     {
-                        if (_child.GetType().Name == "ComboBox")
+                        foreach (object _child in child.Children)
                         {
-                            Group group = ((ComboBox)_child).SelectedItem as Group;
-                            schedule.groups.Add(group);
-                            break;
+                            if (_child.GetType().Name == "ComboBox")
+                            {
+                                Group group = ((ComboBox)_child).SelectedItem as Group;
+                                schedule.groups.Add(group);
+                                break;
+                            }
                         }
                     }
-                }
 
-                var list = this.window.scheduleList;
-                if (currentSchedule == null)
-                {
-                    list.Add(schedule);
+                    var list = this.window.scheduleList;
+                    if (currentSchedule == null)
+                    {
+                        list.Add(schedule);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            if (list.ElementAt(i).id == currentSchedule.id)
+                            {
+                                list[i] = schedule;
+                            }
+                        }
+                    }
+                    this.Close();
                 }
                 else
                 {
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list.ElementAt(i).id == currentSchedule.id)
-                        {
-                            list[i] = schedule;
-                        }
-                    }
+                    MessageBox.Show("Введіть правильний номер заняття!", "Попередження!");
                 }
-                this.Close();
             }
             else
             {

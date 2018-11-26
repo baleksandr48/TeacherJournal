@@ -136,39 +136,76 @@ namespace TeacherJournal.view
 
         private void AcceptAndSave(object sender, RoutedEventArgs e)
         {
-            Lesson lesson = new Lesson();
-
-            lesson.numOfLesson = int.Parse(tbLessonNumber.Text);
-            lesson.subject = cbLessonSubject.SelectedItem as Subject;
-            lesson.classroom = cbLessonClassroom.SelectedItem as Classroom;
-            lesson.theme = tbLessonTheme.Text;
-            lesson.idTerm = currentTerm.id;
-            lesson.date = dpLessonDate.SelectedDate.Value.Date;
-            lesson.groups = new List<Group>();
-
-            // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
-            foreach (StackPanel child in GroupVerticalPanel.Children)
+            if ((dpLessonDate.SelectedDate != null) && (cbLessonSubject.SelectedItem != null) && (cbLessonClassroom.SelectedItem != null)
+                && AreGroupsFilled() && (tbLessonNumber.Text != ""))
             {
-                foreach (object _child in child.Children)
+                if (int.TryParse(tbLessonNumber.Text, out int numOfLesson))
                 {
-                    if (_child.GetType().Name == "ComboBox")
+                    Lesson lesson = new Lesson();
+                    lesson.numOfLesson = numOfLesson;
+                    lesson.subject = cbLessonSubject.SelectedItem as Subject;
+                    lesson.classroom = cbLessonClassroom.SelectedItem as Classroom;
+                    lesson.theme = tbLessonTheme.Text;
+                    lesson.idTerm = currentTerm.id;
+                    lesson.date = dpLessonDate.SelectedDate.Value.Date;
+                    lesson.groups = new List<Group>();
+
+                    // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
+                    foreach (StackPanel child in GroupVerticalPanel.Children)
                     {
-                        Group group = ((ComboBox)_child).SelectedItem as Group;
-                        lesson.groups.Add(group);
-                        break;
+                        foreach (object _child in child.Children)
+                        {
+                            if (_child.GetType().Name == "ComboBox")
+                            {
+                                Group group = ((ComboBox)_child).SelectedItem as Group;
+                                lesson.groups.Add(group);
+                                break;
+                            }
+                        }
+                    }
+                    var list = this.mainWindow.lessonList;
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list.ElementAt(i).id == currentLesson.id)
+                        {
+                            list[i] = lesson;
+                        }
+                    }
+
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Введіть правильний номер заняття!", "Попередження!");
+                }
+
+            }
+            else {
+                MessageBox.Show("Заповніть всі необхідні поля!", "Попередження");
+            }
+                
+        }
+
+        private bool AreGroupsFilled()
+        {
+            if (GroupVerticalPanel.Children.Count != 0)
+            {
+                foreach (StackPanel child in GroupVerticalPanel.Children)
+                {
+                    foreach (object _child in child.Children)
+                    {
+                        if (_child.GetType().Name == "ComboBox")
+                        {
+                            ComboBox cb = (ComboBox)_child;
+                            if (cb.SelectedItem == null)
+                                return false;
+                            break;
+                        }
                     }
                 }
+                return true;
             }
-            var list = this.mainWindow.lessonList;
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list.ElementAt(i).id == currentLesson.id)
-                {
-                    list[i] = lesson;
-                }
-            }
-
-            this.Close();
+            return false;
         }
     }
 }

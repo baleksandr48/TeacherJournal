@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="LessonItemWindow" Height="355.814" Width="658.882"
+        Title="Редагування заняття" Height="355.814" Width="658.882"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Grid Margin="15 10 15 0">
         <Grid.RowDefinitions>
@@ -64,7 +64,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="btnAccept" Grid.Column="2" Width="Auto" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="10" Click="AcceptAndSave">Принять</Button>
+            <Button x:Name="btnAccept" Grid.Column="2" Width="Auto" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="10" Click="AcceptAndSave">Прийняти</Button>
         </Grid>
     </Grid>
 </Window>

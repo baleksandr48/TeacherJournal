@@ -23,6 +23,7 @@ namespace TeacherJournal.database
             if (File.Exists(dbName))
                 return;
 
+            /* Даем выбор пользователю - или создать новый файл, или указать существующий. 
             MessageBoxResult result = CustomMessageBox.ShowYesNo("Не знайдено файл бази даних journal.db." +
                                                                 "\nВкажіть шлях до файлу journal.db або створіть новий файл.",
                                                                 "Попередження",
@@ -56,7 +57,8 @@ namespace TeacherJournal.database
 
             }
             else return;
-            
+            */
+
             connection = new SQLiteConnection(String.Format("Data Source={0};", dbName));
             connection.Open();
 

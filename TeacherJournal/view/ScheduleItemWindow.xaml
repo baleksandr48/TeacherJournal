@@ -5,21 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="ScheduleItemWindow" Height="340" Width="500" Loaded="Window_Loaded"
+        Title="ScheduleItemWindow" Height="340" Width="584" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
-    <Grid>
+    <Grid Margin="10 ">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" ShowGridLines="True">
-            
+        <Grid  Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -27,7 +26,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.Resources>
@@ -51,21 +50,14 @@
             <ComboBox x:Name="cbClassroom" Grid.Row="5" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
             <TextBlock Grid.Row="6" Grid.Column="0">Группа</TextBlock>
 
-            <StackPanel x:Name="GroupVerticalPanel" Grid.Row="6" Grid.Column="1"  HorizontalAlignment="Center">
-            </StackPanel>
-            
-            <Button x:Name="btnAddNewGroup" Grid.Row="6" Grid.Column="2" MaxHeight="40" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0" Padding="10 2" Click="btnAddNewGroup_Click">+</Button>
-            
-        </Grid>
-        <Grid Grid.Row="1">
-            
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Row="6" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
+                <StackPanel x:Name="GroupVerticalPanel"   HorizontalAlignment="Center">
+                </StackPanel>
+            </ScrollViewer>
 
-            <Button x:Name="btnAccept" Grid.Column="2" Width="Auto" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="10" Click="AcceptAndSave">Принять</Button>
+            <Button x:Name="btnAddNewGroup" Grid.Row="6" Grid.Column="2" MaxHeight="40" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0" Padding="10 2" Click="btnAddNewGroup_Click">+</Button>
+
         </Grid>
+        <Button Grid.Row="1" x:Name="btnAccept" Width="Auto" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="10" Click="AcceptAndSave">Приняти</Button>
     </Grid>
 </Window>
