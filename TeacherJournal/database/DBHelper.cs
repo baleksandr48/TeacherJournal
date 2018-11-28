@@ -24,19 +24,16 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("INSERT INTO Term (name, beginDate, endDate, startFromNumerator) VALUES ('{0}', '{1}', '{2}', {3});",
-                            term.name, calculateDays(term.beginDate), calculateDays(term.endDate), term.startFromNumerator);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("INSERT INTO Term (name, beginDate, endDate, startFromNumerator) VALUES ('{0}', '{1}', '{2}', {3});",
+                        term.name, calculateDays(term.beginDate), calculateDays(term.endDate), term.startFromNumerator);
+                    command.ExecuteNonQuery();
+                    
                 }
                 connection.Close();
             }
@@ -73,18 +70,14 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("UPDATE Term SET name = '{0}' WHERE id = '{1}');", term.name, term.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("UPDATE Term SET name = '{0}' WHERE id = '{1}');", term.name, term.id);
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
             }
@@ -121,19 +114,14 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("DELETE FROM Term WHERE id = {0};", term.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
-                }
+                    command.CommandText = String.Format("DELETE FROM Term WHERE id = {0};", term.id);
+                    command.ExecuteNonQuery();
+                } 
                 connection.Close();
             }
         }
@@ -201,18 +189,13 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("DELETE * Term");
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("DELETE * Term");
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
             }
@@ -224,18 +207,13 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("INSERT INTO _Group (name, idTerm) VALUES ('{0}', '{1}');", group.name, group.idTerm);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("INSERT INTO _Group (name, idTerm) VALUES ('{0}', '{1}');", group.name, group.idTerm);
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
             }
@@ -271,19 +249,15 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("UPDATE _Group SET name = '{0}' WHERE id = {1};", group.name, group.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("UPDATE _Group SET name = '{0}' WHERE id = {1};", group.name, group.id);
+                    command.ExecuteNonQuery();
                 }
+                    
                 connection.Close();
             }
         }
@@ -318,19 +292,16 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("DELETE FROM _Group WHERE id = {0};", group.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("DELETE FROM _Group WHERE id = {0};", group.id);
+                    command.ExecuteNonQuery();
                 }
+                    
                 connection.Close();
             }
         }
@@ -389,19 +360,15 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("INSERT INTO Subject (name, idTerm) VALUES ('{0}', '{1}');", subject.name, subject.idTerm);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("INSERT INTO Subject (name, idTerm) VALUES ('{0}', '{1}');", subject.name, subject.idTerm);
+                    command.ExecuteNonQuery();
                 }
+                    
                 connection.Close();
             }
         }
@@ -437,19 +404,15 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("UPDATE Subject SET name = '{0}' WHERE id = {1};", subject.name, subject.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("UPDATE Subject SET name = '{0}' WHERE id = {1};", subject.name, subject.id);
+                    command.ExecuteNonQuery();
                 }
+                   
                 connection.Close();
             }
         }
@@ -484,19 +447,15 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("DELETE FROM Subject WHERE id = {0};", subject.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("DELETE FROM Subject WHERE id = {0};", subject.id);
+                    command.ExecuteNonQuery();
                 }
+                    
                 connection.Close();
             }
         }
@@ -555,19 +514,15 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("INSERT INTO Classroom (name, idTerm) VALUES ('{0}', '{1}');", classroom.name, classroom.idTerm);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("INSERT INTO Classroom (name, idTerm) VALUES ('{0}', '{1}');", classroom.name, classroom.idTerm);
+                    command.ExecuteNonQuery();
                 }
+                    
                 connection.Close();
             }
         }
@@ -602,19 +557,15 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("UPDATE Classroom SET name = '{0}' WHERE id = {1};", classroom.name, classroom.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("UPDATE Classroom SET name = '{0}' WHERE id = {1};", classroom.name, classroom.id);
+                    command.ExecuteNonQuery();
                 }
+                    
                 connection.Close();
             }
         }
@@ -649,19 +600,15 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("DELETE FROM Classroom WHERE id = {0};", classroom.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("DELETE FROM Classroom WHERE id = {0};", classroom.id);
+                    command.ExecuteNonQuery();
                 }
+                    
                 connection.Close();
             }
         }
@@ -998,18 +945,16 @@ namespace TeacherJournal.database
             using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
             {
                 connection.Open();
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    using (SQLiteCommand command = connection.CreateCommand())
-                    {
-                        command.Transaction = transaction;
-                        command.CommandText = pragmaKeyON;
-                        command.ExecuteNonQuery();
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
 
-                        command.CommandText = String.Format("DELETE FROM Lesson WHERE id = {0};", lesson.id);
-                        command.ExecuteNonQuery();
-                    }
-                    transaction.Commit();
+                    command.CommandText = String.Format("DELETE FROM Lesson WHERE idTerm = {0} AND _date = {1} " +
+                        "AND countOfHours = {2} AND numOfLesson = {3} AND idClassroom = {4} " +
+                        "AND idSubject = {5} AND idTypeOfLesson = {6};", lesson.idTerm, calculateDays(lesson.date), 
+                        lesson.countOfHours, lesson.numOfLesson, lesson.classroom.id, lesson.subject.id, lesson.typeOfLesson.id);
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
             }
@@ -1030,7 +975,10 @@ namespace TeacherJournal.database
 
                         foreach (Lesson lesson in lessons)
                         {
-                            command.CommandText = String.Format("DELETE FROM Lesson WHERE id = {0};", lesson.id);
+                            command.CommandText = String.Format("DELETE FROM Lesson WHERE idTerm = {0} AND _date = {1} " +
+                            "AND countOfHours = {2} AND numOfLesson = {3} AND idClassroom = {4} " +
+                            "AND idSubject = {5} AND idTypeOfLesson = {6};", lesson.idTerm, calculateDays(lesson.date),
+                            lesson.countOfHours, lesson.numOfLesson, lesson.classroom.id, lesson.subject.id, lesson.typeOfLesson.id);
                             command.ExecuteNonQuery();
                         }
                     }

@@ -139,7 +139,8 @@ namespace TeacherJournal.view
             if ((dpLessonDate.SelectedDate != null) && (cbLessonSubject.SelectedItem != null) && (cbLessonClassroom.SelectedItem != null)
                 && AreGroupsFilled() && (tbLessonNumber.Text != ""))
             {
-                if (int.TryParse(tbLessonNumber.Text, out int numOfLesson))
+                int numOfLesson;
+                if (int.TryParse(tbLessonNumber.Text, out numOfLesson))
                 {
                     Lesson lesson = new Lesson();
                     lesson.numOfLesson = numOfLesson;
@@ -163,6 +164,10 @@ namespace TeacherJournal.view
                             }
                         }
                     }
+
+                    //сначала нужно установить тип Занятия 
+                    lesson.typeOfLesson = currentLesson.typeOfLesson;
+
                     var list = this.mainWindow.lessonList;
                     for (int i = 0; i < list.Count; i++)
                     {
@@ -171,6 +176,10 @@ namespace TeacherJournal.view
                             list[i] = lesson;
                         }
                     }
+                    //добавляю код для сохранения редактирования в БД
+                    //старый lesson удаляем, а новый сохраняем
+                    DBHelper.deleteLesson(currentLesson);
+                    DBHelper.addLesson(lesson);
 
                     this.Close();
                 }
@@ -183,7 +192,7 @@ namespace TeacherJournal.view
             else {
                 MessageBox.Show("Заповніть всі необхідні поля!", "Попередження");
             }
-                
+               
         }
 
         private bool AreGroupsFilled()

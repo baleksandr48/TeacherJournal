@@ -133,7 +133,8 @@ namespace TeacherJournal.view
             if ((cbTypeOfWeek.SelectedItem != null) && (cbTypeOfLesson.SelectedItem != null) && (cbDayOfWeek.SelectedItem != null)
                 && (cbSubject.SelectedItem != null) && (cbClassroom.SelectedItem != null) && AreGroupsFilled() && (tbNumberOfLesson.Text != ""))
             {
-                if (int.TryParse(tbNumberOfLesson.Text, out int numOfLesson))
+                int numOfLesson;
+                if (int.TryParse(tbNumberOfLesson.Text, out numOfLesson))
                 {
                     Schedule schedule = new Schedule();
                     schedule.typeOfWeek = cbTypeOfWeek.SelectedItem as TypeOfWeek;
@@ -185,7 +186,7 @@ namespace TeacherJournal.view
             {
                 MessageBox.Show("Заповніть всі необхідні поля!", "Попередження");
             }
-
+            
         }
 
         // Проверяем, заполнен ли список групп на форме.
