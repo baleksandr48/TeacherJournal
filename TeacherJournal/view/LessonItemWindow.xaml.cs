@@ -164,10 +164,8 @@ namespace TeacherJournal.view
                             }
                         }
                     }
-
-                    //сначала нужно установить тип Занятия 
+                    // Сначала нужно установить тип Занятия.
                     lesson.typeOfLesson = currentLesson.typeOfLesson;
-
                     var list = this.mainWindow.lessonList;
                     for (int i = 0; i < list.Count; i++)
                     {
@@ -176,8 +174,7 @@ namespace TeacherJournal.view
                             list[i] = lesson;
                         }
                     }
-                    //добавляю код для сохранения редактирования в БД
-                    //старый lesson удаляем, а новый сохраняем
+                    // Сохранение редактирования в БД - удаляем старый, добавляем новый.
                     DBHelper.deleteLesson(currentLesson);
                     DBHelper.addLesson(lesson);
 

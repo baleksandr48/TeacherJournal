@@ -18,7 +18,6 @@ using TeacherJournal.model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
-using WPFCustomMessageBox;
 
 namespace TeacherJournal
 {
@@ -27,6 +26,7 @@ namespace TeacherJournal
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         // Список семестров. Используем его так же из окна SemesterWindow.
         public ObservableCollection<Term> termList;
         // Список для хранения занятий.
@@ -87,7 +87,7 @@ namespace TeacherJournal
                 VocabularyWindow vocabulary = new VocabularyWindow(vocabularyId, currentTerm);
                 try
                 {
-                    vocabulary.Show();
+                    vocabulary.ShowDialog();
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +104,7 @@ namespace TeacherJournal
             SemesterWindow semester = new SemesterWindow(this);
             try
             {
-                semester.Show();
+                semester.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -215,7 +215,7 @@ namespace TeacherJournal
             LessonItemWindow window = new LessonItemWindow(obj, currentTerm, this);
             try
             {
-                window.Show();
+                window.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -232,11 +232,25 @@ namespace TeacherJournal
 
             if (senderName == "dpStartDate")
             {
-                if (startDateValue != dateValue) { startDateValue = dateValue; if (endDateValue >= startDateValue && startDateValue != null) { UpdateLessonList(); } } 
+                if (startDateValue != dateValue)
+                {
+                    startDateValue = dateValue;
+                    if (endDateValue >= startDateValue && startDateValue != null)
+                    {
+                        UpdateLessonList();
+                    }
+                } 
             }
             else if (senderName == "dpEndDate")
             {
-                if (endDateValue != dateValue) { endDateValue = dateValue; if (endDateValue >= startDateValue && startDateValue != null) { UpdateLessonList(); } }
+                if (endDateValue != dateValue)
+                {
+                    endDateValue = dateValue;
+                    if (endDateValue >= startDateValue && startDateValue != null)
+                    {
+                        UpdateLessonList();
+                    }
+                }
             }
         }
 
@@ -252,6 +266,8 @@ namespace TeacherJournal
                 try
                 {
                     DBHelper.ClearTerms();
+                    termList.Clear();
+                    lessonList.Clear();
                 }
                 catch (Exception ex)
                 {

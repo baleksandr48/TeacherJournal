@@ -10,6 +10,8 @@
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Window.Resources>
         <local:ListToStringConverter x:Key="ListToStringConverter"/>
+        <Image x:Shared="False" x:Key="PenImage" Source="pack://application:,,,/Resources/images/pencil.png"/>
+        <Image x:Shared="False" x:Key="TrashBoxImage" Source="pack://application:,,,/Resources/images/garbage.png"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -100,14 +102,14 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="EditRow_Click">Ред</Button>
+                                <Button Click="EditRow_Click" Content="{StaticResource PenImage}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="DeleteRow_Click">X</Button>
+                                <Button Click="DeleteRow_Click" Content="{StaticResource TrashBoxImage}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TeacherJournal.model;
 using TeacherJournal.database;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace TeacherJournal.view
 {
@@ -24,6 +25,9 @@ namespace TeacherJournal.view
     {
         private Term currentTerm;
         public ObservableCollection<Schedule> scheduleList;
+
+        // Форма с progressbar.
+        LoadingForm loadingForm;
 
         public ScheduleWindow()
         {
@@ -50,19 +54,41 @@ namespace TeacherJournal.view
             if (MessageBox.Show("Ви підтверджуєте прийняття розкладу?\nУ разі, якщо існує розклад на цей семестр, " +
                 "він буде перезаписаний новими даними.", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                try
-                {
-                    DBHelper.ClearSchedule(currentTerm);
-                    DBHelper.addSchedules(scheduleList.ToList());
-                    DBHelper.addLessons(Lesson.generateLessons(scheduleList.ToList(), currentTerm));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("{0} Exception cought", ex);
-                }
-
-                this.Close();
+                BackgroundWorker bg = new BackgroundWorker();
+                bg.DoWork += new DoWorkEventHandler(bg_DoWork);
+                bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
+                // Запуск worker.
+                bg.RunWorkerAsync();
+                // Отображаем loading form.
+                loadingForm = new LoadingForm("Заповнення журналу занять");
+                loadingForm.ShowDialog();
             }
+        }
+
+        private void bg_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // Выполните свою длительную операцию здесь.
+            try
+            {
+                DBHelper.ClearSchedule(currentTerm);
+                DBHelper.addSchedules(scheduleList.ToList());
+                DBHelper.addLessons(Lesson.generateLessons(scheduleList.ToList(), currentTerm));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception cought", ex);
+            }
+        }
+
+        private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Извлеките полученный результат из bg_DoWork (), если таковой имеется.     
+            // Обратите внимание, вам может потребоваться преобразовать тип.
+            object result = e.Result;
+
+            // Закрыть loading form и это окно.
+            loadingForm.Close();
+            this.Close();
         }
 
         // Добавляем объект Schedule.
@@ -71,7 +97,7 @@ namespace TeacherJournal.view
             ScheduleItemWindow addScheduleItem = new ScheduleItemWindow(currentTerm, this);
             try
             {
-                addScheduleItem.Show();
+                addScheduleItem.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -100,7 +126,7 @@ namespace TeacherJournal.view
             {
                 Schedule obj = ((FrameworkElement)sender).DataContext as Schedule;
                 ScheduleItemWindow window = new ScheduleItemWindow(currentTerm, this, obj);
-                window.Show();
+                window.ShowDialog();
             }
             catch (Exception ex)
             {

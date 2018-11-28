@@ -194,7 +194,7 @@ namespace TeacherJournal.database
                     command.CommandText = pragmaKeyON;
                     command.ExecuteNonQuery();
 
-                    command.CommandText = String.Format("DELETE * Term");
+                    command.CommandText = String.Format("DELETE From Term");
                     command.ExecuteNonQuery();
                 }
                 connection.Close();

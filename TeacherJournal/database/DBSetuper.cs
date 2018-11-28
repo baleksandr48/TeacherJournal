@@ -4,7 +4,6 @@ using System.Data.SQLite;
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using WPFCustomMessageBox;
 
 
 namespace TeacherJournal.database

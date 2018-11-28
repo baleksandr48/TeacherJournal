@@ -29,6 +29,12 @@ namespace TeacherJournal.view
             InitializeComponent();
         }
 
+
+
+        // ----------- ПОЧЕМУ Я ТУТ РЕШИЛ term = null сделать??? В методе записи не обрабатывается это
+
+
+
         public SemesterWindow(MainWindow window, Term term = null)
         {
             InitializeComponent();
@@ -52,7 +58,8 @@ namespace TeacherJournal.view
                     {
                         currentTerm = new Term(Term.ID_FOR_WRITING, termName, termStartDate, termEndDate, startWithNumerator);
                         DBHelper.addTerm(currentTerm);
-                        mainWindow.termList.Add(currentTerm);
+                        Term newTerm = DBHelper.getLastTerm();
+                        mainWindow.termList.Add(newTerm);
                         this.Close();
                     }
                     catch (Exception ex)

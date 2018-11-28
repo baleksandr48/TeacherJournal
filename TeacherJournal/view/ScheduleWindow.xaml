@@ -9,6 +9,8 @@
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Window.Resources>
         <local:ListToStringConverter x:Key="ListToStringConverter"/>
+        <Image x:Shared="False" x:Key="PenImage" Source="pack://application:,,,/Resources/images/pencil.png"/>
+        <Image x:Shared="False" x:Key="TrashBoxImage" Source="pack://application:,,,/Resources/images/garbage.png"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -39,14 +41,14 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="EditeRow_Click">Ред</Button>
+                            <Button Click="EditeRow_Click" Content="{StaticResource PenImage}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="DeleteRow_Click" >Х</Button>
+                            <Button Click="DeleteRow_Click" Content="{StaticResource TrashBoxImage}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -62,8 +64,5 @@
             <Button Grid.Column="1" x:Name="btnFillSchedule" Width="Auto" HorizontalAlignment="Right" Content="Заповнити" Margin="10" FontSize="18" Padding="15 5 15 5" Click="btnFillSchedule_Click"></Button>
         </Grid>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="2" FlowDirection="RightToLeft">
-            
-        </StackPanel>
     </Grid>
 </Window>

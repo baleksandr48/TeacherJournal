@@ -76,8 +76,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFCustomMessageBox, Version=1.0.7.39267, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFCustomMessageBox.1.0.7\lib\WPFCustomMessageBox.dll</HintPath>
+    <Reference Include="WinFormAnimation, Version=1.5.6298.3372, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinFormAnimation.1.5.6298.3372\lib\net35-client\WinFormAnimation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +89,9 @@
     <Compile Include="database\DBHelper.cs" />
     <Compile Include="database\DBSetuper.cs" />
     <Compile Include="EnumerableExtension.cs" />
+    <Compile Include="LoadingForm.xaml.cs">
+      <DependentUpon>LoadingForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="model\Classroom.cs" />
     <Compile Include="model\DayOfWeek.cs" />
     <Compile Include="model\Group.cs" />
@@ -115,6 +118,10 @@
     <Compile Include="view\VocabularyWindow.xaml.cs">
       <DependentUpon>VocabularyWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="LoadingForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +185,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Aha-Soft-Software-Reports.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\garbage.png" />
+    <Resource Include="Resources\images\pencil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\trash_box.png" />
+    <Resource Include="Resources\images\pen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets')" />
