@@ -17,7 +17,12 @@ namespace TeacherJournal
         private String[] ColumnsNameOfLessons = { "Дата","Шифр потоку (академічної групи)","Назва навчальної дисципліни", "Тема заняття","Вид заняття", "К-ть годин"};
         private String[] TypeOfLesson = { "Лекція", "Практичне заняття", "Лабораторне заняття ", "Семінарське заняття", "Індивідуальне заняття", "Консультація", "Екзамінаційна консультація" };
         private String[] Month = { "Вересень", "Жовтень", "Листопад", "Грудень", "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень" };
-        
+        private String[] nameColumns = { "Місяць", "Читання лекцій", "Проведення практичних занять", "Проведення лабораторних занять", "Проведення семінарських занять", "Проведення індивідуальних занять", "Проведення консультацій протягом семестра", "Проведення екзаменаційних консультацій", "Перевірка контрольних (модульних) робіт, що виконуються під час самостійної роботи", "Рефератів, аналітичних оглядів, перекладів", "Розрахункових, графічних, розрахунково-графічних робіт", "Курсових проектів, робіт", "Проведення заліку", "Проведення семестрових екзаменів", "Керівництво навчальною і виробничою практикою", "Проведення атестації", "Керівництво, консуль - тування, рецензування та проведення захисту дипломних проектів(робіт)", "Керівництво аспірантами, здобувачами та стажуванням викладачів", "Усього" };
+
+
+        private String zavkaf;
+        private String prepod;
+
         private int[] sumMonth = new int[2];
         // Количество столбцов.
         private int tableColumns;
@@ -25,7 +30,6 @@ namespace TeacherJournal
         private int tableRows;
         // Предустановленная закладка конца файла.
         private object oEndOfDoc = "\\endofdoc";
-        private object StarOfDoc = "\\StartOfDoc";
         // Range для создания таблицы.
         private Word.Range rangeEndOfFile;
         // Параграф для для создания пустой строки после таблицы.
@@ -38,12 +42,15 @@ namespace TeacherJournal
         private Word.Document adoc;
         // Количество пар, всегда не больше 8.
         private int maxLessons = 8;
-        private int DaysOfWeek =6;
+        private int DaysOfWeek = 6;
         public Export()
         {
             WordApp = new Word.Application();
             adoc = WordApp.Documents.Add();
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+
+            prepod = "Каплієнко Т.І.";
+            zavkaf = "Субботін С.О.";
 
             Word.Application wrdApplication = new Word.Application();
             adoc.PageSetup.TopMargin = wrdApplication.InchesToPoints(0.5f);
@@ -64,39 +71,59 @@ namespace TeacherJournal
             table.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
             table.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
         }
+        private void InsertText(String Text,int bold, int size, Word.WdUnderline underline, Word.WdParagraphAlignment alignment, bool Enter)
+        {
+            Word.Paragraph Para1;
+            objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+            Para1 = adoc.Content.Paragraphs.Add(ref objRangePara);
+            Para1.Range.Text = Text;
+            Para1.Range.Bold = bold;
+            Para1.Range.Font.Size = size;
+            Para1.Range.Font.Underline = underline;
+            Para1.Alignment = alignment;
+
+            if(Enter)
+            {
+                rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+                Word.Table tableLessons = adoc.Tables.Add(rangeEndOfFile, 1, 1);
+            }
+        }
         private void InsertFieldWithInitials(String HeadofDepartment, String Teacher,String Orientation)
         {
 
-            Word.Paragraph Para;
-
-
+            Word.Paragraph Para1;
             objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            Para = adoc.Content.Paragraphs.Add(ref objRangePara);
-            //Para.Range.Text = "Завідувач кафедри                                                 ___"+HeadofDepartment+ "___________   Викладач                                                                ___" + Teacher + "___________";*/
+            Para1 = adoc.Content.Paragraphs.Add(ref objRangePara);
             if (Orientation == "Album")
             {
-                Para.Range.Text = "Завідувач кафедри                                                                                                                                 ___" + HeadofDepartment + "___________";
-            }else Para.Range.Text = "Завідувач кафедри                                                                 ___" + HeadofDepartment + "___________";
-            Para.Range.Bold = 0;
-            Para.Range.Font.Size = 14;
-            Para.Range.Font.Name = "Times New Roman";
-            Para.Range.Font.Underline = 0;
+                Para1.Range.Text = "Завідувач кафедри                                                                                                                                 ___" + HeadofDepartment + "___________";
+            }
+            else
+            {
+                Para1.Range.Text = "Завідувач кафедри                                                                 ___" + HeadofDepartment + "___________";
+            }
+            
+            Para1.Range.Bold = 0;
+            Para1.Range.Font.Size = 14;
+            Para1.Range.Font.Underline = 0;
+            Para1.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
 
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             Word.Table tableLessons = adoc.Tables.Add(rangeEndOfFile, 1, 1);
 
-            Word.Paragraph Para1;
+            Word.Paragraph Para2;
             objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            Para1 = adoc.Content.Paragraphs.Add(rangeEndOfFile);
+            Para2 = adoc.Content.Paragraphs.Add(ref objRangePara);
+
             if (Orientation == "Album")
             {
-                Para.Range.Text = "Викладач                                                                                                                                                ___" + Teacher + "___________";
+                Para2.Range.Text = "Викладач                                                                                                                                                ___" + Teacher + "___________";
             }
-            else Para.Range.Text = "Викладач                                                                                ___" + Teacher + "___________ ";
-            Para1.Range.Bold = 0;
-            Para1.Range.Font.Size = 14;
-            Para1.Range.Font.Name = "Times New Roman";
-            Para1.Range.Font.Underline = 0;
+            else Para2.Range.Text = "Викладач                                                                                ___" + Teacher + "___________";
+            Para2.Range.Bold = 0;
+            Para2.Range.Font.Size = 14;
+            Para2.Range.Font.Underline = 0;
+            Para2.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
         }
         private void fillCellOfReport(List<Lesson> lessons, Word.Table table, int month, String typeOfLesson, int column, int cell)
         {
@@ -541,7 +568,6 @@ namespace TeacherJournal
 
             List<Lesson> lessons1Term = DBHelper.selectLessons(term1, term1.beginDate, term1.endDate);
             List<Lesson> lessons2Term = DBHelper.selectLessons(term2, term2.beginDate, term2.endDate);
-            String[] nameColumns = { "Місяць", "Читання лекцій", "Проведення практичних занять", "Проведення лабораторних занять", "Проведення семінарських занять", "Проведення індивідуальних занять", "Проведення консультацій протягом семестра", "Проведення екзаменаційних консультацій", "Перевірка контрольних (модульних) робіт, що виконуються під час самостійної роботи","Рефератів, аналітичних оглядів, перекладів",  "Розрахункових, графічних, розрахунково-графічних робіт",  "Курсових проектів, робіт", "Проведення заліку", "Проведення семестрових екзаменів", "Керівництво навчальною і виробничою практикою", "Проведення атестації", "Керівництво, консуль - тування, рецензування та проведення захисту дипломних проектів(робіт)", "Керівництво аспірантами, здобувачами та стажуванням викладачів", "Усього" };
             tableRows =  18;
             tableColumns = 19;
 
@@ -553,6 +579,8 @@ namespace TeacherJournal
 
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             SetStyleOfDoc(tableOfReport);
+
+
             fillRowsOfReport(lessons1Term, tableOfReport, 1, "Січень", 8);
             fillRowsOfReport(lessons2Term, tableOfReport, 2, "Лютий", 10);
             fillRowsOfReport(lessons2Term, tableOfReport, 3, "Березень", 11);
@@ -622,65 +650,35 @@ namespace TeacherJournal
         {
             Titulka("інформатики та радіоелектроніки", "комп’ютерних наук і технологій",Convert.ToString(term1.beginDate.Year), Convert.ToString(term2.beginDate.Year), "програмних засобів", "Каплієнко Тетяна Ігорівна", "к.т.н.", "доцент");
 
-            Word.Paragraph Para1;
-            objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            Para1 = adoc.Content.Paragraphs.Add(ref objRangePara);
-            //Надо сделать чтобы год ставился в зависимости от того какие семестры выбраны.
-            Para1.Range.Text = "Розклад занять і графік роботи в приміщеннях вищого навчального закладу на "+Convert.ToString(term1.beginDate.Year) +"-"+Convert.ToString(term2.beginDate.Year)+" навчальний рік";
-            Para1.Range.Bold = 1;
-            Para1.Range.Font.Size = 14;
-            Para1.Range.Font.Underline = Word.WdUnderline.wdUnderlineSingle;
-            Para1.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            InsertText("Розклад занять і графік роботи в приміщеннях вищого навчального закладу на " + Convert.ToString(term1.beginDate.Year) + "-" + Convert.ToString(term2.beginDate.Year) + " навчальний рік",1,14, Word.WdUnderline.wdUnderlineSingle, Word.WdParagraphAlignment.wdAlignParagraphCenter,true);
 
-            rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            Word.Table tableLessons = adoc.Tables.Add(rangeEndOfFile, 1, 1);
-
-            Word.Paragraph Para2;
-            objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            Para2 = adoc.Content.Paragraphs.Add(ref objRangePara);
-
-            Para2.Range.Text = "Семестр I";
-            Para2.Range.Bold = 1;
-            Para2.Range.Font.Size = 12;
-            Para2.Range.Font.Underline = 0;
-            Para2.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+            InsertText(term1.name, 1, 12, 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
 
             CreateScheduleTable(term1, false);
 
-            Word.Paragraph Para3;
-            objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            Para3 = adoc.Content.Paragraphs.Add(ref objRangePara);
-            Para3.Range.Text = "Семестр II";
-            Para3.Range.Bold = 1;
-            Para3.Range.Font.Size = 12;
-            Para3.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+            rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+            rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
+
+            InsertText(term2.name, 1, 12, 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
 
             CreateScheduleTable(term2, true);
 
-            Word.Paragraph Para4;
-            objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            Para4 = adoc.Content.Paragraphs.Add(ref objRangePara);
-            Para4.Range.Text = "1.Облік виконання навчальної роботи викладача";
-            Para4.Range.Bold = 1;
-            Para4.Range.Font.Size = (float)14.5;
-            Para4.Range.Font.Name = "Times New Roman";
-            Para4.Range.Font.Underline = 0;
-            Para4.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
-
+            InsertText("1.Облік виконання навчальної роботи викладача", 1, Convert.ToInt32(14.5), 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
+           
             CreateLessonsTable(term1);
+        
             CreateLessonsTable(term2);
-            InsertFieldWithInitials("Субботін С.О.", "Каплієнко Т.І.", "Book");
+
+            InsertFieldWithInitials(zavkaf, prepod, "Book");
 
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
             CreateReportTable(term1, term2);
-            InsertFieldWithInitials("Субботін С.О.", "Каплієнко Т.І.", "Album");
+            InsertFieldWithInitials(zavkaf, prepod, "Album");
             //Сохранение документа
             object filename = @"E:\4curs\AV\TeacherJournal-master\Export\TeacherJournal.doc"; // Здесь указать путь до рабочего стола
             adoc.SaveAs(ref filename);
             WordApp.Visible = true;
         }
-
     }
-    
 }
