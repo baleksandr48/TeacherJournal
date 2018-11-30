@@ -204,7 +204,7 @@ namespace TeacherJournal
         private void btnToDoc_Click(object sender, RoutedEventArgs e)
         {
             Export ctw = new Export();
-            ctw.ConvertToWordSchedule(cbSemesterList.SelectedIndex);
+            ctw.ConvertToWordSchedule(termList[0],termList[1]);
         }
     }  
 }
