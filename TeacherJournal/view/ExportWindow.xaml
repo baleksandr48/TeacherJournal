@@ -1,0 +1,45 @@
+﻿<Window x:Class="TeacherJournal.view.ExportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TeacherJournal.view"
+        mc:Ignorable="d"
+        Title="в DOC" Height="229.467" Width="464.577"
+        WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="15 0 0 0">
+            <TextBlock Text="1 семестр"/>
+            <ComboBox x:Name="cbFirstTerm" IsEditable="False" MinWidth="140" DisplayMemberPath="name"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="15 0 0 0">
+            <TextBlock Text="2 семестр"/>
+            <ComboBox x:Name="cbSecondTerm" IsEditable="False" MinWidth="140" DisplayMemberPath="name"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="15 0 0 0">
+            <TextBlock Text="ФІО викладача"/>
+            <TextBox x:Name="tbTeacherFullName" FontSize="16"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="15 0 0 0">
+            <TextBlock Text="ФІО зав. кафедри "/>
+            <TextBox x:Name="tbHeadFullName" FontSize="16"/>
+        </StackPanel>
+
+        <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Right"
+                Margin="0 15 0 0" Padding="15 5" Content="Прийняти" Click="AcceptAndConvert" />
+    </Grid>
+</Window>

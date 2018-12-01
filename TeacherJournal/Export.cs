@@ -688,7 +688,7 @@ namespace TeacherJournal
             CreateReportTable(term1, term2);
             InsertFieldWithInitials(zavkaf, prepod, "Album");
             //Сохранение документа
-            object filename = @"E:\4curs\AV\TeacherJournal-master\Export\TeacherJournal.doc"; // Здесь указать путь до рабочего стола
+            object filename = @"TeacherJournal.doc"; // Здесь указать путь до рабочего стола
             adoc.SaveAs(ref filename);
             WordApp.Visible = true;
         }

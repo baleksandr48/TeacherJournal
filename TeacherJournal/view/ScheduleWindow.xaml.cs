@@ -54,14 +54,22 @@ namespace TeacherJournal.view
             if (MessageBox.Show("Ви підтверджуєте прийняття розкладу?\nУ разі, якщо існує розклад на цей семестр, " +
                 "він буде перезаписаний новими даними.", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                BackgroundWorker bg = new BackgroundWorker();
-                bg.DoWork += new DoWorkEventHandler(bg_DoWork);
-                bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
-                // Запуск worker.
-                bg.RunWorkerAsync();
-                // Отображаем loading form.
-                loadingForm = new LoadingForm("Заповнення журналу занять");
-                loadingForm.ShowDialog();
+                if (Schedule.isSchedulesCorrect(scheduleList.ToList()))
+                {
+                    BackgroundWorker bg = new BackgroundWorker();
+                    bg.DoWork += new DoWorkEventHandler(bg_DoWork);
+                    bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
+                    // Запуск worker.
+                    bg.RunWorkerAsync();
+                    // Отображаем loading form.
+                    loadingForm = new LoadingForm("Заповнення журналу занять");
+                    loadingForm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Ви невірно заповнили розклад!" +
+                        "\nВикладач не може знаходитися в двух місцях одночасно.", "Похибка");
+                }
             }
         }
 

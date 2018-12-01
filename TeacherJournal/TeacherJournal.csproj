@@ -109,6 +109,9 @@
     <Compile Include="model\TypeOfWeek.cs" />
     <Compile Include="model\VocabularyEntity.cs" />
     <Compile Include="Validators.cs" />
+    <Compile Include="view\ExportWindow.xaml.cs">
+      <DependentUpon>ExportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\LessonItemWindow.xaml.cs">
       <DependentUpon>LessonItemWindow.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="view\ExportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\LessonItemWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
