@@ -657,7 +657,7 @@ namespace TeacherJournal
 
         }
         
-        public void ConvertToWordSchedule(Term term1, Term term2)
+        public void ConvertToWord(Term term1, Term term2)
         {
             Titulka("інформатики та радіоелектроніки", "комп’ютерних наук і технологій",Convert.ToString(term1.beginDate.Year), Convert.ToString(term2.beginDate.Year), "програмних засобів", "Каплієнко Тетяна Ігорівна", "к.т.н.", "доцент");
 

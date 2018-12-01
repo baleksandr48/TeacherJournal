@@ -318,5 +318,12 @@ namespace TeacherJournal
                 }
             }
         }
+
+        private void btnToDoc_Click(object sender, RoutedEventArgs e)
+        {
+            Export ctw = new Export();
+
+            ctw.ConvertToWord(termList[0],termList[1]);
+        }
     }  
 }
