@@ -189,12 +189,12 @@ namespace TeacherJournal
             }
             return countOfHours;
         }
-        private void SetStyleOfTable(Word.Table table, int column, int cell, int bold, int size)
+        private void SetStyleOfTable(Word.Table table, int column, int cell, int bold, int size, Word.WdParagraphAlignment alignH)
         {
             //table.Columns[column].Cells[cell].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
             //table.Columns[column].Cells[cell].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
             //table.Columns[column].Cells[cell].Range.Font.Size = 11;
-            table.Cell(cell,column).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            table.Cell(cell,column).Range.ParagraphFormat.Alignment = alignH;
             table.Cell(cell, column).VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
             table.Cell(cell, column).Range.Font.Size = size;
             table.Cell(cell, column).Range.Font.Bold = bold;
@@ -220,7 +220,7 @@ namespace TeacherJournal
             for (int i = 0; i < tableColumns; i++)
             {
                 tableLessons.Rows[1].Cells[i + 1].Range.InsertAfter(ColumnsNameOfLessons[i]);
-                SetStyleOfTable(tableLessons, i + 1, 1,0,11);
+                SetStyleOfTable(tableLessons, i + 1, 1,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
             // Заполнение колонки с датой.
@@ -229,7 +229,7 @@ namespace TeacherJournal
                 tableLessons.Rows[i + 2].Cells[1].Range.InsertAfter(Convert.ToString(lessons[i].date.Day));
                 tableLessons.Rows[i + 2].Cells[1].Range.InsertAfter(".");
                 tableLessons.Rows[i + 2].Cells[1].Range.InsertAfter(Convert.ToString(lessons[i].date.Month));
-                SetStyleOfTable(tableLessons, 1, i + 2,0,11);
+                SetStyleOfTable(tableLessons, 1, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
             // Заполнение колонки с номером групп
@@ -243,33 +243,33 @@ namespace TeacherJournal
                         tableLessons.Rows[i + 2].Cells[2].Range.InsertAfter(",");
                     }
                 }
-                SetStyleOfTable(tableLessons, 2, i + 2,0,11);
+                SetStyleOfTable(tableLessons, 2, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
             // Заполнение колонки с названием дисциплины.
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[3].Range.InsertAfter(lessons[i].subject.name);
-                SetStyleOfTable(tableLessons, 3, i + 2,0,11);
+                SetStyleOfTable(tableLessons, 3, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
             // Заполнение колонки с темой.
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[4].Range.InsertAfter(lessons[i].theme);
-                SetStyleOfTable(tableLessons, 4, i + 2,0,11);
+                SetStyleOfTable(tableLessons, 4, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
             // Заполнение колонки вид занятия.
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[5].Range.InsertAfter(lessons[i].typeOfLesson.name);
-                SetStyleOfTable(tableLessons, 5, i + 2,0,11);
+                SetStyleOfTable(tableLessons, 5, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
             // Заполнение колонки к-во часов.
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[6].Range.InsertAfter(Convert.ToString(lessons[i].countOfHours));
-                SetStyleOfTable(tableLessons, 6, i + 2,0,11);
+                SetStyleOfTable(tableLessons, 6, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
 
             }
         }
@@ -566,12 +566,15 @@ namespace TeacherJournal
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             rangeEndOfFile.PageSetup.Orientation = Word.WdOrientation.wdOrientLandscape;
 
+            Object defaultTableBehavior = Word.WdDefaultTableBehavior.wdWord9TableBehavior;
+            Object autoFitBehavior = Word.WdAutoFitBehavior.wdAutoFitWindow;
+
             List<Lesson> lessons1Term = DBHelper.selectLessons(term1, term1.beginDate, term1.endDate);
             List<Lesson> lessons2Term = DBHelper.selectLessons(term2, term2.beginDate, term2.endDate);
             tableRows =  18;
             tableColumns = 19;
 
-            Word.Table tableOfReport = adoc.Tables.Add(rangeEndOfFile, tableRows, tableColumns);
+            Word.Table tableOfReport = adoc.Tables.Add(rangeEndOfFile, tableRows, tableColumns, ref defaultTableBehavior, ref autoFitBehavior);
 
             objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             objParagraph = adoc.Content.Paragraphs.Add(ref objRangePara);
@@ -595,8 +598,9 @@ namespace TeacherJournal
             fillRowsOfReport(lessons1Term, tableOfReport, 12, "Грудень", 7);
 
             int[] sum = new int[TypeOfLesson.Length];
-            tableOfReport.Columns.AutoFit();
-            
+            //tableOfReport.Columns.AutoFit();
+
+           
             for (int i = 0; i < TypeOfLesson.Length; i++)
             {
                 amountOfHoursInTerm(lessons1Term, tableOfReport, TypeOfLesson[i], i + 2, 9);
@@ -605,9 +609,16 @@ namespace TeacherJournal
 
             }
             for(int i=1;i<=3;i++)
-                for(int k=0;k<=19;k++)
+                for(int k=1;k<=tableColumns;k++)
                 {
-                    SetStyleOfTable(tableOfReport, k, i,1,10);
+                    if (i == 1 || k==1 && i==1|| k==2 && i==1 || k==3 && i == 1 || i==2 && k==10 || i == 2 && k == 11 || i == 2 && k == 12)
+                    {
+                        SetStyleOfTable(tableOfReport, k, i, 1, 10, Word.WdParagraphAlignment.wdAlignParagraphCenter);
+                    }
+                    else
+                    {
+                        SetStyleOfTable(tableOfReport, k, i, 1, 10, Word.WdParagraphAlignment.wdAlignParagraphLeft);
+                    }
                 }
             //tableOfReport.Columns[1].Cells[9].Range.Orientation = Word.WdTextOrientation.wdTextOrientationUpward;
             tableOfReport.Columns[1].Cells[9].Range.InsertAfter("Разом за семестр I");
@@ -673,6 +684,7 @@ namespace TeacherJournal
 
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
+
             CreateReportTable(term1, term2);
             InsertFieldWithInitials(zavkaf, prepod, "Album");
             //Сохранение документа
