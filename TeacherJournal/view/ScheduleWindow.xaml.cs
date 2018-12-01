@@ -67,10 +67,11 @@ namespace TeacherJournal.view
 
         private void bg_DoWork(object sender, DoWorkEventArgs e)
         {
-            // Выполните свою длительную операцию здесь.
+            // Очистка расписания и занятий. Создание новых данных по занятиям и расписанию.
             try
             {
                 DBHelper.ClearSchedule(currentTerm);
+                DBHelper.ClearLesson(currentTerm);
                 DBHelper.addSchedules(scheduleList.ToList());
                 DBHelper.addLessons(Lesson.generateLessons(scheduleList.ToList(), currentTerm));
             }
@@ -82,13 +83,9 @@ namespace TeacherJournal.view
 
         private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            // Извлеките полученный результат из bg_DoWork (), если таковой имеется.     
-            // Обратите внимание, вам может потребоваться преобразовать тип.
-            object result = e.Result;
-
             // Закрыть loading form и это окно.
             loadingForm.Close();
-            this.Close();
+            this.DialogResult = true;
         }
 
         // Добавляем объект Schedule.

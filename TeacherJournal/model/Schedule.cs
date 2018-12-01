@@ -31,7 +31,7 @@ namespace TeacherJournal.model
             this.classroom = classroom;
             this.groups = groups;
         }
-
+        // Расписание считается неправильным если в один момент времени препооду надо находиться в двух местах.
         public static bool isSchedulesCorrect(List<Schedule> schedules)
         {
             for (int i = 0; i < schedules.Count; i++)

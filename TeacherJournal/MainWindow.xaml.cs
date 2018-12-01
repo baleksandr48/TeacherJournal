@@ -31,9 +31,9 @@ namespace TeacherJournal
         public ObservableCollection<Term> termList;
         // Список для хранения занятий.
         public ObservableCollection<Lesson> lessonList;
-        // Сеременная хранит текущую начальную дату.
+        // Переменная хранит текущую начальную дату.
         private DateTime startDateValue;
-        // Сонечную дату ---- нужны из-за того, что обработчик dp_SelectedDateChanged местами вызывается дважды подряд.
+        // Конечную дату ---- нужны из-за того, что обработчик dp_SelectedDateChanged местами вызывается дважды подряд.
         private DateTime endDateValue; 
 
         Term currentTerm;
@@ -43,27 +43,13 @@ namespace TeacherJournal
             InitializeComponent();
             DBSetuper.setup();
 
-            // Привязываем коллекцию семестров к cbSemesterList.
+            // Привязываем коллекцию семестров к cbSemesterList windowLoaded.
             termList = new ObservableCollection<Term>(DBHelper.selectTerms());
         }
 
-        private void btnSchedule_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (currentTerm != null)
-            {
-                ScheduleWindow Schedule = new ScheduleWindow(currentTerm);
-                try
-                {
-                    Schedule.Show();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("{0} Exception cought", ex);
-                }
-            }
-            else {
-                OpenAddTermWindow();
-            }
+            cbSemesterList.ItemsSource = termList;
         }
 
         /// <summary>
@@ -101,10 +87,15 @@ namespace TeacherJournal
 
         private void OpenAddTermWindow()
         {
-            SemesterWindow semester = new SemesterWindow(this);
+            SemesterWindow semester = new SemesterWindow();
             try
             {
-                semester.ShowDialog();
+                if (semester.ShowDialog() == true)
+                {
+                    Term newTerm = DBHelper.getLastTerm();
+                    termList.Add(newTerm);
+                    cbSemesterList.SelectedItem = newTerm;
+                }
             }
             catch (Exception ex)
             {
@@ -112,28 +103,56 @@ namespace TeacherJournal
             }
         }
 
-        // Открываем окно для добавления нового семестра.
+        // Открытие окна для добавления нового семестра.
         private void btnAddNewSemester_Click(object sender, RoutedEventArgs e)
         {
             OpenAddTermWindow();
+        }
+
+        // Открытие окна расписания.
+        private void btnSchedule_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentTerm != null)
+            {
+                ScheduleWindow Schedule = new ScheduleWindow(currentTerm);
+                try
+                {
+                    if (Schedule.ShowDialog() == true)
+                    {
+                        UpdateLessonList();
+                    }                
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("{0} Exception cought", ex);
+                }
+            }
+            else
+            {
+                OpenAddTermWindow();
+            }
         }
 
         // При выборе семестра возвращаем выбранный айтем и приводим тип к Term. Узнаем id. 
         private void cbSemesterList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Term term = (Term)cbSemesterList.SelectedItem;
-            currentTerm = term;
-            if (currentTerm != null)
-            {
-                // Задаем датапикерам дату начала и конца выбранного семестра.
-                dpStartDate.SelectedDate = currentTerm.beginDate;
-                dpEndDate.SelectedDate = currentTerm.endDate;
-            }
-        }
+            if(term != null)
+            { 
+                currentTerm = term;
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            cbSemesterList.ItemsSource = termList;    
+                // Если даты выбранного семестра совпадают с датами датапикеров - вызываем обновление списка вручную.
+                if ((startDateValue == currentTerm.beginDate) && (endDateValue == currentTerm.endDate))
+                {
+                    UpdateLessonList();
+                }
+                // Если нет - задаем датапикерам дату начала и конца выбранного семестра.
+                else
+                {
+                    dpStartDate.SelectedDate = currentTerm.beginDate;
+                    dpEndDate.SelectedDate = currentTerm.endDate;
+                }             
+            }
         }
 
         // Отобразить весь семестр в главной таблице посредством установления дат в даты начала и окончания семестра.
@@ -151,19 +170,20 @@ namespace TeacherJournal
         {
             if (currentTerm != null)
             {
-                // Задаем датапикерам дату начала и конца выбранного семестра.
+                // Задаем датапикерам дату сегодня.
                 dpStartDate.SelectedDate = DateTime.Today;
                 dpEndDate.SelectedDate = DateTime.Today;
             }
         }
-        
 
         // Обновляем список занятий с помощью повторного запроса в бд и, если, результат больше нуля - обновляем ItemSource нашего lessonGrid.
         private void UpdateLessonList()
         {
             if (currentTerm != null)
             {
-                lessonList = new ObservableCollection<Lesson>(DBHelper.selectLessons(currentTerm, dpStartDate.SelectedDate.Value.Date, dpEndDate.SelectedDate.Value.Date));
+                startDateValue = dpStartDate.SelectedDate.Value.Date;
+                endDateValue = dpEndDate.SelectedDate.Value.Date;
+                lessonList = new ObservableCollection<Lesson>(DBHelper.selectLessons(currentTerm, startDateValue, endDateValue));
                 if ((lessonList != null) && (lessonList.Count != 0))
                 {
                     lessonsGrid.ItemsSource = lessonList;
@@ -209,6 +229,7 @@ namespace TeacherJournal
             }  
         }
 
+        // Редактирование конкретного занятия. Вызываем окно и передаем объект подлежащий редактированию.
         private void EditRow_Click(object sender, RoutedEventArgs e)
         {
             Lesson obj = ((FrameworkElement)sender).DataContext as Lesson;
@@ -224,18 +245,20 @@ namespace TeacherJournal
 
         }
 
+        // Событие изменения даты на датапикерах. В связи с тем, что может вызываться дважды для каждого датапикера, вводим проверку с startDateValue и endDateValue.
+        // Вызываем обновление списка занятий.
         private void dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             DatePicker datePicker = (DatePicker)sender;
             String senderName = datePicker.Name;
             DateTime dateValue = datePicker.SelectedDate.Value.Date;
-
-            if (senderName == "dpStartDate")
+            
+            if(senderName == "dpStartDate")
             {
                 if (startDateValue != dateValue)
                 {
                     startDateValue = dateValue;
-                    if (endDateValue >= startDateValue && startDateValue != null)
+                    if (endDateValue >= startDateValue)
                     {
                         UpdateLessonList();
                     }
@@ -246,19 +269,22 @@ namespace TeacherJournal
                 if (endDateValue != dateValue)
                 {
                     endDateValue = dateValue;
-                    if (endDateValue >= startDateValue && startDateValue != null)
+                    if (endDateValue >= startDateValue)
                     {
                         UpdateLessonList();
                     }
                 }
             }
+
         }
 
+        // Событие ввода данных в датапикер. Вводить можно только числовые значения и ".".
         private void dpPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Validators.DatePickerValidation(sender, e);
         }
 
+        // Очистка всея бд по нажатия на соответствующий пункт меню.
         private void ClearTerms_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Ви впевненні, що хочете очистити файл бд?", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -272,6 +298,23 @@ namespace TeacherJournal
                 catch (Exception ex)
                 {
                     Console.WriteLine("{0} Exception cought", ex);
+                }
+            }
+        }
+
+        private void btnEditSemester_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentTerm != null)
+            {
+                SemesterWindow window = new SemesterWindow(currentTerm);
+                if (window.ShowDialog() == true)
+                {
+                    // Делаем небольшой костыль, чтобы таблица не обновлялась дважды.
+                    endDateValue = DateTime.MinValue;
+                    cbSemesterList.SelectedItem = null;
+                    cbSemesterList.SelectedItem = currentTerm;
+                    /* dpStartDate.SelectedDate = currentTerm.beginDate;
+                     dpEndDate.SelectedDate = currentTerm.endDate;*/
                 }
             }
         }

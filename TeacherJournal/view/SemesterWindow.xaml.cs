@@ -21,25 +21,19 @@ namespace TeacherJournal.view
     /// </summary>
     public partial class SemesterWindow : Window
     {
-        MainWindow mainWindow;
         private Term currentTerm;
+        private bool NeedToUpdateLessons;
 
         public SemesterWindow()
         {
             InitializeComponent();
         }
 
-
-
-        // ----------- ПОЧЕМУ Я ТУТ РЕШИЛ term = null сделать??? В методе записи не обрабатывается это
-
-
-
-        public SemesterWindow(MainWindow window, Term term = null)
+        public SemesterWindow(Term term = null)
         {
             InitializeComponent();
-            this.mainWindow = window;
             this.currentTerm = term;
+            this.NeedToUpdateLessons = false;
         }
 
         private void btnAccept_Click(object sender, RoutedEventArgs e)
@@ -51,22 +45,60 @@ namespace TeacherJournal.view
                 DateTime termEndDate = dpSemesterEndDate.SelectedDate.Value.Date;
                 int startWithNumerator = chbStartWithNumerator.IsChecked.Value ? 1 : 0;
 
-                // Записываем семестр в бд, после этого добавляем в коллекцию termList mainwindow-a последний семестр.
-                if (MessageBox.Show("Ви підтверджуєте створення нового семестру?", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                // Записываем семестр в бд.
+
+                // Сделать перезапись данных, если в существующем семестре изменили дату начала или окончания. !!!!!!!
+                              
+                if (currentTerm == null)
                 {
-                    try
+                    if (MessageBox.Show("Ви підтверджуєте створення нового семестру?", "Підтвердження", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         currentTerm = new Term(Term.ID_FOR_WRITING, termName, termStartDate, termEndDate, startWithNumerator);
-                        DBHelper.addTerm(currentTerm);
-                        Term newTerm = DBHelper.getLastTerm();
-                        mainWindow.termList.Add(newTerm);
-                        this.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("{0} Exception cought", ex);
+                        try
+                        {
+                            DBHelper.addTerm(currentTerm);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("{0} Exception cought", ex);
+                        }
+                        this.DialogResult = true;
                     }
                 }
+                else
+                {
+                    if (MessageBox.Show("Ви підтверджуєте внесення змін до семестру?" +
+                        "\nВ разі зміни однієї з дат або чекбоксу - заняття будуть перезаписані!", "Підтвердження",
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        // Если одна из дат или отсчет от числителя поменялось - будем перезаписывать lessons.
+                        if ((termStartDate != currentTerm.beginDate) || (termEndDate != currentTerm.endDate)
+                                                  || (startWithNumerator != currentTerm.startFromNumerator))
+                        {
+                            NeedToUpdateLessons = true;
+                        }
+                        currentTerm.name = termName;
+                        currentTerm.beginDate = termStartDate;
+                        currentTerm.endDate = termEndDate;
+                        currentTerm.startFromNumerator = startWithNumerator;
+                        try
+                        {                           
+                            DBHelper.updateTerm(currentTerm);
+
+                            if (NeedToUpdateLessons)
+                            {
+                                List<Schedule> scheduleList = DBHelper.selectSchedules(currentTerm);
+                                DBHelper.ClearLesson(currentTerm);
+                                DBHelper.addLessons(Lesson.generateLessons(scheduleList, currentTerm));
+                            }       
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("{0} Exception cought", ex);
+                        }
+                        this.DialogResult = true;
+                    }
+                }          
             }
             else
             {
@@ -77,6 +109,17 @@ namespace TeacherJournal.view
         private void dpPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Validators.DatePickerValidation(sender, e);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (currentTerm != null)
+            {
+                tbxSemesterName.Text = currentTerm.name;
+                dpSemesterStartDate.SelectedDate = currentTerm.beginDate;
+                dpSemesterEndDate.SelectedDate = currentTerm.endDate;
+                chbStartWithNumerator.IsChecked = currentTerm.startFromNumerator == 1 ? true : false;
+            }
         }
     }
 }

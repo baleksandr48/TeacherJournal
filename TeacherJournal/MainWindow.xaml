@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="Журнал викладача" Height="626" Width="910"
+        Title="Журнал викладача" Height="625" Width="1000"
         FontSize="16"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Window.Resources>
@@ -25,7 +25,7 @@
 
         <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
             <Menu>
-                <MenuItem Header="File">
+                <MenuItem Header="Дані">
                     <MenuItem Header="Очистити файл бд" Click="ClearTerms_Click"></MenuItem>
                 </MenuItem>
             </Menu>
@@ -54,9 +54,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="cbSemesterList" Grid.Column="0" Margin="10 5 5 5"  SelectedIndex="0" IsEditable="False" MinWidth="140" DisplayMemberPath="name" SelectionChanged="cbSemesterList_SelectionChanged"/>
-                <Button x:Name="btnAddNewSemester" Grid.Column="1" Margin="0 5 10 5" Click="btnAddNewSemester_Click">+</Button>
+                <Button x:Name="btnAddNewSemester" Grid.Column="1" Margin="0 5 5 5" Click="btnAddNewSemester_Click">+</Button>
+                <Button x:Name="btnEditSemester" Grid.Column="2" Margin="0 5 10 5" Content="{StaticResource PenImage}" Click="btnEditSemester_Click" />
             </Grid>
 
             <Button x:Name="btnSubject" Grid.Row="2" Content="Предмети" Click="OpenVocabulary" />
@@ -93,11 +95,11 @@
                       CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False"
                       RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" Margin="10 0 10 15">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Дата" Binding="{Binding Path=date, StringFormat=\{0:dd.MM\}}" Width="*"/>
-                    <DataGridTextColumn Header="№" Binding="{Binding Path=numOfLesson}" Width="Auto"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Path=date, StringFormat=\{0:dd.MM\}}" Width="0.5*"/>
+                    <DataGridTextColumn Header="№ Пари" Binding="{Binding Path=numOfLesson}" Width="Auto"/>
                     <DataGridTextColumn Header="Аудиторія" Binding="{Binding Path=classroom.name}" Width="Auto"/>
-                    <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}" Width="*"/>
-                    <DataGridTextColumn Header="Предмет" Binding="{Binding Path=subject.name}" Width="*"/>
+                    <DataGridTextColumn Header="Групи" Binding="{Binding Path=groups, Converter={StaticResource ListToStringConverter}}" Width="0.5*"/>
+                    <DataGridTextColumn Header="Предмет" Binding="{Binding Path=subject.name}" Width="0.5*"/>
                     <DataGridTextColumn Header="Тема" Binding="{Binding Path=theme}" Width="*"/>
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>

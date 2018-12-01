@@ -76,7 +76,8 @@ namespace TeacherJournal.database
                     command.CommandText = pragmaKeyON;
                     command.ExecuteNonQuery();
 
-                    command.CommandText = String.Format("UPDATE Term SET name = '{0}' WHERE id = '{1}');", term.name, term.id);
+                    command.CommandText = String.Format("UPDATE Term SET name = {0}, beginDate = {1}, endDate = {2}, startFromNumerator = {3} WHERE id = {4};", term.name, calculateDays(term.beginDate), 
+                        calculateDays(term.endDate), term.startFromNumerator, term.id);
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -99,7 +100,9 @@ namespace TeacherJournal.database
                         command.Transaction = transaction;
                         foreach (Term term in terms)
                         {
-                            command.CommandText = String.Format("UPDATE Term SET name = '{0}' WHERE id = '{1}');", term.name, term.id);
+                            command.CommandText = String.Format("UPDATE Term SET name = '{0}', beginDate = '{1}', endDate = '{2}', " +
+                        "startFromNumerator = '{3}' WHERE id = '{4}');", term.name, calculateDays(term.beginDate),
+                        calculateDays(term.endDate), term.startFromNumerator, term.id);
                             command.ExecuteNonQuery();
                         }
                     }
@@ -1053,6 +1056,29 @@ namespace TeacherJournal.database
             }
             return lessons;
         }
+
+        public static void ClearLesson(Term term)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                {
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.Transaction = transaction;
+                        command.CommandText = pragmaKeyON;
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = String.Format("DELETE FROM Lesson WHERE idTerm={0}", term.id);
+                        command.ExecuteNonQuery();
+                    }
+                    transaction.Commit();
+                }
+                connection.Close();
+            }
+        }
+
         //-----------DayOfWeek----------
         public static List<model.DayOfWeek> selectDaysOfWeek()
         {

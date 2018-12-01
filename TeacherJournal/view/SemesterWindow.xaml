@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
         Title="Новий семестр" Height="164.179" Width="406.716"
-        WindowStartupLocation="CenterScreen" WindowState="Normal">
+        WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
