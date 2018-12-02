@@ -12,37 +12,37 @@ namespace TeacherJournal
 {
     class Export
     {
-        private String[] ColumnsNameOfSchedule = { "Пара", "Номер тижня", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Суббота" };
-        private String[] RowsNumberOfSchedule = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" };
-        private String[] ColumnsNameOfLessons = { "Дата","Шифр потоку (академічної групи)","Назва навчальної дисципліни", "Тема заняття","Вид заняття", "К-ть годин"};
-        private String[] TypeOfLesson = { "Лекція", "Практичне заняття", "Лабораторне заняття ", "Семінарське заняття", "Індивідуальне заняття", "Консультація", "Екзамінаційна консультація" };
-        private String[] Month = { "Вересень", "Жовтень", "Листопад", "Грудень", "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень" };
-        private String[] nameColumns = { "Місяць", "Читання лекцій", "Проведення практичних занять", "Проведення лабораторних занять", "Проведення семінарських занять", "Проведення індивідуальних занять", "Проведення консультацій протягом семестра", "Проведення екзаменаційних консультацій", "Перевірка контрольних (модульних) робіт, що виконуються під час самостійної роботи", "Рефератів, аналітичних оглядів, перекладів", "Розрахункових, графічних, розрахунково-графічних робіт", "Курсових проектів, робіт", "Проведення заліку", "Проведення семестрових екзаменів", "Керівництво навчальною і виробничою практикою", "Проведення атестації", "Керівництво, консуль - тування, рецензування та проведення захисту дипломних проектів(робіт)", "Керівництво аспірантами, здобувачами та стажуванням викладачів", "Усього" };
+        private  String[] ColumnsNameOfSchedule = { "Пара", "Номер тижня", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Суббота", "Неділя" };
+        private  String[] RowsNumberOfSchedule = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" };
+        private  String[] ColumnsNameOfLessons = { "Дата","Шифр потоку (академічної групи)","Назва навчальної дисципліни", "Тема заняття","Вид заняття", "К-ть годин"};
+        private  String[] TypeOfLesson = { "Лекція", "Практичне заняття", "Лабораторне заняття ", "Семінарське заняття", "Індивідуальне заняття", "Консультація", "Екзамінаційна консультація" };
+        private  String[] Month = { "Вересень", "Жовтень", "Листопад", "Грудень", "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень" };
+        private  String[] nameColumns = { "Місяць", "Читання лекцій", "Проведення практичних занять", "Проведення лабораторних занять", "Проведення семінарських занять", "Проведення індивідуальних занять", "Проведення консультацій протягом семестра", "Проведення екзаменаційних консультацій", "Перевірка контрольних (модульних) робіт, що виконуються під час самостійної роботи", "Рефератів, аналітичних оглядів, перекладів", "Розрахункових, графічних, розрахунково-графічних робіт", "Курсових проектів, робіт", "Проведення заліку", "Проведення семестрових екзаменів", "Керівництво навчальною і виробничою практикою", "Проведення атестації", "Керівництво, консуль - тування, рецензування та проведення захисту дипломних проектів(робіт)", "Керівництво аспірантами, здобувачами та стажуванням викладачів", "Усього" };
 
 
-        private String zavkaf;
-        private String prepod;
+        private  String zavkaf;
+        private  String prepod;
 
-        private int[] sumMonth = new int[2];
+        private  int[] sumMonth = new int[2];
         // Количество столбцов.
-        private int tableColumns;
+        private  int tableColumns;
         // Общее количество строк в таблице.
-        private int tableRows;
+        private  int tableRows;
         // Предустановленная закладка конца файла.
-        private object oEndOfDoc = "\\endofdoc";
+        private  object oEndOfDoc = "\\endofdoc";
         // Range для создания таблицы.
-        private Word.Range rangeEndOfFile;
+        private  Word.Range rangeEndOfFile;
         // Параграф для для создания пустой строки после таблицы.
-        private Word.Paragraph objParagraph;
+        private  Word.Paragraph objParagraph;
         // Параграф с текстом документа
         //private Word.Paragraph[] wordparagraphs;
-        private object objRangePara;
+        private  object objRangePara;
         // Создание документа.
-        private Word.Application WordApp;
-        private Word.Document adoc;
+        private  Word.Application WordApp;
+        private  Word.Document adoc;
         // Количество пар, всегда не больше 8.
-        private int maxLessons = 8;
-        private int DaysOfWeek = 6;
+        private  int maxLessons = 8;
+        private  int DaysOfWeek;
         public Export()
         {
             WordApp = new Word.Application();
@@ -59,7 +59,7 @@ namespace TeacherJournal
             adoc.PageSetup.RightMargin = wrdApplication.InchesToPoints(0.5f);
             //wordparagraphs = new Word.Paragraph[10];
         }
-        private void SetStyleOfDoc(Word.Table table)
+        private  void SetStyleOfDoc(Word.Table table)
         {
             //Настройка стиля
             table.Range.Font.Size = 10;
@@ -71,7 +71,7 @@ namespace TeacherJournal
             table.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
             table.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
         }
-        private void InsertText(String Text,int bold, int size, Word.WdUnderline underline, Word.WdParagraphAlignment alignment, bool Enter)
+        private  void InsertText(String Text,int bold, int size, Word.WdUnderline underline, Word.WdParagraphAlignment alignment, bool Enter)
         {
             Word.Paragraph Para1;
             objRangePara = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
@@ -88,7 +88,7 @@ namespace TeacherJournal
                 Word.Table tableLessons = adoc.Tables.Add(rangeEndOfFile, 1, 1);
             }
         }
-        private void InsertFieldWithInitials(String HeadofDepartment, String Teacher,String Orientation)
+        private  void InsertFieldWithInitials(String HeadofDepartment, String Teacher,String Orientation)
         {
 
             Word.Paragraph Para1;
@@ -125,7 +125,7 @@ namespace TeacherJournal
             Para2.Range.Font.Underline = 0;
             Para2.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
         }
-        private void fillCellOfReport(List<Lesson> lessons, Word.Table table, int month, String typeOfLesson, int column, int cell)
+        private  void fillCellOfReport(List<Lesson> lessons, Word.Table table, int month, String typeOfLesson, int column, int cell)
         {
             int countOfHours = 0;
             foreach (Lesson lsn1 in lessons)
@@ -141,7 +141,7 @@ namespace TeacherJournal
                 }
             }
         }
-        private void fillRowsOfReport(List<Lesson> lessons, Word.Table table, int month, String nameMonth, int rows)
+        private  void fillRowsOfReport(List<Lesson> lessons, Word.Table table, int month, String nameMonth, int rows)
         {
            
             table.Columns[1].Cells[rows].Range.InsertAfter(nameMonth);
@@ -161,7 +161,7 @@ namespace TeacherJournal
             }
             
         }
-        private int amountHoursInMonth(List<Lesson> lessons, Word.Table table, int month, int column, int cell)
+        private  int amountHoursInMonth(List<Lesson> lessons, Word.Table table, int month, int column, int cell)
         {
             int countOfHours = 0;
             foreach (Lesson lsn1 in lessons)
@@ -175,7 +175,7 @@ namespace TeacherJournal
             }
             return countOfHours;
         }
-        private int amountOfHoursInTerm(List<Lesson> lessons, Word.Table table, String typeOfLesson, int column, int cell)
+        private  int amountOfHoursInTerm(List<Lesson> lessons, Word.Table table, String typeOfLesson, int column, int cell)
         {
             int countOfHours = 0;
             foreach (Lesson lsn1 in lessons)
@@ -189,7 +189,7 @@ namespace TeacherJournal
             }
             return countOfHours;
         }
-        private void SetStyleOfTable(Word.Table table, int column, int cell, int bold, int size, Word.WdParagraphAlignment alignH)
+        private  void SetStyleOfTable(Word.Table table, int column, int cell, int bold, int size, Word.WdParagraphAlignment alignH)
         {
             //table.Columns[column].Cells[cell].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
             //table.Columns[column].Cells[cell].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
@@ -199,7 +199,7 @@ namespace TeacherJournal
             table.Cell(cell, column).Range.Font.Size = size;
             table.Cell(cell, column).Range.Font.Bold = bold;
         }
-        private void CreateLessonsTable(Term term)
+        private  void CreateLessonsTable(Term term)
         {
             //Лекции
             List<Lesson> lessons = DBHelper.selectLessons(term, term.beginDate, term.endDate);
@@ -226,9 +226,7 @@ namespace TeacherJournal
             // Заполнение колонки с датой.
             for (int i = 0; i < lessons.Count; i++)
             {
-                tableLessons.Rows[i + 2].Cells[1].Range.InsertAfter(Convert.ToString(lessons[i].date.Day));
-                tableLessons.Rows[i + 2].Cells[1].Range.InsertAfter(".");
-                tableLessons.Rows[i + 2].Cells[1].Range.InsertAfter(Convert.ToString(lessons[i].date.Month));
+                tableLessons.Rows[i + 2].Cells[1].Range.InsertAfter(Convert.ToString(lessons[i].date.ToString("dd.MM")));
                 SetStyleOfTable(tableLessons, 1, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
@@ -273,11 +271,29 @@ namespace TeacherJournal
 
             }
         }
-        private void CreateScheduleTable(Term term,bool Break)
+        private  void CreateScheduleTable(Term term,bool Break)
         {
-            tableColumns = 8;
-            List<Schedule> schedules = DBHelper.selectSchedules(term);
             
+            List<Schedule> schedules = DBHelper.selectSchedules(term);
+            List<model.DayOfWeek> dayOfWeek = DBHelper.selectDaysOfWeek();
+            DaysOfWeek = dayOfWeek.Count;
+
+
+            foreach(Schedule obj in schedules)
+            {
+                if(obj.dayOfWeek.name!=nameColumns[8] || obj.dayOfWeek.name != nameColumns[9])
+                {
+                    DaysOfWeek = 5;
+                } else if (obj.dayOfWeek.name == nameColumns[8])
+                {
+                    DaysOfWeek = 6;
+                }else if(obj.dayOfWeek.name == nameColumns[9])
+                {
+                    DaysOfWeek = 7;
+                }
+                
+            }
+            tableColumns = 2 + DaysOfWeek;
             //Количество недель в семестре
             int numOfWeeks = (DBHelper.calculateDays(term.endDate) - DBHelper.calculateDays(term.beginDate)) / 7;
             //Счетчик который показывает в какие дние есть занятия а в какие нет True = есть False = нет
@@ -467,7 +483,7 @@ namespace TeacherJournal
                 }
             }
         }
-        private void Titulka(String institut, String fakultet, String DateBegin, String DateEnd, String kafedra, String FIO,String zvanya, String posada)
+        private  void Titulka(String institut, String fakultet, String DateBegin, String DateEnd, String kafedra, String FIO,String zvanya, String posada)
         {
             Word.Paragraphs wordparagraphs = adoc.Paragraphs;
             
@@ -560,7 +576,7 @@ namespace TeacherJournal
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
         }
-        private void CreateReportTable(Term term1, Term term2)
+        private  void CreateReportTable(Term term1, Term term2)
         {
 
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
@@ -657,7 +673,7 @@ namespace TeacherJournal
 
         }
         
-        public void ConvertToWord(Term term1, Term term2)
+        public  void ConvertToWord(Term term1, Term term2)
         {
             Titulka("інформатики та радіоелектроніки", "комп’ютерних наук і технологій",Convert.ToString(term1.beginDate.Year), Convert.ToString(term2.beginDate.Year), "програмних засобів", "Каплієнко Тетяна Ігорівна", "к.т.н.", "доцент");
 
@@ -674,7 +690,7 @@ namespace TeacherJournal
 
             CreateScheduleTable(term2, true);
 
-            InsertText("1.Облік виконання навчальної роботи викладача", 1, Convert.ToInt32(14.5), 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
+            InsertText("1. Облік виконання навчальної роботи викладача", 1, Convert.ToInt32(14.5), 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
            
             CreateLessonsTable(term1);
         

@@ -1005,7 +1005,7 @@ namespace TeacherJournal.database
                 "INNER JOIN TypeOfLesson ON Lesson.idTypeOfLesson = TypeOfLesson.id) " +
                 "INNER JOIN Classroom ON Lesson.idClassroom = Classroom.id) " +
                 "INNER JOIN _Group ON Lesson.idGroup = _Group.id " +
-                "WHERE Lesson.idTerm = {0} AND Lesson._date >= {1} AND Lesson._date <= {2};", term.id, calculateDays(startDate), calculateDays(endDate));
+                "WHERE Lesson.idTerm = {0} AND Lesson._date >= {1} AND Lesson._date <= {2} ORDER BY Lesson._date;", term.id, calculateDays(startDate), calculateDays(endDate));
 
                     SQLiteDataReader reader = command.ExecuteReader();
 

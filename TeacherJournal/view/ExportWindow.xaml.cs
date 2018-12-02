@@ -78,8 +78,8 @@ namespace TeacherJournal.view
 
         private void bg_DoWork(object sender, DoWorkEventArgs e)
         {
-            Export export = new Export();
-            export.ConvertToWord(_firstTerm, _secondTerm);
+            Export ctw = new Export();
+            ctw.ConvertToWord(_firstTerm, _secondTerm);
         }
 
         private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
