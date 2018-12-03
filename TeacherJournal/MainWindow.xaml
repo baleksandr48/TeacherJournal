@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="Журнал викладача" Height="625" Width="1000"
+        Title="Журнал викладача" Height="625" Width="1000" MinWidth="890" MinHeight="380"
         FontSize="16"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Window.Resources>

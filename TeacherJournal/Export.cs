@@ -194,7 +194,7 @@ namespace TeacherJournal
             //table.Columns[column].Cells[cell].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
             //table.Columns[column].Cells[cell].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
             //table.Columns[column].Cells[cell].Range.Font.Size = 11;
-            table.Cell(cell,column).Range.ParagraphFormat.Alignment = alignH;
+            table.Cell(cell, column).Range.ParagraphFormat.Alignment = alignH;
             table.Cell(cell, column).VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
             table.Cell(cell, column).Range.Font.Size = size;
             table.Cell(cell, column).Range.Font.Bold = bold;
@@ -223,47 +223,51 @@ namespace TeacherJournal
                 SetStyleOfTable(tableLessons, i + 1, 1,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
-            // Заполнение колонки с датой.
+            // Заполнение колонки с датой. 3440мс
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[1].Range.InsertAfter(Convert.ToString(lessons[i].date.ToString("dd.MM")));
                 SetStyleOfTable(tableLessons, 1, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
-            // Заполнение колонки с номером групп
+            // Заполнение колонки с номером групп. 5483мс -> 3300мс
             for (int i = 0; i < lessons.Count; i++)
             {
-                for (int k = 0; k < lessons[i].groups.Count; k++)
+                /*for (int k = 0; k < lessons[i].groups.Count; k++)
                 {
                     tableLessons.Rows[i + 2].Cells[2].Range.InsertAfter(lessons[i].groups[k].name);
                     if (k + 1 < lessons[i].groups.Count)
                     {
                         tableLessons.Rows[i + 2].Cells[2].Range.InsertAfter(",");
                     }
-                }
+                }*/
+                List<string> groupNamesList = lessons[i].groups.Select(o => o.name).ToList();
+                String groupCombine = String.Join(", ", groupNamesList.ToArray());
+                tableLessons.Rows[i + 2].Cells[2].Range.InsertAfter(groupCombine);
+
                 SetStyleOfTable(tableLessons, 2, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
-            // Заполнение колонки с названием дисциплины.
+            // Заполнение колонки с названием дисциплины. 3532мс
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[3].Range.InsertAfter(lessons[i].subject.name);
                 SetStyleOfTable(tableLessons, 3, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
 
-            // Заполнение колонки с темой.
+            // Заполнение колонки с темой. 3507мс
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[4].Range.InsertAfter(lessons[i].theme);
                 SetStyleOfTable(tableLessons, 4, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
-            // Заполнение колонки вид занятия.
+            // Заполнение колонки вид занятия. 3539мс
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[5].Range.InsertAfter(lessons[i].typeOfLesson.name);
                 SetStyleOfTable(tableLessons, 5, i + 2,0,11, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             }
-            // Заполнение колонки к-во часов.
+            // Заполнение колонки к-во часов. 3604мс
             for (int i = 0; i < lessons.Count; i++)
             {
                 tableLessons.Rows[i + 2].Cells[6].Range.InsertAfter(Convert.ToString(lessons[i].countOfHours));
@@ -383,7 +387,7 @@ namespace TeacherJournal
                     tableSchedule.Columns[1].Cells[i + 2].Merge(tableSchedule.Columns[1].Cells[i + 3]);
                 }
             }
-            //Основная часть заполнение таблицы
+            //Основная часть заполнение таблицы. 1770мс
             for (int i = 0, posDays = 3; i < DaysOfWeek; i++, posDays++)
             {
                 int begin = 2;
@@ -431,7 +435,7 @@ namespace TeacherJournal
             }
 
 
-            //Шапка таблицы
+            //Шапка таблицы. 320мс
             for (int i = 0; i < tableColumns; i++)
             {
                 tableSchedule.Cell(1, 1 + i).Range.InsertAfter(ColumnsNameOfSchedule[i]);
@@ -440,7 +444,7 @@ namespace TeacherJournal
                 tableSchedule.Columns[1 + i].Cells[1].Range.Font.Bold = 1;
             }
 
-            //Заполнение клеток
+            //Заполнение клеток. 553мс
             for (int i = 0; i < tableSchedule.Columns[1].Cells.Count - 1; i++)
             {
                 tableSchedule.Columns[1].Cells[2 + i].Range.InsertAfter(RowsNumberOfSchedule[i]);
@@ -451,7 +455,7 @@ namespace TeacherJournal
                 //tableSchedule.Rows[i + 1].Cells[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
             }
 
-            //Нумеруем 2 колонку
+            //Нумеруем 2 колонку. 3729мс
             for (int i = 0, position = 1; i < maxLessons; i++)
             {
 
@@ -461,10 +465,10 @@ namespace TeacherJournal
                     {
                         if (position <= maxRows)
                         {
-                            tableSchedule.Columns[2].Cells[position + 1].Range.InsertAfter(Convert.ToString(k + 1));
-                            tableSchedule.Columns[2].Cells[position + 1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            tableSchedule.Columns[2].Cells[position + 1].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                            tableSchedule.Columns[2].Cells[position + 1].Range.Font.Size = 10;
+                            tableSchedule.Columns[2].Cells[position + 1].Range.InsertAfter(Convert.ToString(k + 1)); // 17мс
+                            tableSchedule.Columns[2].Cells[position + 1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter; // 18мс
+                            tableSchedule.Columns[2].Cells[position + 1].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter; // 55мс
+                            tableSchedule.Columns[2].Cells[position + 1].Range.Font.Size = 10; // 17мс
                         }
                     }
                 }

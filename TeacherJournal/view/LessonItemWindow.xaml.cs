@@ -144,6 +144,7 @@ namespace TeacherJournal.view
                 {
                     Lesson lesson = new Lesson();
                     lesson.numOfLesson = numOfLesson;
+                    lesson.countOfHours = currentLesson.countOfHours;
                     lesson.subject = cbLessonSubject.SelectedItem as Subject;
                     lesson.classroom = cbLessonClassroom.SelectedItem as Classroom;
                     lesson.theme = tbLessonTheme.Text;

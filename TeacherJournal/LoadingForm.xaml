@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="LoadingForm" Height="300" Width="300" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+        Title="LoadingForm" Height="300" Width="300" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid>
         <Grid Margin="50">
             <Grid.RowDefinitions>

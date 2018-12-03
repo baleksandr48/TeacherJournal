@@ -85,6 +85,7 @@ namespace TeacherJournal.model
                 // 5 - расчитываем все занятия до конца семестра
                 while (DateTime.Compare(dateLesson, term.endDate) < 0)
                 {
+                    // 2 = количество часов
                     lessons.Add(new Lesson(0, dateLesson, 2, schedule.numOfLesson, schedule.classroom,
                         term.id, schedule.subject, schedule.groups, schedule.typeOfLesson, null));
                     if ((int)schedule.typeOfWeek.id == 3)
