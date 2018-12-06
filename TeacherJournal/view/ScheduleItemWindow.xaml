@@ -7,6 +7,26 @@
         mc:Ignorable="d"
         Title="ScheduleItemWindow" Height="340" Width="584" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
+    <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="15" Background="#0076FF" BorderThickness="1" Padding="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Image x:Shared="False" x:Key="TrashBoxImage" Source="pack://application:,,,/Resources/images/garbage.png"/>
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFE1E2E1" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid Margin="10 ">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -36,28 +56,34 @@
                 </Style>
             </Grid.Resources>
 
-            <TextBlock Grid.Row="0" Grid.Column="0">Тип неділі</TextBlock>
-            <ComboBox x:Name="cbTypeOfWeek" Grid.Row="0" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
-            <TextBlock Grid.Row="1" Grid.Column="0">День неділі</TextBlock>
-            <ComboBox x:Name="cbDayOfWeek" Grid.Row="1" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
-            <TextBlock Grid.Row="2" Grid.Column="0">№ пари</TextBlock>
-            <TextBox x:Name="tbNumberOfLesson" Grid.Row="2" Grid.Column="1" PreviewTextInput="tbNumberOfLesson_PreviewTextInput"></TextBox>
-            <TextBlock Grid.Row="3" Grid.Column="0">Предмет</TextBlock>
-            <ComboBox x:Name="cbSubject" Grid.Row="3" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
-            <TextBlock Grid.Row="4" Grid.Column="0">Тип заняття</TextBlock>
-            <ComboBox x:Name="cbTypeOfLesson" Grid.Row="4" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
-            <TextBlock Grid.Row="5" Grid.Column="0">Аудиторія</TextBlock>
-            <ComboBox x:Name="cbClassroom" Grid.Row="5" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
-            <TextBlock Grid.Row="6" Grid.Column="0">Группа</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">Тип неділі</TextBlock>
+            <ComboBox x:Name="cbTypeOfWeek" Grid.Row="0" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
+            <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">День неділі</TextBlock>
+            <ComboBox x:Name="cbDayOfWeek" Grid.Row="1" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
+            <TextBlock Grid.Row="2" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">№ пари</TextBlock>
+            <TextBox x:Name="tbNumberOfLesson" Grid.Row="2" Grid.Column="1" PreviewTextInput="tbNumberOfLesson_PreviewTextInput" Foreground="#FF212121" BorderBrush="#FF8E8E93" SelectionBrush="#FF0076FF">
+                <TextBox.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFE1E2E1" Offset="1"/>
+                        <GradientStop Color="#FFEEEEEE"/>
+                    </LinearGradientBrush>
+                </TextBox.Background>
+            </TextBox>
+            <TextBlock Grid.Row="3" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">Предмет</TextBlock>
+            <ComboBox x:Name="cbSubject" Grid.Row="3" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
+            <TextBlock Grid.Row="4" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">Тип заняття</TextBlock>
+            <ComboBox x:Name="cbTypeOfLesson" Grid.Row="4" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
+            <TextBlock Grid.Row="5" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">Аудиторія</TextBlock>
+            <ComboBox x:Name="cbClassroom" Grid.Row="5" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
+            <TextBlock Grid.Row="6" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">Группа</TextBlock>
 
-            <ScrollViewer Grid.Row="6" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
-                <StackPanel x:Name="GroupVerticalPanel"   HorizontalAlignment="Center">
-                </StackPanel>
+            <ScrollViewer Grid.Row="6" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Foreground="#FF212121">
+                <StackPanel x:Name="GroupVerticalPanel"  HorizontalAlignment="Left"/>
             </ScrollViewer>
 
-            <Button x:Name="btnAddNewGroup" Grid.Row="6" Grid.Column="2" MaxHeight="40" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0" Padding="10 2" Click="btnAddNewGroup_Click">+</Button>
-
+            <Button x:Name="btnAddNewGroup" Style="{DynamicResource RoundedButtonStyle}" Grid.Row="6" Grid.Column="2" MaxHeight="40" Width="26" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" Padding="10 2" Click="btnAddNewGroup_Click" Background="#FF0076FF" BorderBrush="{x:Null}" Foreground="#FFE1E2E1">+</Button>
+            
         </Grid>
-        <Button Grid.Row="1" x:Name="btnAccept" Width="Auto" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="10" Click="AcceptAndSave">Приняти</Button>
+        <Button Style="{DynamicResource RoundedButtonStyle}" Grid.Row="1" x:Name="btnAccept" Width="110" MinHeight="30" Height="Auto" MinWidth="100" Margin="10" Click="AcceptAndSave" Foreground="#FFE1E2E1" Background="#FF0076FF" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right">Приняти</Button>
     </Grid>
 </Window>

@@ -5,16 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="LoadingForm" Height="300" Width="300" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        Title="Обробка" Height="180.934" Width="500.778" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFE1E2E1" Offset="0.134"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid Margin="50">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock x:Name="tbDescription" Grid.Row="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <ProgressBar Grid.Row="1" Height="40px" IsIndeterminate="True"/>
-            
+            <ProgressBar Grid.Row="1" Height="40px" IsIndeterminate="True" Foreground="#FF0076FF" BorderBrush="{x:Null}"/>
+
         </Grid>
     </Grid>
 </Window>

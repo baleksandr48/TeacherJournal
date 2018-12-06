@@ -324,5 +324,10 @@ namespace TeacherJournal
             ExportWindow exportWindow = new ExportWindow();
             exportWindow.ShowDialog();
         }
+
+        private void lessonsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }  
 }

@@ -99,9 +99,9 @@ namespace TeacherJournal.view
             cbGroup.SelectedValuePath = "id";
 
             Button btn = new Button();
-            btn.Content = "Del";
+            btn.Content = (Image)FindResource("TrashBoxImage");
             btn.Margin = new Thickness(5, 0, 0, 0);
-            btn.Width = 30;
+           // btn.Width = 30;
             btn.Click += new RoutedEventHandler(btnDeleteGroup_Click);
             if (group != null)
             {
