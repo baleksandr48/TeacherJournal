@@ -144,5 +144,10 @@ namespace TeacherJournal.view
         {
             scheduleList.Add(DBHelper.AddRandomSchedule(currentTerm));
         }
+
+        private void ScheduleGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

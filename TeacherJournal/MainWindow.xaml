@@ -5,13 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal"
         mc:Ignorable="d"
-        Title="Журнал викладача" Height="625" Width="1000"
+        Title="Журнал викладача" Height="625" Width="1126" MinWidth="890" MinHeight="380"
         FontSize="16"
-        WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
+        WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded" Background="#FF212121">
     <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="12" Background="#0076FF" BorderThickness="1" Padding="5" Margin="5 10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <local:ListToStringConverter x:Key="ListToStringConverter"/>
         <Image x:Shared="False" x:Key="PenImage" Source="pack://application:,,,/Resources/images/pencil.png"/>
         <Image x:Shared="False" x:Key="TrashBoxImage" Source="pack://application:,,,/Resources/images/garbage.png"/>
+        <Image x:Shared="False" x:Key="WhitePenImage" Source="pack://application:,,,/Resources/images/pencil_white.png"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -24,14 +36,14 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
-            <Menu>
-                <MenuItem Header="Дані">
-                    <MenuItem Header="Очистити файл бд" Click="ClearTerms_Click"></MenuItem>
+            <Menu Foreground="#FFE1E2E1" Background="#FF212121">
+                <MenuItem Header="Дані" Foreground="#FFE1E2E1">
+                    <MenuItem Header="Очистити файл бд" Foreground="Black" Click="ClearTerms_Click"></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>
 
-        <Grid Grid.Row="1" Grid.Column="0" Background="#E4ECBB">
+        <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -41,59 +53,70 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid.Resources>
+            <!--<Grid.Resources>
                 <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="10"/>
-                    <Setter Property="Padding" Value="5 3"/>
-                    <Setter Property="FontSize" Value="16"/>
-                    <Setter Property="Background" Value="#F0BEBE"/>
+                    
                 </Style>
-            </Grid.Resources>
-            <TextBlock Grid.Row="0" Margin="10 10 10 3" Text="Семестр:"/>
+            </Grid.Resources>-->
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE1E2E1" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <TextBlock Grid.Row="0" Margin="10" Text="Семестр:" Foreground="#FF212121" FontSize="20" FontWeight="Bold"/>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="cbSemesterList" Grid.Column="0" Margin="10 5 5 5"  SelectedIndex="0" IsEditable="False" MinWidth="140" DisplayMemberPath="name" SelectionChanged="cbSemesterList_SelectionChanged"/>
-                <Button x:Name="btnAddNewSemester" Grid.Column="1" Margin="0 5 5 5" Click="btnAddNewSemester_Click">+</Button>
-                <Button x:Name="btnEditSemester" Grid.Column="2" Margin="0 5 10 5" Content="{StaticResource PenImage}" Click="btnEditSemester_Click" />
+                <ComboBox x:Name="cbSemesterList" Grid.Column="0" Margin="15 5 5 5"  SelectedIndex="0" IsEditable="False" VerticalAlignment="Center" MinHeight="40" MinWidth="160" DisplayMemberPath="name" SelectionChanged="cbSemesterList_SelectionChanged" Foreground="#FF212121" BorderBrush="{x:Null}" Background="{x:Null}"/>
+                <Button x:Name="btnEditSemester" Style="{DynamicResource RoundedButtonStyle}" Grid.Column="1" Margin="0 5 5 5" Content="{StaticResource WhitePenImage}" Click="btnEditSemester_Click" Background="#FF0076FF" Foreground="White" FontWeight="Bold" FontSize="20" BorderBrush="{x:Null}" Width="36" />
+                <Button x:Name="btnAddNewSemester" Style="{DynamicResource RoundedButtonStyle}" Grid.Column="2" Margin="0 5 10 5" Click="btnAddNewSemester_Click" Background="#FF0076FF" Foreground="#FFE1E2E1" FontSize="20" FontWeight="Bold" BorderBrush="{x:Null}" Width="36">+</Button>
             </Grid>
 
-            <Button x:Name="btnSubject" Grid.Row="2" Content="Предмети" Click="OpenVocabulary" />
-            <Button x:Name="btnGroup" Grid.Row="3" Content="Групи" Click="OpenVocabulary"/>
-            <Button x:Name="btnClassroom" Grid.Row="4" Content="Аудиторії" Click="OpenVocabulary"/>
-            <Button x:Name="btnSchedule" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click"/>
-            <Button x:Name="btnToDoc" Grid.Row="6" Content="В DOC" Click="btnToDoc_Click"/>
+            <Button x:Name="btnSubject" Style="{DynamicResource RoundedButtonStyle}" Padding="5 0" Margin="10 0 10 10" Grid.Row="2" Content="Предмети" Click="OpenVocabulary" Background="#FF0076FF" Foreground="#FFE1E2E1" FontWeight="Bold" FontSize="20" BorderBrush="{x:Null}"/>
+            <Button x:Name="btnGroup" Style="{DynamicResource RoundedButtonStyle}" Padding="5 0" Margin="10 0 10 10" Grid.Row="3" Content="Групи" Click="OpenVocabulary" Background="#FF0076FF" Foreground="#FFE1E2E1" FontWeight="Bold" FontSize="20" BorderBrush="{x:Null}"/>
+            <Button x:Name="btnClassroom" Style="{DynamicResource RoundedButtonStyle}" Padding="5 0" Margin="10 0 10 10" Grid.Row="4" Content="Аудиторії" Click="OpenVocabulary" Background="#FF0076FF" Foreground="#FFE1E2E1" FontWeight="Bold" FontSize="20" BorderBrush="{x:Null}"/>
+            <Button x:Name="btnSchedule" Style="{DynamicResource RoundedButtonStyle}" Padding="5 0" Margin="10 0 10 10" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click" Background="#FF0076FF" Foreground="#FFE1E2E1" FontWeight="Bold" FontSize="20" BorderBrush="{x:Null}"/>
+            <Button x:Name="btnToDoc" Style="{DynamicResource RoundedButtonStyle}" Padding="5 0" Margin="10 0 10 10" Grid.Row="6" Content="В DOC" Click="btnToDoc_Click" Background="#FF0076FF" Foreground="#FFE1E2E1" FontWeight="Bold" FontSize="20" BorderBrush="{x:Null}"/>
         </Grid>
         <!--<Border BorderBrush="#cccccc" BorderThickness="1" Margin="10,75,5,-73"/>-->
-        <Grid Grid.Row="1" Grid.Column="1" Background="#AFA7CD">
+        <Grid Grid.Row="1" Grid.Column="1" OpacityMask="#FF3A2A2A">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE1E2E1" Offset="0.134"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition ></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Заняття" HorizontalAlignment="Center" FontWeight="Bold"/>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="195" Height="48">
+                <TextBlock Grid.Row="0" FontSize="24" Text="Заняття" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF212121" Width="100" Height="32"/>
+            </Grid>
             <Grid Grid.Row="1" Margin="10 0 10 15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.75*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.25*"></ColumnDefinition>
+                    <ColumnDefinition Width="50*"></ColumnDefinition>
+                    <ColumnDefinition Width="33*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <TextBlock Text="Дата з " VerticalAlignment="Center" />
-                    <DatePicker x:Name="dpStartDate" MinWidth="150" SelectedDateChanged="dp_SelectedDateChanged" PreviewTextInput="dpPreviewTextInput"/>
-                    <TextBlock Text="по " Margin="10 0 0 0" VerticalAlignment="Center"/>
-                    <DatePicker x:Name="dpEndDate" MinWidth="150" SelectedDateChanged="dp_SelectedDateChanged" PreviewTextInput="dpPreviewTextInput"></DatePicker>
+                    <TextBlock Text="Дата з " VerticalAlignment="Center" Foreground="#FF212121" />
+                    <DatePicker x:Name="dpStartDate" VerticalAlignment="Center" MinWidth="150" SelectedDateChanged="dp_SelectedDateChanged" PreviewTextInput="dpPreviewTextInput" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF212121"/>
+                    <TextBlock Text="по " Margin="10 0 0 0" VerticalAlignment="Center" Foreground="#FF212121"/>
+                    <DatePicker x:Name="dpEndDate" VerticalAlignment="Center" MinWidth="150" SelectedDateChanged="dp_SelectedDateChanged" PreviewTextInput="dpPreviewTextInput" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF212121"></DatePicker>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Click="ShowToday" Padding="5 0" Margin="0 0 10 0">Сьогодні</Button>
-                    <Button Click="ShowAllTerm" Padding="5 0">Семестр</Button>
-                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Width="258">
+                    <Button Click="ShowToday" Style="{DynamicResource RoundedButtonStyle}" Padding="5 0" Margin="0 0 10 0" Foreground="#FFE1E2E1" FontWeight="Bold" FontSize="20" Width="124" Content="Сьогодні" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Click="ShowAllTerm" Style="{DynamicResource RoundedButtonStyle}" Padding="5 0" Foreground="#FFE1E2E1" FontWeight="Bold" FontSize="20" Content="Семестр" Width="124" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                 </StackPanel>
             </Grid>
             <DataGrid Grid.Row="2" x:Name="lessonsGrid"
                       CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False"
-                      RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" Margin="10 0 10 15">
+                      RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" Margin="10 0 10 15" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF212121" SelectionChanged="lessonsGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Дата" Binding="{Binding Path=date, StringFormat=\{0:dd.MM\}}" Width="0.5*"/>
                     <DataGridTextColumn Header="№ Пари" Binding="{Binding Path=numOfLesson}" Width="Auto"/>

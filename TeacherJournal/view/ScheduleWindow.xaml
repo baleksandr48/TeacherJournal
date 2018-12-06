@@ -8,11 +8,34 @@
         Title="Семестр" Height="500" Width="924.927"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
     <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="15" Background="#0076FF" BorderThickness="1" Padding="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <local:ListToStringConverter x:Key="ListToStringConverter"/>
         <Image x:Shared="False" x:Key="PenImage" Source="pack://application:,,,/Resources/images/pencil.png"/>
         <Image x:Shared="False" x:Key="TrashBoxImage" Source="pack://application:,,,/Resources/images/garbage.png"/>
     </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFE1E2E1" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFE1E2E1" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -23,13 +46,13 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Розклад" Padding="10" FontSize="18" FontWeight="Bold"/>
-            <Button x:Name="btnAddNewScheduleRow" Grid.Column="1" Width="Auto"  MinWidth="100px" Margin="10 5" 
-                    FontSize="18" HorizontalAlignment="Right" Click="btnAddNewScheduleRow_Click">Додати</Button>
+            <TextBlock Grid.Column="0" Text="Розклад" Padding="10" FontSize="24" FontWeight="Bold" Foreground="#FFE1E2E1"/>
+            <Button x:Name="btnAddNewScheduleRow" Style="{DynamicResource RoundedButtonStyle}" Grid.Column="1" Width="190"  MinWidth="100px" Margin="0,5,10,5" 
+                    FontSize="20" HorizontalAlignment="Right" Click="btnAddNewScheduleRow_Click" Background="#FF0076FF" Foreground="#FFE1E2E1" FontWeight="Bold" BorderBrush="{x:Null}" Height="33">Додати</Button>
         </Grid>
 
         <DataGrid x:Name="ScheduleGrid" Grid.Row="1" Margin="10 0 10 10" AutoGenerateColumns="False" 
-                  RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False" CanUserDeleteRows="False">
+                  RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False" CanUserDeleteRows="False" Background="{x:Null}" SelectionChanged="ScheduleGrid_SelectionChanged" BorderBrush="{x:Null}" Foreground="#FF212121">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Тип неділі" Binding="{Binding Path=typeOfWeek.name}"/>
                 <DataGridTextColumn Header="День неділі" Binding="{Binding Path=dayOfWeek.name}"/>
@@ -60,9 +83,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" x:Name="RandScheduleItem" Width="Auto" HorizontalAlignment="Left" Content="RandScheduleItem" Margin="10" FontSize="18" Padding="15 5 15 5" Click="RandScheduleItem_Click"></Button>
-            <Button Grid.Column="1" x:Name="btnFillSchedule" Width="Auto" HorizontalAlignment="Right" Content="Заповнити" Margin="10" FontSize="18" Padding="15 5 15 5" Click="btnFillSchedule_Click"></Button>
+            <Button Style="{DynamicResource RoundedButtonStyle}" Grid.Column="0" x:Name="RandScheduleItem" Width="190" HorizontalAlignment="Left" Content="RandScheduleItem" Margin="10" FontSize="20" Padding="15 5 15 5" Click="RandScheduleItem_Click" Background="#FF0076FF" Foreground="#FFE1E2E1" FontWeight="Bold" BorderBrush="{x:Null}"></Button>
+            <Button Style="{DynamicResource RoundedButtonStyle}" Grid.Column="1" x:Name="btnFillSchedule" Width="190" HorizontalAlignment="Right" Content="Заповнити" Margin="10" FontSize="20" Padding="15 5 15 5" Click="btnFillSchedule_Click" Background="#FF0076FF" Foreground="#FFE1E2E1" FontWeight="Bold" BorderBrush="{x:Null}"></Button>
         </Grid>
-        
+
     </Grid>
 </Window>

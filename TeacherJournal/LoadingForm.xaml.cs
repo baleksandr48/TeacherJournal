@@ -34,5 +34,10 @@ namespace TeacherJournal
         {
             tbDescription.Text = _processDesription;
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+        }
     }
 }
