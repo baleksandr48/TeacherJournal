@@ -21,7 +21,7 @@ namespace TeacherJournal
         public static void DatePickerValidation(object sender, TextCompositionEventArgs e)
         {
             DatePicker dp = (DatePicker)sender;
-            Regex regex = new Regex("[^0-9.]");
+            Regex regex = new Regex("[^0-9./]");
             e.Handled = regex.IsMatch(e.Text);
         }
     }

@@ -7,20 +7,6 @@
         mc:Ignorable="d"
         Title="ScheduleItemWindow" Height="340" Width="584" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen" WindowState="Normal">
-    <Window.Resources>
-        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="15" Background="#0076FF" BorderThickness="1" Padding="2">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Image x:Shared="False" x:Key="TrashBoxImage" Source="pack://application:,,,/Resources/images/garbage.png"/>
-    </Window.Resources>
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFE1E2E1" Offset="0"/>
@@ -81,9 +67,9 @@
                 <StackPanel x:Name="GroupVerticalPanel"  HorizontalAlignment="Left"/>
             </ScrollViewer>
 
-            <Button x:Name="btnAddNewGroup" Style="{DynamicResource RoundedButtonStyle}" Grid.Row="6" Grid.Column="2" MaxHeight="40" Width="26" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" Padding="10 2" Click="btnAddNewGroup_Click" Background="#FF0076FF" BorderBrush="{x:Null}" Foreground="#FFE1E2E1">+</Button>
+            <Button x:Name="btnAddNewGroup" Style="{DynamicResource RoundedBlueShortButtonStyle}" Grid.Row="6" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" Click="btnAddNewGroup_Click" BorderBrush="{x:Null}">+</Button>
             
         </Grid>
-        <Button Style="{DynamicResource RoundedButtonStyle}" Grid.Row="1" x:Name="btnAccept" Width="110" MinHeight="30" Height="Auto" MinWidth="100" Margin="10" Click="AcceptAndSave" Foreground="#FFE1E2E1" Background="#FF0076FF" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right">Приняти</Button>
+        <Button Style="{DynamicResource RoundedBlueLongButtonStyle}" Grid.Row="1" x:Name="btnAccept" Width="110" MinHeight="30" Height="Auto" MinWidth="100" Margin="10" Click="AcceptAndSave" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Right">Приняти</Button>
     </Grid>
 </Window>

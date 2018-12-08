@@ -18,6 +18,7 @@ namespace TeacherJournal
     {
         public static String DefaultProcessDescription = "Почекайте, виконуються дії.";
         private String _processDesription;
+        public bool WorkEnded;
 
         public LoadingForm()
         {
@@ -32,12 +33,16 @@ namespace TeacherJournal
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            WorkEnded = false;
             tbDescription.Text = _processDesription;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+            if (!WorkEnded)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

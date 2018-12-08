@@ -7,20 +7,6 @@
         mc:Ignorable="d"
         Title="Редагування заняття" Height="355.814" Width="658.882"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded" Foreground="#FF212121">
-    <Window.Resources>
-        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="15" Background="#0076FF" BorderThickness="1" Padding="2">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Image x:Shared="False" x:Key="TrashBoxImage" Source="pack://application:,,,/Resources/images/garbage.png"/>
-    </Window.Resources>
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFE1E2E1" Offset="0"/>
@@ -76,8 +62,8 @@
             <ScrollViewer Grid.Row="5" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Foreground="#FF212121">
                 <StackPanel x:Name="GroupVerticalPanel" HorizontalAlignment="Left"/>
             </ScrollViewer>
-            
-            <Button x:Name="btnAddNewGroup" Style="{DynamicResource RoundedButtonStyle}" Grid.Row="5" Grid.Column="2" MaxHeight="40" Width="26" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" Padding="10 2" Click="btnAddNewGroup_Click" Background="#FF0076FF" BorderBrush="{x:Null}" Foreground="#FFE1E2E1" >+</Button>
+
+            <Button x:Name="btnAddNewGroup" Style="{DynamicResource RoundedBlueShortButtonStyle}" Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" Click="btnAddNewGroup_Click" BorderBrush="{x:Null}">+</Button>
 
         </Grid>
         <Grid Grid.Row="1">
@@ -88,7 +74,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="btnAccept" Style="{DynamicResource RoundedButtonStyle}" Grid.Column="2" Width="110" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="0,10,10,10" Click="AcceptAndSave" FontSize="18" FontWeight="Bold" Foreground="#FFE1E2E1" Background="#FF0076FF" BorderBrush="{x:Null}">Прийняти</Button>
+            <Button x:Name="btnAccept" Style="{DynamicResource RoundedBlueLongButtonStyle}" Grid.Column="2" Width="110" MinHeight="30" Height="Auto" MinWidth="100" HorizontalAlignment="Right" Margin="0,10,10,10" Click="AcceptAndSave" FontSize="18" FontWeight="Bold" Foreground="#FFE1E2E1" Background="#FF0076FF" BorderBrush="{x:Null}">Прийняти</Button>
         </Grid>
     </Grid>
 </Window>
