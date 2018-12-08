@@ -229,11 +229,29 @@ namespace TeacherJournal
             }  
         }
 
-        // Редактирование конкретного занятия. Вызываем окно и передаем объект подлежащий редактированию.
+        // Нажатие на кнопку редактирования конкретного занятия. Вызываем окно и передаем объект подлежащий редактированию.
         private void EditRow_Click(object sender, RoutedEventArgs e)
         {
             Lesson obj = ((FrameworkElement)sender).DataContext as Lesson;
-            LessonItemWindow window = new LessonItemWindow(obj, currentTerm, this);
+            OpenLessonItemWindow(obj);
+        }
+
+        // Двойное нажатие ЛЕВОЙ кнопки на строку. Нужно редактировать объект Lesson в строке. 
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DataGridRow row = sender as DataGridRow;
+                Lesson obj = ((FrameworkElement)sender).DataContext as Lesson;
+                OpenLessonItemWindow(obj);
+            }
+            e.Handled = true;
+        }
+
+        // Открытие окна для редактирования Lesson.
+        private void OpenLessonItemWindow(Lesson ls)
+        {
+            LessonItemWindow window = new LessonItemWindow(ls, currentTerm, this);
             try
             {
                 window.ShowDialog();
@@ -242,7 +260,6 @@ namespace TeacherJournal
             {
                 Console.WriteLine("{0} Exception cought", ex);
             }
-
         }
 
         // Событие изменения даты на датапикерах. В связи с тем, что может вызываться дважды для каждого датапикера, вводим проверку с startDateValue и endDateValue.
@@ -302,6 +319,7 @@ namespace TeacherJournal
             }
         }
 
+        // Нажатие кнопки редактировать семестр.
         private void btnEditSemester_Click(object sender, RoutedEventArgs e)
         {
             if (currentTerm != null)
@@ -319,15 +337,12 @@ namespace TeacherJournal
             }
         }
 
+        // Обработка нажатия кнопки в Док.
         private void btnToDoc_Click(object sender, RoutedEventArgs e)
         {
             ExportWindow exportWindow = new ExportWindow();
             exportWindow.ShowDialog();
         }
 
-        private void lessonsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }  
 }

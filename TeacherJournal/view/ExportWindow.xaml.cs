@@ -28,11 +28,12 @@ namespace TeacherJournal.view
         private String _teacherFullName;
         private String _headFullName;
 
-        private LoadingForm loadingForm;
+        public LoadingForm loadingForm;
 
         public ExportWindow()
         {
             InitializeComponent();
+
             try
             {
                 _termList = DBHelper.selectTerms();
@@ -78,13 +79,14 @@ namespace TeacherJournal.view
 
         private void bg_DoWork(object sender, DoWorkEventArgs e)
         {
-            Export ctw = new Export();
-            ctw.ConvertToWord(_firstTerm, _secondTerm);
+            Export exportObject = new Export();
+            exportObject.ConvertToWord(_firstTerm, _secondTerm);
         }
 
         private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // Закрыть loading form и это окно.
+            loadingForm.WorkEnded = true;
             loadingForm.Close();
             this.DialogResult = true;
         }

@@ -92,6 +92,7 @@ namespace TeacherJournal.view
         private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // Закрыть loading form и это окно.
+            loadingForm.WorkEnded = true;
             loadingForm.Close();
             this.DialogResult = true;
         }
@@ -137,6 +138,19 @@ namespace TeacherJournal.view
             {
                 Console.WriteLine("{0} Exception caught", ex);
             }
+        }
+
+        // Двойное нажатие ЛЕВОЙ кнопки на строку. Нужно редактировать объект Schedule в строке. 
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DataGridRow row = sender as DataGridRow;
+                Schedule obj = ((FrameworkElement)sender).DataContext as Schedule;
+                ScheduleItemWindow window = new ScheduleItemWindow(currentTerm, this, obj);
+                window.ShowDialog();
+            }
+            e.Handled = true;
         }
 
         // Генерируем случайный объект Schedule и добавляем его в список.

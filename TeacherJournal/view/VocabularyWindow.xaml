@@ -7,33 +7,19 @@
         mc:Ignorable="d"
         Title="VocabularyWindow" Height="408.105" Width="287.629"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded">
-    <Window.Resources>
-        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="15" Background="#0076FF" BorderThickness="1" Padding="2">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Image x:Shared="False" x:Key="TrashBoxImage" Source="pack://application:,,,/Resources/images/garbage.png"/>
-    </Window.Resources>
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFE1E2E1" Offset="0"/>
             <GradientStop Color="White" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid>
+    <Grid Margin="0 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="tbVocabularyName" TextAlignment="Center" FontSize="20" FontWeight="Bold" Padding="10 5" Foreground="#FF212121"/>
+        <TextBlock Grid.Row="0" x:Name="tbVocabularyName" TextAlignment="Center" FontSize="20" FontWeight="Bold" Padding="10 5" Foreground="#FF212121" Text="Словник"/>
 
         <DataGrid x:Name="VocabularyGrid" Grid.Row="1" AutoGenerateColumns="False" RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF212121">
             <DataGrid.Columns>
@@ -53,8 +39,10 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnAddRow" Style="{DynamicResource RoundedButtonStyle}"  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,10,10,10" Padding="10 5" Click="btnAddRow_Click" Background="#FF0076FF" Foreground="#FFE1E2E1" FontSize="16" FontWeight="Bold" Width="110" BorderBrush="{x:Null}">Додати</Button>
-            <Button x:Name="btnAcceptClose" Style="{DynamicResource RoundedButtonStyle}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAcceptClose_Click" Margin="10" Padding="10 5" Background="#FF0076FF" Foreground="#FFE1E2E1" FontSize="16" FontWeight="Bold" Width="110" BorderBrush="{x:Null}">Зберегти</Button>
+            <Button x:Name="btnAddRow" Style="{DynamicResource RoundedBlueLongButtonStyle}"  Grid.Column="0" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Click="btnAddRow_Click" Width="110" BorderBrush="{x:Null}">Додати</Button>
+            <Button x:Name="btnAcceptClose" Style="{DynamicResource RoundedBlueLongButtonStyle}" Grid.Column="1" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Click="btnAcceptClose_Click" Width="110" BorderBrush="{x:Null}">Зберегти</Button>
         </Grid>
     </Grid>
 </Window>

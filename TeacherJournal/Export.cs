@@ -7,6 +7,7 @@ using Word = Microsoft.Office.Interop.Word;
 using System.Data;
 using TeacherJournal.model;
 using TeacherJournal.database;
+using Microsoft.Win32;
 
 namespace TeacherJournal
 {
@@ -19,6 +20,7 @@ namespace TeacherJournal
         private  String[] Month = { "Вересень", "Жовтень", "Листопад", "Грудень", "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень" };
         private  String[] nameColumns = { "Місяць", "Читання лекцій", "Проведення практичних занять", "Проведення лабораторних занять", "Проведення семінарських занять", "Проведення індивідуальних занять", "Проведення консультацій протягом семестра", "Проведення екзаменаційних консультацій", "Перевірка контрольних (модульних) робіт, що виконуються під час самостійної роботи", "Рефератів, аналітичних оглядів, перекладів", "Розрахункових, графічних, розрахунково-графічних робіт", "Курсових проектів, робіт", "Проведення заліку", "Проведення семестрових екзаменів", "Керівництво навчальною і виробничою практикою", "Проведення атестації", "Керівництво, консуль - тування, рецензування та проведення захисту дипломних проектів(робіт)", "Керівництво аспірантами, здобувачами та стажуванням викладачів", "Усього" };
 
+        private object _filename;
 
         private  String zavkaf;
         private  String prepod;
@@ -45,13 +47,24 @@ namespace TeacherJournal
         private  int DaysOfWeek;
         public Export()
         {
+            //_filename = @"TeacherJournal.doc";
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.DefaultExt = ".doc";
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.Title = "Виберіть місце та назву файлу";
+            saveFileDialog.Filter = "Документ Microsoft Word 97–2003 (*.doc)|*.doc";
+            if (saveFileDialog.ShowDialog() == false)
+                return;
+            // получаем выбранный файл
+            _filename = saveFileDialog.FileName;
+
             WordApp = new Word.Application();
             adoc = WordApp.Documents.Add();
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
 
             prepod = "Каплієнко Т.І.";
             zavkaf = "Субботін С.О.";
-
+            
             Word.Application wrdApplication = new Word.Application();
             adoc.PageSetup.TopMargin = wrdApplication.InchesToPoints(0.5f);
             adoc.PageSetup.BottomMargin = wrdApplication.InchesToPoints(0.5f);
@@ -707,9 +720,11 @@ namespace TeacherJournal
 
             CreateReportTable(term1, term2);
             InsertFieldWithInitials(zavkaf, prepod, "Album");
+
             //Сохранение документа
-            object filename = @"TeacherJournal.doc"; // Здесь указать путь до рабочего стола
-            adoc.SaveAs(ref filename);
+            
+        //    object filename = @"TeacherJournal.doc"; // Здесь указать путь до рабочего стола
+            adoc.SaveAs(ref _filename);
             WordApp.Visible = true;
         }
     }
