@@ -129,6 +129,13 @@ namespace TeacherJournal.database
                 "FOREIGN KEY(idSubject) REFERENCES Subject(id) ON DELETE CASCADE," +
                 "FOREIGN KEY(idGroup) REFERENCES _Group(id) ON DELETE CASCADE," +
                 "FOREIGN KEY(idTypeOfLesson) REFERENCES TypeOfLesson(id));";
+            String teacher = "CREATE TABLE Teacher(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
+                "institute TEXT," +
+                "faculty TEXT," +
+                "department TEXT," +
+                "fullName TEXT," +
+                "academicRank TEXT," +
+                "post TEXT);";
 
             new SQLiteCommand(group, connection).ExecuteNonQuery();
             new SQLiteCommand(subject, connection).ExecuteNonQuery();
@@ -139,6 +146,7 @@ namespace TeacherJournal.database
             new SQLiteCommand(typeOfWeek, connection).ExecuteNonQuery();
             new SQLiteCommand(schedule, connection).ExecuteNonQuery();
             new SQLiteCommand(lesson, connection).ExecuteNonQuery();
+            new SQLiteCommand(teacher, connection).ExecuteNonQuery();
         }
 
         static private void fillVocabularies()
@@ -165,6 +173,9 @@ namespace TeacherJournal.database
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Індивідуальне заняття')", connection).ExecuteNonQuery();
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Консультація')", connection).ExecuteNonQuery();
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Екзамінаційна консультація')", connection).ExecuteNonQuery();
+
+            //Создаем запись с информацией преподавателя
+            new SQLiteCommand("INSERT INTO Teacher (institute, faculty, department, fullName, academicRank, post) VALUES (' ', ' ', ' ', ' ', ' ', ' ')", connection).ExecuteNonQuery();
         }
     }
 }
