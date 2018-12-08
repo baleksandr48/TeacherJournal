@@ -1149,6 +1149,247 @@ namespace TeacherJournal.database
             return typesOfLesson;
         }
 
+        //Teacher
+        public static String getTeacherName()
+        {
+            String teacherName = " ";
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = String.Format("SELECT fullName FROM Teacher");
+
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    foreach (DbDataRecord record in reader)
+                    {
+                        teacherName = record.GetString(0);
+                    }
+                }
+                connection.Close();
+            }
+            return teacherName;
+        }
+
+        public static void updateTeacherName(String name)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE Teacher SET fullName = '{0}';", name);
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+
+        public static String getTeacherInstitute()
+        {
+            String teacherInstitute = " ";
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = String.Format("SELECT institute FROM Teacher");
+
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    foreach (DbDataRecord record in reader)
+                    {
+                        teacherInstitute = record.GetString(0);
+                    }
+                }
+                connection.Close();
+            }
+            return teacherInstitute;
+        }
+
+        public static void updateTeacherInstitute(String institute)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE Teacher SET institute = '{0}';", institute);
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+
+        public static String getTeacherFaculty()
+        {
+            String teacherFaculty = " ";
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = String.Format("SELECT faculty FROM Teacher");
+
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    foreach (DbDataRecord record in reader)
+                    {
+                        teacherFaculty = record.GetString(0);
+                    }
+                }
+                connection.Close();
+            }
+            return teacherFaculty;
+        }
+
+        public static void updateTeacherFaculty(String faculty)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE Teacher SET faculty = '{0}';", faculty);
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+
+        public static String getTeacherDepartment()
+        {
+            String teacherDepartment = " ";
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = String.Format("SELECT department FROM Teacher");
+
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    foreach (DbDataRecord record in reader)
+                    {
+                        teacherDepartment = record.GetString(0);
+                    }
+                }
+                connection.Close();
+            }
+            return teacherDepartment;
+        }
+
+        public static void updateTeacherDepartment(String department)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE Teacher SET department = '{0}';", department);
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+
+        public static String getTeacherAcademicRank()
+        {
+            String teacherAcademicRank = " ";
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = String.Format("SELECT academikRank FROM Teacher");
+
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    foreach (DbDataRecord record in reader)
+                    {
+                        teacherAcademicRank = record.GetString(0);
+                    }
+                }
+                connection.Close();
+            }
+            return teacherAcademicRank;
+        }
+
+        public static void updateTeacherRank(String rank)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE Teacher SET academicRank = '{0}';", rank);
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+
+        public static String getTeacherPost()
+        {
+            String teacherPost = " ";
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = String.Format("SELECT post FROM Teacher");
+
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    foreach (DbDataRecord record in reader)
+                    {
+                        teacherPost = record.GetString(0);
+                    }
+                }
+                connection.Close();
+            }
+            return teacherPost;
+        }
+
+        public static void updateTeacherPost(String post)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE Teacher SET post = '{0}';", post);
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+
         //считает количество дней с 01.01.1970 до заданной даты
         public static int calculateDays(DateTime date)
         {
