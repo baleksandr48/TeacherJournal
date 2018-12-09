@@ -755,9 +755,9 @@ namespace TeacherJournal
             tableOfReport.Cell(1,1).Merge(tableOfReport.Cell(3,1));
         }
         
-        public  void ConvertToWord(Term term1, Term term2)
+        public  void ConvertToWord(Term term1, Term term2, String _teacherFullName,String _headFullName,String _instute, String _faculty, String _department, String _academic, String _post)
         {
-            Titulka("інформатики та радіоелектроніки", "комп’ютерних наук і технологій",Convert.ToString(term1.beginDate.Year), Convert.ToString(term2.beginDate.Year), "програмних засобів", "Каплієнко Тетяна Ігорівна", "к.т.н.", "доцент");
+            Titulka(_instute, _faculty,Convert.ToString(term1.beginDate.Year), Convert.ToString(term2.beginDate.Year), _department, _teacherFullName, _academic, _post);
 
             //InsertText("Розклад занять і графік роботи в приміщеннях вищого навчального закладу на " + Convert.ToString(term1.beginDate.Year) + "-" + Convert.ToString(term2.beginDate.Year) + " навчальний рік",1,14, Word.WdUnderline.wdUnderlineSingle, Word.WdParagraphAlignment.wdAlignParagraphCenter,true);
 

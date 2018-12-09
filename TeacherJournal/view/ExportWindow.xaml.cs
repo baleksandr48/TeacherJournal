@@ -27,6 +27,12 @@ namespace TeacherJournal.view
         private Term _secondTerm;
         private String _teacherFullName;
         private String _headFullName;
+        private String _instute;
+        private String _faculty;
+        private String _department;
+        private String _academic;
+        private String _post;
+
 
         public LoadingForm loadingForm;
 
@@ -55,12 +61,18 @@ namespace TeacherJournal.view
 
         private void AcceptAndConvert(object sender, RoutedEventArgs e)
         {
-            _teacherFullName = tbTeacherFullName.Text;
-            _headFullName = tbHeadFullName.Text;
+            _teacherFullName = DBHelper.getTeacherName();
+            _headFullName = "asdf";
+            _instute = DBHelper.getTeacherInstitute();
+            _faculty = DBHelper.getTeacherFaculty();
+            _department = DBHelper.getTeacherDepartment();
+            //_academic = DBHelper.getTeacherAcademicRank();
+            _post = DBHelper.getTeacherPost();
+
             _firstTerm = cbFirstTerm.SelectedItem as Term;
             _secondTerm = cbSecondTerm.SelectedItem as Term;
 
-            if ((_teacherFullName != "") && (_headFullName != "") && (_firstTerm != null) && (_secondTerm != null))
+            if ((_firstTerm != null) && (_secondTerm != null))
             {
                 BackgroundWorker bg = new BackgroundWorker();
                 bg.DoWork += new DoWorkEventHandler(bg_DoWork);
@@ -80,7 +92,7 @@ namespace TeacherJournal.view
         private void bg_DoWork(object sender, DoWorkEventArgs e)
         {
             Export exportObject = new Export();
-            exportObject.ConvertToWord(_firstTerm, _secondTerm);
+            exportObject.ConvertToWord(_firstTerm, _secondTerm, _teacherFullName, _headFullName, _instute, _faculty, _department, _academic, _post);
         }
 
         private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
