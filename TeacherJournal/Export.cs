@@ -13,7 +13,7 @@ namespace TeacherJournal
 {
     class Export
     {
-        private  String[] ColumnsNameOfSchedule = { "Пара", "Номер тижня", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Суббота", "Неділя" };
+        private  String[] ColumnsNameOfSchedule = { "Пара", "Номер тижня", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя" };
         private  String[] RowsNumberOfSchedule = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" };
         private  String[] ColumnsNameOfLessons = { "Дата","Шифр потоку (академічної групи)","Назва навчальної дисципліни", "Тема заняття","Вид заняття", "К-ть годин"};
         private  String[] TypeOfLesson = { "Лекція", "Практичне заняття", "Лабораторне заняття ", "Семінарське заняття", "Індивідуальне заняття", "Консультація", "Екзамінаційна консультація" };
@@ -295,20 +295,19 @@ namespace TeacherJournal
             List<model.DayOfWeek> dayOfWeek = DBHelper.selectDaysOfWeek();
             DaysOfWeek = dayOfWeek.Count;
 
-
-            foreach(Schedule obj in schedules)
+            DaysOfWeek = 5;
+            foreach (Schedule obj in schedules)
             {
-                if(obj.dayOfWeek.name!=nameColumns[8] || obj.dayOfWeek.name != nameColumns[9])
+                 if (obj.dayOfWeek.name == ColumnsNameOfSchedule[7])
                 {
-                    DaysOfWeek = 5;
-                } else if (obj.dayOfWeek.name == nameColumns[8])
-                {
-                    DaysOfWeek = 6;
-                }else if(obj.dayOfWeek.name == nameColumns[9])
-                {
-                    DaysOfWeek = 7;
+                    DaysOfWeek += 1;
+                    break;
                 }
-                
+                if (obj.dayOfWeek.name == ColumnsNameOfSchedule[8])
+                {
+                    DaysOfWeek += 2;
+                    break;
+                }
             }
             tableColumns = 2 + DaysOfWeek;
             //Количество недель в семестре
@@ -330,7 +329,7 @@ namespace TeacherJournal
                 }
             }
 
-            Schedule[,] scheduleMatrix = new Schedule[maxLessons, DaysOfWeek];
+            Schedule[,,] scheduleMatrix = new Schedule[maxLessons, DaysOfWeek,3];
 
             foreach (Schedule obj in schedules)
             {
@@ -340,7 +339,17 @@ namespace TeacherJournal
                     {
                         if (obj.numOfLesson == i + 1 && obj.dayOfWeek.id == k + 1)
                         {
-                            scheduleMatrix[i, k] = obj;
+                            if (obj.typeOfWeek.name == "Чисельник")
+                            {
+                                scheduleMatrix[i, k, 0] = obj;
+                            } else if(obj.typeOfWeek.name == "Знаменник")
+                            {
+                                scheduleMatrix[i, k, 1] = obj;
+                            } else if(obj.typeOfWeek.name == "Щотижня")
+                            {
+                                scheduleMatrix[i, k, 2] = obj;
+                            }
+
                         }
                     }
                 }
@@ -365,6 +374,8 @@ namespace TeacherJournal
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             Word.Table tableSchedule = adoc.Tables.Add(rangeEndOfFile, tableRows, tableColumns);
 
+            tableSchedule.Columns.AutoFit();
+
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             if (Break)
             {
@@ -388,7 +399,7 @@ namespace TeacherJournal
 
             SetStyleOfDoc(tableSchedule);
 
-            //Сливание клеток
+            //Слияние клеток
             for (int i = 0; i < maxLessons; i++)
             {
                 if (DaysIsntNull[i])
@@ -406,44 +417,93 @@ namespace TeacherJournal
                 int begin = 2;
                 for (int k = 0; k < maxLessons; k++)
                 {
+                    
                     if (DaysIsntNull[k])
                     {
-                        if (scheduleMatrix[k, i] != null)
+                        
+                        if (scheduleMatrix[k, i, 0] != null && scheduleMatrix[k, i, 0].dayOfWeek.id == i + 1 || scheduleMatrix[k, i, 1] != null && scheduleMatrix[k, i, 1].dayOfWeek.id == i + 1 || scheduleMatrix[k, i, 2] != null && scheduleMatrix[k, i, 2].dayOfWeek.id == i + 1)
                         {
-                            if (scheduleMatrix[k, i].dayOfWeek.id == i + 1)
+                            for (int n = 0; n < 3; n++)
                             {
-                                tableSchedule.Columns[posDays].Cells[begin].Merge(tableSchedule.Columns[posDays].Cells[begin + numOfWeeks - 1]);
-                                tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i].subject.name);
-                                tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(", ");
-                                tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i].typeOfLesson.name);
-                                tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(", ");
-
-                                for (int n = 0; n < scheduleMatrix[k, i].groups.Count; n++)
+                                if (scheduleMatrix[k, i, n] != null)
                                 {
-                                    tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i].groups[n].name);
-                                    tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(", ");
+                                    if (scheduleMatrix[k, i, n].typeOfWeek.name == "Чисельник")
+                                    {
+                                        tableSchedule.Columns[posDays].Cells[begin].Merge(tableSchedule.Columns[posDays].Cells[begin + numOfWeeks - 1]);
+                                        tableSchedule.Columns[posDays].Cells[begin].Split(2, 1);
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].subject.name+ ", ");
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].typeOfLesson.name+ ", ");
+
+                                        for (int m = 0; m < scheduleMatrix[k, i, n].groups.Count; m++)
+                                        {
+                                            tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].groups[m].name+ ", ");
+                                        }
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter("ауд. "+ scheduleMatrix[k, i, n].classroom.name+", ");
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].typeOfWeek.name);
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                                        tableSchedule.Columns[posDays].Cells[begin].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.Font.Size = 11;
+                                        if(scheduleMatrix[k, i, n+1] != null)
+                                        {
+                                            begin += 1;
+                                        }else begin += 2;
+
                                 }
-                                tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter("ауд. ");
+                                    else if (scheduleMatrix[k, i, n].typeOfWeek.name == "Знаменник")
+                                    {
+                                            
+                                        if (scheduleMatrix[k, i, n - 1] == null)
+                                        {
+                                            tableSchedule.Columns[posDays].Cells[begin].Merge(tableSchedule.Columns[posDays].Cells[begin + numOfWeeks - 1]);
+                                            tableSchedule.Columns[posDays].Cells[begin].Split(2, 1);
+                                            begin += 1;
+                                        }
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].subject.name+", ");
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].typeOfLesson.name+", ");
 
-                                tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i].classroom.name);
-                                tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(", ");
-                                tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i].typeOfWeek.name);
-                                tableSchedule.Columns[posDays].Cells[begin].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                                tableSchedule.Columns[posDays].Cells[begin].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                                tableSchedule.Columns[posDays].Cells[begin].Range.Font.Size = 11;
-                                begin += 1;
+                                        for (int m = 0; m < scheduleMatrix[k, i, n].groups.Count; m++)
+                                        {
+                                            tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].groups[m].name+ ", ");
+                                        }
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter("ауд. "+ scheduleMatrix[k, i, n].classroom.name+", ");
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].typeOfWeek.name);
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                                        tableSchedule.Columns[posDays].Cells[begin].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.Font.Size = 11;
+                                        begin += 1;
+                                    }
+                                    else if (scheduleMatrix[k, i, n].typeOfWeek.name == "Щотижня")
+                                    {
+                                        tableSchedule.Columns[posDays].Cells[begin].Merge(tableSchedule.Columns[posDays].Cells[begin + numOfWeeks - 1]);
 
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].subject.name+", ");
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].typeOfLesson.name+", ");
+
+                                        for (int m = 0; m < scheduleMatrix[k, i, n].groups.Count; m++)
+                                        {
+                                            tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].groups[m].name+", ");
+                                        }
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter("ауд. "+ scheduleMatrix[k, i, n].classroom.name+",");
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.InsertAfter(scheduleMatrix[k, i, n].typeOfWeek.name);
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                                        tableSchedule.Columns[posDays].Cells[begin].VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                                        tableSchedule.Columns[posDays].Cells[begin].Range.Font.Size = 11;
+                                        begin += 1;
+                                    }
+                                }
                             }
                         }
                         else
                         {
                             begin += numOfWeeks;
                         }
+                        
                     }
                     else
                     {
                         begin += 2;
                     }
+                    
                 }
             }
 
@@ -616,6 +676,10 @@ namespace TeacherJournal
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             SetStyleOfDoc(tableOfReport);
 
+            
+            tableOfReport.Columns.AutoFit();
+
+            
 
             fillRowsOfReport(lessons1Term, tableOfReport, 1, "Січень", 8);
             fillRowsOfReport(lessons2Term, tableOfReport, 2, "Лютий", 10);
@@ -631,7 +695,6 @@ namespace TeacherJournal
             fillRowsOfReport(lessons1Term, tableOfReport, 12, "Грудень", 7);
 
             int[] sum = new int[TypeOfLesson.Length];
-            //tableOfReport.Columns.AutoFit();
 
            
             for (int i = 0; i < TypeOfLesson.Length; i++)
@@ -683,47 +746,49 @@ namespace TeacherJournal
             }
             tableOfReport.Cell(1,1).Range.Orientation = Word.WdTextOrientation.wdTextOrientationUpward;
             tableOfReport.Columns[2].Cells[1].Range.InsertAfter("Кількість годин");
-            tableOfReport.Columns[1].Cells[1].Merge(tableOfReport.Columns[1].Cells[3]);
             tableOfReport.Columns[10].Cells[2].Merge(tableOfReport.Columns[12].Cells[2]);
-            tableOfReport.Cell(1,2).Merge(tableOfReport.Cell(1,19));
+            tableOfReport.Cell(1, 2).Merge(tableOfReport.Cell(1, 19));
 
-
+            tableOfReport.Cell(1, 2).SetHeight((float)20, Word.WdRowHeightRule.wdRowHeightExactly);
+            
+            tableOfReport.Cell(3,1).SetHeight((float)120, Word.WdRowHeightRule.wdRowHeightExactly);
+            tableOfReport.Cell(1,1).Merge(tableOfReport.Cell(3,1));
         }
         
         public  void ConvertToWord(Term term1, Term term2)
         {
             Titulka("інформатики та радіоелектроніки", "комп’ютерних наук і технологій",Convert.ToString(term1.beginDate.Year), Convert.ToString(term2.beginDate.Year), "програмних засобів", "Каплієнко Тетяна Ігорівна", "к.т.н.", "доцент");
 
-            InsertText("Розклад занять і графік роботи в приміщеннях вищого навчального закладу на " + Convert.ToString(term1.beginDate.Year) + "-" + Convert.ToString(term2.beginDate.Year) + " навчальний рік",1,14, Word.WdUnderline.wdUnderlineSingle, Word.WdParagraphAlignment.wdAlignParagraphCenter,true);
+            //InsertText("Розклад занять і графік роботи в приміщеннях вищого навчального закладу на " + Convert.ToString(term1.beginDate.Year) + "-" + Convert.ToString(term2.beginDate.Year) + " навчальний рік",1,14, Word.WdUnderline.wdUnderlineSingle, Word.WdParagraphAlignment.wdAlignParagraphCenter,true);
 
-            InsertText(term1.name, 1, 12, 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
+            //InsertText(term1.name, 1, 12, 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
 
-            CreateScheduleTable(term1, false);
+            //CreateScheduleTable(term1, false);
 
-            rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
+            //rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+            //rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
 
-            InsertText(term2.name, 1, 12, 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
+            //InsertText(term2.name, 1, 12, 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
 
-            CreateScheduleTable(term2, true);
+            //CreateScheduleTable(term2, true);
 
-            InsertText("1. Облік виконання навчальної роботи викладача", 1, Convert.ToInt32(14.5), 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
-           
-            CreateLessonsTable(term1);
-        
-            CreateLessonsTable(term2);
+            //InsertText("1. Облік виконання навчальної роботи викладача", 1, Convert.ToInt32(14.5), 0, Word.WdParagraphAlignment.wdAlignParagraphLeft, false);
 
-            InsertFieldWithInitials(zavkaf, prepod, "Book");
+            //CreateLessonsTable(term1);
 
-            rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
+            //CreateLessonsTable(term2);
 
-            CreateReportTable(term1, term2);
-            InsertFieldWithInitials(zavkaf, prepod, "Album");
+            //InsertFieldWithInitials(zavkaf, prepod, "Book");
+
+            //rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+            //rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
+
+            //CreateReportTable(term1, term2);
+            //InsertFieldWithInitials(zavkaf, prepod, "Album");
 
             //Сохранение документа
-            
-        //    object filename = @"TeacherJournal.doc"; // Здесь указать путь до рабочего стола
+
+            //    object filename = @"TeacherJournal.doc"; // Здесь указать путь до рабочего стола
             adoc.SaveAs(ref _filename);
             WordApp.Visible = true;
         }

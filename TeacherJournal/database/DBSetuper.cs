@@ -167,7 +167,7 @@ namespace TeacherJournal.database
 
             //Заполняем словарь видов занятий
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Лекція')", connection).ExecuteNonQuery();
-            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Лабораторне заняття ')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Лабораторне заняття')", connection).ExecuteNonQuery();
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Практичне заняття')", connection).ExecuteNonQuery();
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Семінарське заняття')", connection).ExecuteNonQuery();
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Індивідуальне заняття')", connection).ExecuteNonQuery();
