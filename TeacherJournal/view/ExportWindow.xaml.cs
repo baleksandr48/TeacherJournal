@@ -62,11 +62,11 @@ namespace TeacherJournal.view
         private void AcceptAndConvert(object sender, RoutedEventArgs e)
         {
             _teacherFullName = DBHelper.getTeacherName();
-            _headFullName = "asdf";
+            _headFullName = DBHelper.getHeadName();
             _instute = DBHelper.getTeacherInstitute();
             _faculty = DBHelper.getTeacherFaculty();
             _department = DBHelper.getTeacherDepartment();
-            //_academic = DBHelper.getTeacherAcademicRank();
+            _academic = DBHelper.getTeacherAcademicRank();
             _post = DBHelper.getTeacherPost();
 
             _firstTerm = cbFirstTerm.SelectedItem as Term;

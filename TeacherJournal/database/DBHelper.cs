@@ -1189,6 +1189,45 @@ namespace TeacherJournal.database
                 connection.Close();
             }
         }
+        public static String getHeadName()
+        {
+            String teacherAcademicRank = " ";
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = String.Format("SELECT headFullName FROM Teacher");
+
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    foreach (DbDataRecord record in reader)
+                    {
+                        teacherAcademicRank = record.GetString(0);
+                    }
+                }
+                connection.Close();
+            }
+            return teacherAcademicRank;
+        }
+
+        public static void updateHeadName(String rank)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(String.Format("Data Source={0};", dbName)))
+            {
+                connection.Open();
+                using (SQLiteCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = pragmaKeyON;
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE Teacher SET headFullName = '{0}';", rank);
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
 
         public static String getTeacherInstitute()
         {
@@ -1318,7 +1357,7 @@ namespace TeacherJournal.database
                 connection.Open();
                 using (SQLiteCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("SELECT academikRank FROM Teacher");
+                    command.CommandText = String.Format("SELECT academicRank FROM Teacher");
 
                     SQLiteDataReader reader = command.ExecuteReader();
 

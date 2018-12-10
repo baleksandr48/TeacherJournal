@@ -134,6 +134,7 @@ namespace TeacherJournal.database
                 "faculty TEXT," +
                 "department TEXT," +
                 "fullName TEXT," +
+                "headFullName TEXT," +
                 "academicRank TEXT," +
                 "post TEXT);";
 
@@ -175,7 +176,7 @@ namespace TeacherJournal.database
             new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Екзамінаційна консультація')", connection).ExecuteNonQuery();
 
             //Создаем запись с информацией преподавателя
-            new SQLiteCommand("INSERT INTO Teacher (institute, faculty, department, fullName, academicRank, post) VALUES (' ', ' ', ' ', ' ', ' ', ' ')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO Teacher (institute, faculty, department, fullName,headFullName, academicRank, post) VALUES (' ', ' ', ' ', ' ', ' ', ' ',' ')", connection).ExecuteNonQuery();
         }
     }
 }
