@@ -104,6 +104,7 @@
     <Compile Include="model\Lesson.cs" />
     <Compile Include="model\Schedule.cs" />
     <Compile Include="model\Subject.cs" />
+    <Compile Include="model\Teacher.cs" />
     <Compile Include="model\Term.cs" />
     <Compile Include="model\TypeOfLesson.cs" />
     <Compile Include="model\TypeOfWeek.cs" />

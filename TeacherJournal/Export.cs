@@ -560,7 +560,7 @@ namespace TeacherJournal
                 }
             }
         }
-        private  void TitlePage(String instute, String faculty, String beginDate, String endDate, String department,String teacherFullName,String academicRank,String post)
+        private  void TitlePage(String beginDate, String endDate, Teacher teacher)
         {
             Word.Paragraphs wordparagraphs = adoc.Paragraphs;
             
@@ -582,7 +582,7 @@ namespace TeacherJournal
             wordparagraphs[2].Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
 
             adoc.Paragraphs.Add();
-            wordparagraphs[3].Range.Text = "Інститут, факультет: "+ instute + ","+faculty;
+            wordparagraphs[3].Range.Text = "Інститут, факультет: "+ teacher.institute + ","+ teacher.faculty;
             wordparagraphs[3].Range.Bold = 1;
             wordparagraphs[3].Range.Font.Size = (float)12.5;
             wordparagraphs[3].Range.Font.Name = "Times New Roman";
@@ -618,7 +618,7 @@ namespace TeacherJournal
             adoc.Paragraphs.Add();
 
             adoc.Paragraphs.Add();
-            wordparagraphs[16].Range.Text = "1. Кафедра__________________________" + department+"";
+            wordparagraphs[16].Range.Text = "1. Кафедра__________________________" + teacher.department +"";
             wordparagraphs[16].Range.Bold = 0;
             wordparagraphs[16].Range.Font.Name = "Times New Roman";
             wordparagraphs[16].Range.Font.Size = 18;
@@ -626,7 +626,7 @@ namespace TeacherJournal
             wordparagraphs[16].Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
 
             adoc.Paragraphs.Add();
-            wordparagraphs[17].Range.Text = "2. Прізвище, ім'я, по батькові__________" + teacherFullName;
+            wordparagraphs[17].Range.Text = "2. Прізвище, ім'я, по батькові__________" + teacher.fullName;
             wordparagraphs[17].Range.Bold = 0;
             wordparagraphs[17].Range.Font.Name = "Times New Roman";
             wordparagraphs[17].Range.Font.Size = 18;
@@ -634,7 +634,7 @@ namespace TeacherJournal
             wordparagraphs[17].Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
 
             adoc.Paragraphs.Add();
-            wordparagraphs[18].Range.Text = "3. Вчене звання, науковий ступінь______" + academicRank;
+            wordparagraphs[18].Range.Text = "3. Вчене звання, науковий ступінь______" + teacher.academicRank;
             wordparagraphs[18].Range.Bold = 0;
             wordparagraphs[18].Range.Font.Name = "Times New Roman";
             wordparagraphs[18].Range.Font.Size = 18;
@@ -642,7 +642,7 @@ namespace TeacherJournal
             wordparagraphs[18].Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
 
             adoc.Paragraphs.Add();
-            wordparagraphs[19].Range.Text = "4. Посада___________________________" + post;
+            wordparagraphs[19].Range.Text = "4. Посада___________________________" + teacher.post;
             wordparagraphs[19].Range.Bold = 0;
             wordparagraphs[19].Range.Font.Name = "Times New Roman";
             wordparagraphs[19].Range.Font.Size = 18;
@@ -763,9 +763,9 @@ namespace TeacherJournal
             tableOfReport.Cell(1,1).Merge(tableOfReport.Cell(3,1));
         }
         
-        public  void ConvertToWord(Term term1, Term term2, String teacherFullName,String headFullName,String instute, String faculty, String department, String academic, String post)
+        public  void ConvertToWord(Term term1, Term term2, Teacher teacher)
         {
-            TitlePage(instute, faculty, Convert.ToString(term1.beginDate.Year), Convert.ToString(term2.beginDate.Year), department, teacherFullName, academic, post);
+            TitlePage(Convert.ToString(term1.beginDate.Year), Convert.ToString(term2.beginDate.Year), teacher);
 
             InsertText("Розклад занять і графік роботи в приміщеннях вищого навчального закладу на " + Convert.ToString(term1.beginDate.Year) + "-" + Convert.ToString(term2.beginDate.Year) + " навчальний рік", 1, 14, Word.WdUnderline.wdUnderlineSingle, Word.WdParagraphAlignment.wdAlignParagraphCenter, true);
 
@@ -786,13 +786,13 @@ namespace TeacherJournal
 
             CreateLessonsTable(term2);
 
-            InsertFieldWithInitials(headFullName, teacherFullName, "Book");
+            InsertFieldWithInitials(teacher.headFullName, teacher.fullName, "Book");
 
             rangeEndOfFile = adoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
             rangeEndOfFile.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
 
             CreateReportTable(term1, term2);
-            InsertFieldWithInitials(headFullName, teacherFullName, "Album");
+            InsertFieldWithInitials(teacher.headFullName, teacher.fullName, "Album");
 
             //Сохранение документа
 
