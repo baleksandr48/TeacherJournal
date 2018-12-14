@@ -1185,8 +1185,8 @@ namespace TeacherJournal.database
                     command.CommandText = pragmaKeyON;
                     command.ExecuteNonQuery();
 
-                    command.CommandText = String.Format("UPDATE Teacher SET institute = {0}, faculty = {1}, department = {2}, " +
-                        "fullName = {3}, headFullName = {4}, academicRank = {5}, post = {6};", teacher.institute, teacher.faculty, teacher.department,
+                    command.CommandText = String.Format("UPDATE Teacher SET institute = '{0}', faculty = '{1}', department = '{2}', " +
+                        "fullName = '{3}', headFullName = '{4}', academicRank = '{5}', post = '{6}';", teacher.institute, teacher.faculty, teacher.department,
                         teacher.fullName, teacher.headFullName, teacher.academicRank, teacher.post);
                     command.ExecuteNonQuery();
                 }
