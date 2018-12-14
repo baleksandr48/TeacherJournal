@@ -319,6 +319,12 @@ namespace TeacherJournal
             }
         }
 
+        private void OpenTeacherInfo_Click(object sender, RoutedEventArgs e)
+        {
+            TeacherInfoWindow window = new TeacherInfoWindow();
+            window.ShowDialog();
+        }
+
         // Нажатие кнопки редактировать семестр.
         private void btnEditSemester_Click(object sender, RoutedEventArgs e)
         {

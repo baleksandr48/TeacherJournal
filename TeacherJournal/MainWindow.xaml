@@ -26,6 +26,7 @@
             <Menu Foreground="#FFE1E2E1" Background="#FF212121">
                 <MenuItem Header="Дані" Foreground="#FFE1E2E1">
                     <MenuItem Header="Очистити файл бд" Foreground="Black" Click="ClearTerms_Click"></MenuItem>
+                    <MenuItem Header="Інформація про викладача" Foreground="Black" Click="OpenTeacherInfo_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

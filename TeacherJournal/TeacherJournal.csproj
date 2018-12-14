@@ -125,6 +125,9 @@
     <Compile Include="view\SemesterWindow.xaml.cs">
       <DependentUpon>SemesterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\TeacherInfoWindow.xaml.cs">
+      <DependentUpon>TeacherInfoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\VocabularyWindow.xaml.cs">
       <DependentUpon>VocabularyWindow.xaml</DependentUpon>
     </Compile>
@@ -161,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\SemesterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\TeacherInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeacherJournal.model
 {
-    class Teacher
+    public class Teacher
     {
         public String institute { get; set; }
         public String faculty { get; set; }
