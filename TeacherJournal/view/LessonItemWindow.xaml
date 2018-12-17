@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="Редагування заняття" Height="355.814" Width="658.882"
+        Title="Заняття" Height="500" Width="658.882"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded" Foreground="#FF212121">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -26,6 +26,8 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -57,13 +59,21 @@
             <TextBlock Grid.Row="4" Grid.Column="0" Margin="0 5" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF212121">Аудиторія</TextBlock>
             <ComboBox x:Name="cbLessonClassroom" Grid.Row="4" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" VerticalAlignment="Center" Background="White" Foreground="#FF212121" BorderBrush="{x:Null}" Height="25"></ComboBox>
 
-            <TextBlock Grid.Row="5" Grid.Column="0" Margin="0 5" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF212121">Группа</TextBlock>
+            <TextBlock Grid.Row="5" Grid.Column="0" Margin="0 5" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF212121">Тип заняття</TextBlock>
+            <ComboBox x:Name="cbLessonType" Grid.Row="5" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" VerticalAlignment="Center" Background="White" Foreground="#FF212121" BorderBrush="{x:Null}" Height="25"></ComboBox>
 
-            <ScrollViewer Grid.Row="5" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Foreground="#FF212121">
+            <TextBlock Grid.Row="6" Grid.Column="0" Margin="0 5" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF212121" Text="Повна пара"/>
+            <CheckBox IsChecked="True"  x:Name="cbCountOfHours" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Background="White" Foreground="#FF212121" BorderBrush="Black" BorderThickness="1">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <TextBlock Grid.Row="7" Grid.Column="0" Margin="0 5" VerticalAlignment="Top" FontWeight="Bold" Foreground="#FF212121">Группа</TextBlock>
+            <ScrollViewer Grid.Row="7" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Foreground="#FF212121">
                 <StackPanel x:Name="GroupVerticalPanel" HorizontalAlignment="Left"/>
             </ScrollViewer>
-
-            <Button x:Name="btnAddNewGroup" Style="{DynamicResource RoundedBlueShortButtonStyle}" Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" Click="btnAddNewGroup_Click" BorderBrush="{x:Null}">+</Button>
+            <Button x:Name="btnAddNewGroup" Style="{DynamicResource RoundedBlueShortButtonStyle}" Grid.Row="7" Grid.Column="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" Click="btnAddNewGroup_Click" BorderBrush="{x:Null}">+</Button>
 
         </Grid>
         <Grid Grid.Row="1">

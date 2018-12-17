@@ -39,7 +39,7 @@
         </Grid>
 
         <DataGrid x:Name="ScheduleGrid" Grid.Row="1" Margin="10 0 10 10" AutoGenerateColumns="False" 
-                  RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False" CanUserDeleteRows="False" Background="{x:Null}" SelectionChanged="ScheduleGrid_SelectionChanged" BorderBrush="{x:Null}" Foreground="#FF212121">
+                  RowBackground="LightGray" AlternatingRowBackground="White" FontSize="16" CanUserAddRows="False" CanUserDeleteRows="False" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF212121">
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
@@ -75,8 +75,6 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Style="{DynamicResource RoundedBlueLongButtonStyle}" Grid.Column="0" x:Name="RandScheduleItem" Width="190" 
-                    HorizontalAlignment="Left" Content="RandScheduleItem" Margin="10" Click="RandScheduleItem_Click" BorderBrush="{x:Null}"/>
             <Button Style="{DynamicResource RoundedBlueLongButtonStyle}" Grid.Column="1" x:Name="btnFillSchedule" Width="190"
                     HorizontalAlignment="Right" Content="Заповнити" Margin="10" Click="btnFillSchedule_Click" BorderBrush="{x:Null}"/>
         </Grid>

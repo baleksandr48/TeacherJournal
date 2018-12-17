@@ -28,6 +28,7 @@ namespace TeacherJournal.view
         private List<Group> groups;
         private List<Classroom> classrooms;
         private List<Subject> subjects;
+        private List<TypeOfLesson> typesOfLesson;
 
         public LessonItemWindow()
         {
@@ -47,6 +48,7 @@ namespace TeacherJournal.view
                 this.subjects = new List<Subject>(DBHelper.selectSubject(currentTerm));
                 this.classrooms = new List<Classroom>(DBHelper.selectClassroom(currentTerm));
                 this.groups = new List<Group>(DBHelper.selectGroups(currentTerm));
+                this.typesOfLesson = new List<TypeOfLesson>(DBHelper.selectTypesOfLesson());
             }
             catch (Exception ex)
             {
@@ -58,6 +60,7 @@ namespace TeacherJournal.view
         {
             cbLessonSubject.ItemsSource = subjects;
             cbLessonClassroom.ItemsSource = classrooms;
+            cbLessonType.ItemsSource = typesOfLesson;
             if (currentLesson != null)
             {
                 foreach (Subject item in cbLessonSubject.Items)
@@ -73,6 +76,14 @@ namespace TeacherJournal.view
                     if (item.id == currentLesson.classroom.id)
                     {
                         cbLessonClassroom.SelectedItem = item;
+                        break;
+                    }
+                }
+                foreach (TypeOfLesson item in cbLessonType.Items)
+                {
+                    if (item.id == currentLesson.typeOfLesson.id)
+                    {
+                        cbLessonType.SelectedItem = item;
                         break;
                     }
                 }
@@ -144,13 +155,22 @@ namespace TeacherJournal.view
                 {
                     Lesson lesson = new Lesson();
                     lesson.numOfLesson = numOfLesson;
-                    lesson.countOfHours = currentLesson.countOfHours;
                     lesson.subject = cbLessonSubject.SelectedItem as Subject;
                     lesson.classroom = cbLessonClassroom.SelectedItem as Classroom;
                     lesson.theme = tbLessonTheme.Text;
                     lesson.idTerm = currentTerm.id;
                     lesson.date = dpLessonDate.SelectedDate.Value.Date;
+                    lesson.typeOfLesson = cbLessonType.SelectedItem as TypeOfLesson;
                     lesson.groups = new List<Group>();
+
+                    //Устанавливаем количество часов
+                    if((bool)cbCountOfHours.IsChecked)
+                    {
+                        lesson.countOfHours = 2;
+                    }else
+                    {
+                        lesson.countOfHours = 1;
+                    }
 
                     // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
                     foreach (StackPanel child in GroupVerticalPanel.Children)
@@ -165,20 +185,26 @@ namespace TeacherJournal.view
                             }
                         }
                     }
-                    // Сначала нужно установить тип Занятия.
-                    lesson.typeOfLesson = currentLesson.typeOfLesson;
-                    var list = this.mainWindow.lessonList;
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list.ElementAt(i).id == currentLesson.id)
-                        {
-                            list[i] = lesson;
-                        }
-                    }
-                    // Сохранение редактирования в БД - удаляем старый, добавляем новый.
-                    DBHelper.deleteLesson(currentLesson);
-                    DBHelper.addLesson(lesson);
 
+                    var list = this.mainWindow.lessonList;
+                    if (currentLesson == null)//если мы добавляем новое занятие
+                    {
+                        DBHelper.addLesson(lesson);
+                        this.mainWindow.UpdateLessonList();
+                    }
+                    else //если мы изменяем существующее занятие
+                    {
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            if (list.ElementAt(i).id == currentLesson.id)
+                            {
+                                list[i] = lesson;
+                            }
+                        }
+                        DBHelper.deleteLesson(currentLesson);
+                        DBHelper.addLesson(lesson);
+                    }
+                    
                     this.Close();
                 }
                 else

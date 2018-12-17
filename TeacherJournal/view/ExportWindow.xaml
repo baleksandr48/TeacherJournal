@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherJournal.view"
         mc:Ignorable="d"
-        Title="в DOC" Height="229.467" Width="464.577"
+        Title="в DOC" Height="150.467" Width="464.577"
         WindowStartupLocation="CenterScreen" WindowState="Normal" Loaded="Window_Loaded" Foreground="#FF212121">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -20,7 +20,6 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -40,16 +39,6 @@
         <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="15 0 0 0">
             <TextBlock Text="2 семестр" Foreground="#FF212121" FontWeight="Bold"/>
             <ComboBox x:Name="cbSecondTerm" IsEditable="False" MinWidth="140" DisplayMemberPath="name" Background="{x:Null}" Foreground="#FF212121" BorderBrush="{x:Null}"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="15 0 0 0">
-            <TextBlock Text="ФІО викладача" Foreground="#FF212121" FontWeight="Bold"/>
-            <TextBox x:Name="tbTeacherFullName" FontSize="16" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFA7A7AC"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="15 0 0 0">
-            <TextBlock Text="ФІО зав. кафедри " Foreground="#FF212121" FontWeight="Bold"/>
-            <TextBox x:Name="tbHeadFullName" FontSize="16" Foreground="#FF212121" BorderBrush="#FFA7A7AC" Background="{x:Null}"/>
         </StackPanel>
 
         <Button Style="{DynamicResource RoundedBlueLongButtonStyle}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Right"

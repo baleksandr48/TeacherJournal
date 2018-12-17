@@ -25,7 +25,6 @@ namespace TeacherJournal.view
     {
         private Term currentTerm;
         public ObservableCollection<Schedule> scheduleList;
-
         // Форма с progressbar.
         LoadingForm loadingForm;
 
@@ -39,12 +38,16 @@ namespace TeacherJournal.view
             InitializeComponent();
             this.currentTerm = term;
 
-            scheduleList = new ObservableCollection<Schedule>(DBHelper.selectSchedules(currentTerm));
+            scheduleList = new ObservableCollection<Schedule>();
         }
 
         // После завершения инициализации всего окна выполняем привязку данных.
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            List<Schedule> temp = DBHelper.selectSchedules(currentTerm);
+            temp = temp.OrderBy(s => s.dayOfWeek).ThenBy(s => s.numOfLesson).ToList();
+            
+            scheduleList = new ObservableCollection<Schedule>(temp);
             ScheduleGrid.ItemsSource = scheduleList;
         }
 
@@ -152,16 +155,6 @@ namespace TeacherJournal.view
             }
             e.Handled = true;
         }
-
-        // Генерируем случайный объект Schedule и добавляем его в список.
-        private void RandScheduleItem_Click(object sender, RoutedEventArgs e)
-        {
-            scheduleList.Add(DBHelper.AddRandomSchedule(currentTerm));
-        }
-
-        private void ScheduleGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        
     }
 }

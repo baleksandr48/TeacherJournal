@@ -77,6 +77,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition ></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="195" Height="48">
                 <TextBlock Grid.Row="0" FontSize="24" Text="Заняття" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF212121" Width="100" Height="32"/>
@@ -128,6 +129,9 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <Grid Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" Width="195" Height="48">
+                <Button Click="btnAddLesson" Style="{DynamicResource RoundedBlueLongButtonStyle}" Padding="5 0" Margin="0 0 5 5" Width="auto" Content="Додати заняття" BorderBrush="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

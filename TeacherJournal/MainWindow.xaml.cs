@@ -177,17 +177,19 @@ namespace TeacherJournal
         }
 
         // Обновляем список занятий с помощью повторного запроса в бд и, если, результат больше нуля - обновляем ItemSource нашего lessonGrid.
-        private void UpdateLessonList()
+        public  void UpdateLessonList()
         {
             if (currentTerm != null)
             {
                 startDateValue = dpStartDate.SelectedDate.Value.Date;
                 endDateValue = dpEndDate.SelectedDate.Value.Date;
-                lessonList = new ObservableCollection<Lesson>(DBHelper.selectLessons(currentTerm, startDateValue, endDateValue));
-                if ((lessonList != null) && (lessonList.Count != 0))
+                lessonList = new ObservableCollection<Lesson>();
+                if ((lessonList != null))
                 {
+                    //сортируем список и делаем егои сточником данных для таблицы
+                    List<Lesson> tempLessons = DBHelper.selectLessons(currentTerm, startDateValue, endDateValue);
+                    lessonList = new ObservableCollection<Lesson>(tempLessons.OrderBy(l => l.date).ThenBy(l => l.numOfLesson).ToList());
                     lessonsGrid.ItemsSource = lessonList;
-                    SortLessonGridByPropertyName("date", ListSortDirection.Ascending);
                 }
                 else {
                     lessonsGrid.ItemsSource = null;
@@ -196,7 +198,7 @@ namespace TeacherJournal
         }
 
         // Сортировка lessonGrid по указанному названию столбца и в указанном направлении.
-        private void SortLessonGridByPropertyName(string propertyName, ListSortDirection direction)
+        /*private void SortLessonGridByPropertyName(string propertyName, ListSortDirection direction)
         {
             if (propertyName != "")
             {
@@ -209,7 +211,7 @@ namespace TeacherJournal
                 //refresh the view which in turn refresh the grid
                 dataView.Refresh();
             }
-        }
+        }*/
 
         // Удаляем строку с таблицы и с бд.
         private void DeleteRow_Click(object sender, RoutedEventArgs e)
@@ -348,6 +350,30 @@ namespace TeacherJournal
         {
             ExportWindow exportWindow = new ExportWindow();
             exportWindow.ShowDialog();
+        }
+    
+        //Начал делать обработку кнопки добавления занятия
+        //1. Нужно изменить существующее окно или добавить новое похожее чтобы было с заполнением всех полей Lesson
+        //
+        public void btnAddLesson(object sender, RoutedEventArgs e)
+        {
+            if (currentTerm != null)
+            {
+                LessonItemWindow window = new LessonItemWindow(null, currentTerm, this);
+                try
+                {
+                    window.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("{0} Exception cought", ex);
+                }
+                
+            }
+            else
+            {
+                OpenAddTermWindow();
+            }
         }
 
     }  
