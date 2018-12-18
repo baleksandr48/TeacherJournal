@@ -257,6 +257,7 @@ namespace TeacherJournal
             try
             {
                 window.ShowDialog();
+                UpdateLessonList();
             }
             catch (Exception ex)
             {
@@ -352,23 +353,12 @@ namespace TeacherJournal
             exportWindow.ShowDialog();
         }
     
-        //Начал делать обработку кнопки добавления занятия
-        //1. Нужно изменить существующее окно или добавить новое похожее чтобы было с заполнением всех полей Lesson
-        //
+        // Добавление занятия.
         public void btnAddLesson(object sender, RoutedEventArgs e)
         {
             if (currentTerm != null)
             {
-                LessonItemWindow window = new LessonItemWindow(null, currentTerm, this);
-                try
-                {
-                    window.ShowDialog();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("{0} Exception cought", ex);
-                }
-                
+                OpenLessonItemWindow(null);    
             }
             else
             {

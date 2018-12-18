@@ -190,7 +190,6 @@ namespace TeacherJournal.view
                     if (currentLesson == null)//если мы добавляем новое занятие
                     {
                         DBHelper.addLesson(lesson);
-                        this.mainWindow.UpdateLessonList();
                     }
                     else //если мы изменяем существующее занятие
                     {

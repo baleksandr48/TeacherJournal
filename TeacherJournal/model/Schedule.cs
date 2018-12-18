@@ -17,6 +17,7 @@ namespace TeacherJournal.model
         public TypeOfLesson typeOfLesson { get; set; }
         public Classroom classroom { get; set; }
         public List<Group> groups { get; set; }
+        public int fieldForSort;
 
         public Schedule() { }
         public Schedule(long id, long idTerm, TypeOfWeek typeOfWeek, DayOfWeek dayOfWeek, int numOfLesson, Subject subject, TypeOfLesson typeOfLesson, Classroom classroom, List<Group> groups)
@@ -30,6 +31,7 @@ namespace TeacherJournal.model
             this.typeOfLesson = typeOfLesson;
             this.classroom = classroom;
             this.groups = groups;
+            this.fieldForSort = Schedule.calculateFieldForSort(this.dayOfWeek, this.numOfLesson);
         }
         // Расписание считается неправильным если в один момент времени преподу надо находиться в двух местах.
         public static bool isSchedulesCorrect(List<Schedule> schedules)
@@ -52,6 +54,12 @@ namespace TeacherJournal.model
                 }
             }
             return true;
+        }
+        public static int calculateFieldForSort(DayOfWeek day, int numOfLesson)
+        {
+            int dayPlus = (int)day.id + 1;
+            int newNumber = Convert.ToInt32(string.Format("{0}{1}", dayPlus, numOfLesson));
+            return newNumber;
         }
     }
 }

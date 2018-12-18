@@ -137,6 +137,7 @@ namespace TeacherJournal.view
                 if (int.TryParse(tbNumberOfLesson.Text, out numOfLesson))
                 {
                     Schedule schedule = new Schedule();
+                    schedule.id = this.window.tempId--;
                     schedule.typeOfWeek = cbTypeOfWeek.SelectedItem as TypeOfWeek;
                     schedule.typeOfLesson = cbTypeOfLesson.SelectedItem as TypeOfLesson;
                     schedule.dayOfWeek = cbDayOfWeek.SelectedItem as model.DayOfWeek;
@@ -144,6 +145,7 @@ namespace TeacherJournal.view
                     schedule.subject = cbSubject.SelectedItem as Subject;
                     schedule.classroom = cbClassroom.SelectedItem as Classroom;
                     schedule.idTerm = currentTerm.id;
+                    schedule.fieldForSort = Schedule.calculateFieldForSort(schedule.dayOfWeek, schedule.numOfLesson);
                     schedule.groups = new List<Group>();
 
                     // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.

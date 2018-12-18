@@ -25,6 +25,8 @@ namespace TeacherJournal.view
     {
         private Term currentTerm;
         public ObservableCollection<Schedule> scheduleList;
+        // Временное айди для создания schedule. 
+        public long tempId = long.MaxValue;
         // Форма с progressbar.
         LoadingForm loadingForm;
 
@@ -44,11 +46,8 @@ namespace TeacherJournal.view
         // После завершения инициализации всего окна выполняем привязку данных.
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Schedule> temp = DBHelper.selectSchedules(currentTerm);
-            temp = temp.OrderBy(s => s.dayOfWeek).ThenBy(s => s.numOfLesson).ToList();
-            
-            scheduleList = new ObservableCollection<Schedule>(temp);
-            ScheduleGrid.ItemsSource = scheduleList;
+            scheduleList = new ObservableCollection<Schedule>(DBHelper.selectSchedules(currentTerm));
+            updateScheduleList();
         }
 
         // Используем данные с таблицы чтобы заполнить таблицу Lesson в бд.
@@ -107,6 +106,8 @@ namespace TeacherJournal.view
             try
             {
                 addScheduleItem.ShowDialog();
+                updateScheduleList();
+
             }
             catch (Exception ex)
             {
@@ -136,6 +137,7 @@ namespace TeacherJournal.view
                 Schedule obj = ((FrameworkElement)sender).DataContext as Schedule;
                 ScheduleItemWindow window = new ScheduleItemWindow(currentTerm, this, obj);
                 window.ShowDialog();
+                updateScheduleList();
             }
             catch (Exception ex)
             {
@@ -155,6 +157,14 @@ namespace TeacherJournal.view
             }
             e.Handled = true;
         }
-        
+
+        private void updateScheduleList()
+        {
+            List<Schedule> temp = scheduleList.ToList();
+            temp = temp.OrderBy(s => s.fieldForSort).ToList();
+
+            scheduleList = new ObservableCollection<Schedule>(temp);
+            ScheduleGrid.ItemsSource = scheduleList;
+        }
     }
 }
