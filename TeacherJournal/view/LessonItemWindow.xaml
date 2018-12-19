@@ -50,7 +50,7 @@
             <DatePicker x:Name="dpLessonDate" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Background="{x:Null}" Foreground="#FF212121" Height="25" BorderBrush="{x:Null}" Margin="0,8,0,5"></DatePicker>
 
             <TextBlock Grid.Row="2" Grid.Column="0" Margin="0 5" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF212121">№ пари</TextBlock>
-            <TextBox x:Name="tbLessonNumber" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFA7A7AC" Height="25" SelectionBrush="#FF0076FF"></TextBox>
+            <ComboBox x:Name="cbLessonNumber" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFA7A7AC" ></ComboBox>
 
             <TextBlock Grid.Row="3" Grid.Column="0" Margin="0 5" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF212121">Предмет</TextBlock>
             <ComboBox x:Name="cbLessonSubject" Grid.Row="3" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" VerticalAlignment="Center" Background="White" Foreground="#FF212121" BorderBrush="{x:Null}" Height="25"></ComboBox>

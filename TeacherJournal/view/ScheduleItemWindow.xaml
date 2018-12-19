@@ -46,15 +46,10 @@
             <ComboBox x:Name="cbTypeOfWeek" Grid.Row="0" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
             <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">День неділі</TextBlock>
             <ComboBox x:Name="cbDayOfWeek" Grid.Row="1" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
+            
             <TextBlock Grid.Row="2" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">№ пари</TextBlock>
-            <TextBox x:Name="tbNumberOfLesson" Grid.Row="2" Grid.Column="1" PreviewTextInput="tbNumberOfLesson_PreviewTextInput" Foreground="#FF212121" BorderBrush="#FF8E8E93" SelectionBrush="#FF0076FF">
-                <TextBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFE1E2E1" Offset="1"/>
-                        <GradientStop Color="#FFEEEEEE"/>
-                    </LinearGradientBrush>
-                </TextBox.Background>
-            </TextBox>
+            <ComboBox x:Name="cbNumberOfLesson" Grid.Row="2" Grid.Column="1" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
+                
             <TextBlock Grid.Row="3" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">Предмет</TextBlock>
             <ComboBox x:Name="cbSubject" Grid.Row="3" Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id" Background="{x:Null}" Foreground="#FF212121" BorderBrush="#FFE1E2E1"></ComboBox>
             <TextBlock Grid.Row="4" Grid.Column="0" Foreground="#FF212121" FontSize="16" FontWeight="Bold">Тип заняття</TextBlock>

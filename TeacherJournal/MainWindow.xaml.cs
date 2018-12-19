@@ -38,6 +38,7 @@ namespace TeacherJournal
 
         Term currentTerm;
         
+
         public MainWindow()
         {
             InitializeComponent();

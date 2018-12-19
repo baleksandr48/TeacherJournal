@@ -30,6 +30,8 @@ namespace TeacherJournal.view
         private List<Subject> subjects;
         private List<TypeOfLesson> typesOfLesson;
 
+        private int[] numsOfLessons = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
         public LessonItemWindow()
         {
             InitializeComponent();
@@ -64,7 +66,7 @@ namespace TeacherJournal.view
             cbLessonSubject.ItemsSource = subjects;
             cbLessonClassroom.ItemsSource = classrooms;
             cbLessonType.ItemsSource = typesOfLesson;
-
+            cbLessonNumber.ItemsSource = numsOfLessons;
             // Если редактируем занятие.
             if (currentLesson != null)
             {
@@ -97,7 +99,7 @@ namespace TeacherJournal.view
                     AddNewGroup(group);
                 }
                 tbLessonTheme.Text = currentLesson.theme;
-                tbLessonNumber.Text = currentLesson.numOfLesson.ToString();
+                cbLessonNumber.SelectedItem = cbLessonNumber.Items[currentLesson.numOfLesson - 1];
                 dpLessonDate.SelectedDate = currentLesson.date.Date;
             }
             // Если создаем занятие.
@@ -162,73 +164,67 @@ namespace TeacherJournal.view
         private void AcceptAndSave(object sender, RoutedEventArgs e)
         {
             if ((dpLessonDate.SelectedDate != null) && (cbLessonSubject.SelectedItem != null) && (cbLessonClassroom.SelectedItem != null)
-                && AreGroupsFilled() && (tbLessonNumber.Text != ""))
+                && AreGroupsFilled() && (cbLessonNumber.SelectedItem != null))
             {
-                int numOfLesson;
-                if (int.TryParse(tbLessonNumber.Text, out numOfLesson))
+                
+                Lesson lesson = new Lesson();
+                lesson.numOfLesson = (Int32)cbLessonNumber.SelectedValue;
+                lesson.subject = cbLessonSubject.SelectedItem as Subject;
+                lesson.classroom = cbLessonClassroom.SelectedItem as Classroom;
+                lesson.theme = tbLessonTheme.Text;
+                lesson.idTerm = currentTerm.id;
+                lesson.date = dpLessonDate.SelectedDate.Value.Date;
+                lesson.typeOfLesson = cbLessonType.SelectedItem as TypeOfLesson;
+                lesson.groups = new List<Group>();
+
+                //Устанавливаем количество часов
+                if((bool)cbCountOfHours.IsChecked)
                 {
-                    Lesson lesson = new Lesson();
-                    lesson.numOfLesson = numOfLesson;
-                    lesson.subject = cbLessonSubject.SelectedItem as Subject;
-                    lesson.classroom = cbLessonClassroom.SelectedItem as Classroom;
-                    lesson.theme = tbLessonTheme.Text;
-                    lesson.idTerm = currentTerm.id;
-                    lesson.date = dpLessonDate.SelectedDate.Value.Date;
-                    lesson.typeOfLesson = cbLessonType.SelectedItem as TypeOfLesson;
-                    lesson.groups = new List<Group>();
+                    lesson.countOfHours = 2;
+                }else
+                {
+                    lesson.countOfHours = 1;
+                }
 
-                    //Устанавливаем количество часов
-                    if((bool)cbCountOfHours.IsChecked)
+                // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
+                foreach (StackPanel child in GroupVerticalPanel.Children)
+                {
+                    foreach (object _child in child.Children)
                     {
-                        lesson.countOfHours = 2;
-                    }else
-                    {
-                        lesson.countOfHours = 1;
-                    }
-
-                    // Проходим по всем комбобоксам групп и добавряем выбранные группы в groups.
-                    foreach (StackPanel child in GroupVerticalPanel.Children)
-                    {
-                        foreach (object _child in child.Children)
+                        if (_child.GetType().Name == "ComboBox")
                         {
-                            if (_child.GetType().Name == "ComboBox")
-                            {
-                                Group group = ((ComboBox)_child).SelectedItem as Group;
-                                lesson.groups.Add(group);
-                                break;
-                            }
+                            Group group = ((ComboBox)_child).SelectedItem as Group;
+                            lesson.groups.Add(group);
+                            break;
                         }
                     }
+                }
 
-                    var list = this.mainWindow.lessonList;
-                    if (currentLesson == null)//если мы добавляем новое занятие
+                var list = this.mainWindow.lessonList;
+                if (currentLesson == null)//если мы добавляем новое занятие
+                {
+                    DBHelper.addLesson(lesson);
+                }
+                else //если мы изменяем существующее занятие
+                {
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        DBHelper.addLesson(lesson);
-                    }
-                    else //если мы изменяем существующее занятие
-                    {
-                        for (int i = 0; i < list.Count; i++)
+                        if (list.ElementAt(i).id == currentLesson.id)
                         {
-                            if (list.ElementAt(i).id == currentLesson.id)
-                            {
-                                list[i] = lesson;
-                            }
+                            list[i] = lesson;
                         }
-                        DBHelper.deleteLesson(currentLesson);
-                        DBHelper.addLesson(lesson);
                     }
+                    DBHelper.deleteLesson(currentLesson);
+                    DBHelper.addLesson(lesson);
+                }
                     
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Введіть правильний номер заняття!", "Попередження!");
-                }
-
+                this.Close();
             }
-            else {
-                MessageBox.Show("Заповніть всі необхідні поля!", "Попередження");
+            else
+            {
+                MessageBox.Show("Введіть правильний номер заняття!", "Попередження!");
             }
+            
                
         }
 
