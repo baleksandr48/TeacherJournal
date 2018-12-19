@@ -46,8 +46,11 @@ namespace TeacherJournal.view
             try
             {
                 this.subjects = new List<Subject>(DBHelper.selectSubject(currentTerm));
+                this.subjects.Sort((p, q) => p.name.CompareTo(q.name));
                 this.classrooms = new List<Classroom>(DBHelper.selectClassroom(currentTerm));
+                this.classrooms.Sort((p, q) => p.name.CompareTo(q.name));
                 this.groups = new List<Group>(DBHelper.selectGroups(currentTerm));
+                this.groups.Sort((p, q) => p.name.CompareTo(q.name));
                 this.typesOfLesson = new List<TypeOfLesson>(DBHelper.selectTypesOfLesson());
             }
             catch (Exception ex)
@@ -61,6 +64,8 @@ namespace TeacherJournal.view
             cbLessonSubject.ItemsSource = subjects;
             cbLessonClassroom.ItemsSource = classrooms;
             cbLessonType.ItemsSource = typesOfLesson;
+
+            // Если редактируем занятие.
             if (currentLesson != null)
             {
                 foreach (Subject item in cbLessonSubject.Items)
@@ -95,6 +100,11 @@ namespace TeacherJournal.view
                 tbLessonNumber.Text = currentLesson.numOfLesson.ToString();
                 dpLessonDate.SelectedDate = currentLesson.date.Date;
             }
+            // Если создаем занятие.
+            else
+            {
+                AddNewGroup();
+            }
         }
 
         // Добавляем новую группу, если передаем аргументом группу - выставляем её как SelectedItem.
@@ -112,7 +122,6 @@ namespace TeacherJournal.view
             Button btn = new Button();
             btn.Content = (Image)FindResource("TrashBoxImage");
             btn.Margin = new Thickness(5, 0, 0, 0);
-           // btn.Width = 30;
             btn.Click += new RoutedEventHandler(btnDeleteGroup_Click);
             if (group != null)
             {
@@ -124,6 +133,11 @@ namespace TeacherJournal.view
                         break;
                     }
                 }
+            }
+            else
+            {
+                if (cbGroup.Items.Count > 0)
+                    cbGroup.SelectedItem = cbGroup.Items[0];
             }
 
             stackPanel.Children.Add(cbGroup);

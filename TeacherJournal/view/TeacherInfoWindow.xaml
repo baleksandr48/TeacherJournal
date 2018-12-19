@@ -63,7 +63,7 @@
         </Grid>
 
         <Button x:Name="btAcceptAndClose" Grid.Row="1" Content="Прийняти" VerticalAlignment="Center" 
-                HorizontalAlignment="Right" Click="btAcceptAndClose_Click" Margin="10 10 0 0" Padding="10 5"/>
+                HorizontalAlignment="Right" Click="btAcceptAndClose_Click" Margin="10 10 0 0" Padding="10 5" Style="{DynamicResource RoundedBlueLongButtonStyle}"/>
 
     </Grid>
 </Window>

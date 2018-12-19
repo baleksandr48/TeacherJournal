@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TeacherJournal.model;
 using TeacherJournal.database;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace TeacherJournal.view
 {
@@ -26,14 +27,6 @@ namespace TeacherJournal.view
         private Term _firstTerm;
         private Term _secondTerm;
         private Teacher teacher;
-        private String _teacherFullName;
-        private String _headFullName;
-        private String _instute;
-        private String _faculty;
-        private String _department;
-        private String _academic;
-        private String _post;
-
 
         public LoadingForm loadingForm;
 
@@ -63,31 +56,31 @@ namespace TeacherJournal.view
         private void AcceptAndConvert(object sender, RoutedEventArgs e)
         {
             teacher = DBHelper.getTeacher();
-            _teacherFullName = teacher.fullName;
-            _headFullName = teacher.headFullName;
-            _instute = teacher.institute;
-            _faculty = teacher.faculty;
-            _department = teacher.department;
-            _academic = teacher.academicRank;
-            _post = teacher.post;
 
-            _firstTerm = cbFirstTerm.SelectedItem as Term;
-            _secondTerm = cbSecondTerm.SelectedItem as Term;
-
-            if ((_firstTerm != null) && (_secondTerm != null))
+            if (!isTeacherInitialized(teacher))
             {
-                BackgroundWorker bg = new BackgroundWorker();
-                bg.DoWork += new DoWorkEventHandler(bg_DoWork);
-                bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
-                // Запуск worker.
-                bg.RunWorkerAsync();
-                // Отображаем loading form.
-                loadingForm = new LoadingForm("Конвертація в Word DOC");
-                loadingForm.ShowDialog();
+                MessageBox.Show("Спочатку заповніть всю інформацію про викладача в вікні викладача!", "Попередження");
             }
             else
             {
-                MessageBox.Show("Заповніть всі необхідні поля!", "Попередження");
+                _firstTerm = cbFirstTerm.SelectedItem as Term;
+                _secondTerm = cbSecondTerm.SelectedItem as Term;
+
+                if ((_firstTerm != null) && (_secondTerm != null))
+                {
+                    BackgroundWorker bg = new BackgroundWorker();
+                    bg.DoWork += new DoWorkEventHandler(bg_DoWork);
+                    bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
+                    // Запуск worker.
+                    bg.RunWorkerAsync();
+                    // Отображаем loading form.
+                    loadingForm = new LoadingForm("Конвертація в Word DOC");
+                    loadingForm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Заповніть всі необхідні поля!", "Попередження");
+                }
             }
         }
 
@@ -103,6 +96,19 @@ namespace TeacherJournal.view
             loadingForm.WorkEnded = true;
             loadingForm.Close();
             this.DialogResult = true;
+        }
+
+        private bool isTeacherInitialized(Teacher teacher)
+        {
+            foreach (PropertyInfo propertyInfo in teacher.GetType().GetProperties())
+            {
+                var value = propertyInfo.GetValue(teacher);
+                if ((value == null) || ((string)value == ""))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

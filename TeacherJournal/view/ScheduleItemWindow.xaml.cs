@@ -57,8 +57,11 @@ namespace TeacherJournal.view
                 dayOfWeek = new List<model.DayOfWeek>(DBHelper.selectDaysOfWeek());
                 typeOfLesson = new List<TypeOfLesson>(DBHelper.selectTypesOfLesson());
                 subject = new List<Subject>(DBHelper.selectSubject(currentTerm));
+                subject.Sort((p, q) => p.name.CompareTo(q.name));
                 classroom = new List<Classroom>(DBHelper.selectClassroom(currentTerm));
+                classroom.Sort((p, q) => p.name.CompareTo(q.name));
                 groups = new List<Group>(DBHelper.selectGroups(currentTerm));
+                groups.Sort((p, q) => p.name.CompareTo(q.name));
             }
             catch (Exception ex)
             {
@@ -75,6 +78,7 @@ namespace TeacherJournal.view
             cbSubject.ItemsSource = subject;
             cbClassroom.ItemsSource = classroom;
 
+            // Если редактируем расписание занятия
             if (currentSchedule != null)
             {
                 this.Title = EDIT_TITLE;
@@ -124,6 +128,11 @@ namespace TeacherJournal.view
                     AddNewGroup(group);
                 }
                 tbNumberOfLesson.Text = currentSchedule.numOfLesson.ToString();
+            }
+            // Если создаем новое занятие
+            else
+            {
+                AddNewGroup();
             }
         }
 
@@ -242,6 +251,7 @@ namespace TeacherJournal.view
             btn.Content = (Image)FindResource("TrashBoxImage");
             btn.Margin = new Thickness(5, 0, 0, 0);
             btn.Click += new RoutedEventHandler(btnDeleteGroup_Click);
+
             if (group != null)
             {
                 foreach (Group item in cbGroup.Items)
@@ -252,6 +262,11 @@ namespace TeacherJournal.view
                         break;
                     }
                 }
+            }
+            else
+            {
+                if (cbGroup.Items.Count > 0)
+                cbGroup.SelectedItem = cbGroup.Items[0];
             }
 
             stackPanel.Children.Add(cbGroup);

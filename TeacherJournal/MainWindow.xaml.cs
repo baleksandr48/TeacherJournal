@@ -322,6 +322,7 @@ namespace TeacherJournal
             }
         }
 
+        // Открыть информацию о преподавателе
         private void OpenTeacherInfo_Click(object sender, RoutedEventArgs e)
         {
             TeacherInfoWindow window = new TeacherInfoWindow();

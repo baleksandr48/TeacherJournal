@@ -76,7 +76,8 @@ namespace TeacherJournal.database
                     command.CommandText = pragmaKeyON;
                     command.ExecuteNonQuery();
 
-                    command.CommandText = String.Format("UPDATE Term SET name = {0}, beginDate = {1}, endDate = {2}, startFromNumerator = {3} WHERE id = {4};", term.name, calculateDays(term.beginDate), 
+                    command.CommandText = String.Format("UPDATE Term SET name = '{0}', beginDate = {1}, endDate = {2}, " +
+                        "startFromNumerator = {3} WHERE id = {4};", term.name, calculateDays(term.beginDate), 
                         calculateDays(term.endDate), term.startFromNumerator, term.id);
                     command.ExecuteNonQuery();
                 }

@@ -26,13 +26,13 @@
             <Menu Foreground="#FFE1E2E1" Background="#FF212121">
                 <MenuItem Header="Дані" Foreground="#FFE1E2E1">
                     <MenuItem Header="Очистити файл бд" Foreground="Black" Click="ClearTerms_Click"></MenuItem>
-                    <MenuItem Header="Інформація про викладача" Foreground="Black" Click="OpenTeacherInfo_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -64,6 +64,7 @@
             <Button x:Name="btnClassroom" Style="{DynamicResource RoundedBlueLongButtonStyle}" Margin="10 0 10 10" Grid.Row="4" Content="Аудиторії" Click="OpenVocabulary" BorderBrush="{x:Null}"/>
             <Button x:Name="btnSchedule" Style="{DynamicResource RoundedBlueLongButtonStyle}" Margin="10 0 10 10" Grid.Row="5" Content="Розклад" Click="btnSchedule_Click" BorderBrush="{x:Null}"/>
             <Button x:Name="btnToDoc" Style="{DynamicResource RoundedBlueLongButtonStyle}" Margin="10 0 10 10" Grid.Row="6" Content="В DOC" Click="btnToDoc_Click" BorderBrush="{x:Null}"/>
+            <Button x:Name="btnTeacherInfo" Style="{DynamicResource RoundedBlueLongButtonStyle}" Margin="10 0 10 10" Grid.Row="7" Content="Вікно викладача" Click="OpenTeacherInfo_Click" BorderBrush="{x:Null}"/>
         </Grid>
         <!--<Border BorderBrush="#cccccc" BorderThickness="1" Margin="10,75,5,-73"/>-->
         <Grid Grid.Row="1" Grid.Column="1" OpacityMask="#FF3A2A2A">
