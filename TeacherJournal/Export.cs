@@ -313,6 +313,10 @@ namespace TeacherJournal
             //Количество недель в семестре
             int numOfWeeks = (DBHelper.calculateDays(term.endDate) - DBHelper.calculateDays(term.beginDate)) / 7;
             //Счетчик который показывает в какие дние есть занятия а в какие нет True = есть False = нет
+            while (numOfWeeks % 2 != 0)
+            {
+                numOfWeeks += 1;
+            };
             bool[] DaysIsntNull = new bool[maxLessons];
 
             foreach (Schedule schedule in schedules)
