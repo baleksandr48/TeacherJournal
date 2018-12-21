@@ -67,37 +67,37 @@ namespace TeacherJournal.view
                 }
                 else
                 {
-                    if (MessageBox.Show("Ви підтверджуєте внесення змін до семестру?" +
-                        "\nВ разі зміни однієї з дат або чекбоксу - заняття будуть перезаписані!", "Підтвердження",
-                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    MessageBoxResult result = MessageBox.Show("Перезаписати дані занять?", "Підтвердження", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.Yes)
                     {
-                        // Если одна из дат или отсчет от числителя поменялось - будем перезаписывать lessons.
-                        if ((termStartDate != currentTerm.beginDate) || (termEndDate != currentTerm.endDate)
-                                                  || (startWithNumerator != currentTerm.startFromNumerator))
-                        {
-                            NeedToUpdateLessons = true;
-                        }
-                        currentTerm.name = termName;
-                        currentTerm.beginDate = termStartDate;
-                        currentTerm.endDate = termEndDate;
-                        currentTerm.startFromNumerator = startWithNumerator;
-                        try
-                        {                           
-                            DBHelper.updateTerm(currentTerm);
-
-                            if (NeedToUpdateLessons)
-                            {
-                                List<Schedule> scheduleList = DBHelper.selectSchedules(currentTerm);
-                                DBHelper.ClearLesson(currentTerm);
-                                DBHelper.addLessons(Lesson.generateLessons(scheduleList, currentTerm));
-                            }       
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("{0} Exception cought", ex);
-                        }
-                        this.DialogResult = true;
+                        NeedToUpdateLessons = true;
                     }
+                    else if (result == MessageBoxResult.No)
+                    {
+                        NeedToUpdateLessons = false;
+                    }
+                    else return;
+
+                    currentTerm.name = termName;
+                    currentTerm.beginDate = termStartDate;
+                    currentTerm.endDate = termEndDate;
+                    currentTerm.startFromNumerator = startWithNumerator;
+                    try
+                    {
+                        DBHelper.updateTerm(currentTerm);
+
+                        if (NeedToUpdateLessons)
+                        {
+                            List<Schedule> scheduleList = DBHelper.selectSchedules(currentTerm);
+                            DBHelper.ClearLesson(currentTerm);
+                            DBHelper.addLessons(Lesson.generateLessons(scheduleList, currentTerm));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("{0} Exception cought", ex);
+                    }
+                    this.DialogResult = true;
                 }          
             }
             else

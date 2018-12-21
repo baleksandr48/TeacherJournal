@@ -184,15 +184,14 @@ namespace TeacherJournal
             {
                 startDateValue = dpStartDate.SelectedDate.Value.Date;
                 endDateValue = dpEndDate.SelectedDate.Value.Date;
-                lessonList = new ObservableCollection<Lesson>();
-                if ((lessonList != null))
+                List<Lesson> tempLessons = DBHelper.selectLessons(currentTerm, startDateValue, endDateValue);
+                if (tempLessons.Count > 0)
                 {
-                    //сортируем список и делаем егои сточником данных для таблицы
-                    List<Lesson> tempLessons = DBHelper.selectLessons(currentTerm, startDateValue, endDateValue);
                     lessonList = new ObservableCollection<Lesson>(tempLessons.OrderBy(l => l.date).ThenBy(l => l.numOfLesson).ToList());
                     lessonsGrid.ItemsSource = lessonList;
                 }
                 else {
+                    lessonList = new ObservableCollection<Lesson>(tempLessons);
                     lessonsGrid.ItemsSource = null;
                 }
             }
@@ -339,7 +338,7 @@ namespace TeacherJournal
                 if (window.ShowDialog() == true)
                 {
                     // Делаем небольшой костыль, чтобы таблица не обновлялась дважды.
-                    endDateValue = DateTime.MinValue;
+                    //endDateValue = DateTime.MinValue;
                     cbSemesterList.SelectedItem = null;
                     cbSemesterList.SelectedItem = currentTerm;
                     /* dpStartDate.SelectedDate = currentTerm.beginDate;
