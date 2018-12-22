@@ -747,7 +747,7 @@ namespace TeacherJournal.database
                 using (SQLiteCommand command = connection.CreateCommand())
                 {
                     command.CommandText = String.Format("SELECT Schedule.id, Schedule.idTerm, TypeOfWeek.id, TypeOfWeek.name, DayOfWeek.id, DayOfWeek.name, " +
-                "Schedule.numOfLesson, Subject.id, Subject.name, TypeOfLesson.id, TypeOfLesson.name, Classroom.id, Classroom.name, _Group.id, _Group.name " +
+                "Schedule.numOfLesson, Subject.id, Subject.name, TypeOfLesson.id, TypeOfLesson.name, TypeOfLesson.strForWord, Classroom.id, Classroom.name, _Group.id, _Group.name " +
                 "FROM (((((Schedule INNER JOIN TypeOfWeek ON Schedule.idTypeOfWeek = TypeOfWeek.id) " +
                 "INNER JOIN DayOfWeek ON Schedule.idDayOfWeek = DayOfWeek.id) " +
                 "INNER JOIN Subject ON Schedule.idSubject = Subject.id) " +
@@ -765,9 +765,9 @@ namespace TeacherJournal.database
                         model.DayOfWeek dayOfWeek = new model.DayOfWeek(record.GetInt64(4), record.GetString(5));
                         int numOfLesson = (int)record.GetInt64(6);
                         Subject subject = new Subject(record.GetInt64(7), record.GetInt64(2), record.GetString(8));
-                        TypeOfLesson typeOfLesson = new TypeOfLesson(record.GetInt64(9), record.GetString(10));
-                        Classroom classroom = new Classroom(record.GetInt64(11), record.GetInt64(2), record.GetString(12));
-                        Group group = new Group(record.GetInt64(13), record.GetInt64(2), record.GetString(14));
+                        TypeOfLesson typeOfLesson = new TypeOfLesson(record.GetInt64(9), record.GetString(10), record.GetString(11));
+                        Classroom classroom = new Classroom(record.GetInt64(12), record.GetInt64(2), record.GetString(13));
+                        Group group = new Group(record.GetInt64(14), record.GetInt64(2), record.GetString(15));
 
                         if (schedules.Count() == 0)
                         {
@@ -1001,7 +1001,7 @@ namespace TeacherJournal.database
                 using (SQLiteCommand command = connection.CreateCommand())
                 {
                     command.CommandText = String.Format("SELECT Lesson.id, Lesson._date, Lesson.countOfHours, Lesson.numOfLesson, " +
-                "Subject.id, Subject.name, TypeOfLesson.id, TypeOfLesson.name, Classroom.id, Classroom.name, _Group.id, _Group.name, Lesson.theme " +
+                "Subject.id, Subject.name, TypeOfLesson.id, TypeOfLesson.name, TypeOfLesson.strForWord, Classroom.id, Classroom.name, _Group.id, _Group.name, Lesson.theme " +
                 "FROM (((Lesson INNER JOIN Subject ON Lesson.idSubject = Subject.id) " +
                 "INNER JOIN TypeOfLesson ON Lesson.idTypeOfLesson = TypeOfLesson.id) " +
                 "INNER JOIN Classroom ON Lesson.idClassroom = Classroom.id) " +
@@ -1018,10 +1018,10 @@ namespace TeacherJournal.database
                         int countOfHours = (int)record.GetInt64(2);
                         int numOfLesson = (int)record.GetInt64(3);
                         Subject subject = new Subject(record.GetInt64(4), idTerm, record.GetString(5));
-                        TypeOfLesson typeOfLesson = new TypeOfLesson(record.GetInt64(6), record.GetString(7));
-                        Classroom classroom = new Classroom(record.GetInt64(8), idTerm, record.GetString(9));
-                        Group group = new Group(record.GetInt64(10), idTerm, record.GetString(11));
-                        String theme = record.GetString(12);
+                        TypeOfLesson typeOfLesson = new TypeOfLesson(record.GetInt64(6), record.GetString(7), record.GetString(8));
+                        Classroom classroom = new Classroom(record.GetInt64(9), idTerm, record.GetString(10));
+                        Group group = new Group(record.GetInt64(11), idTerm, record.GetString(12));
+                        String theme = record.GetString(13);
 
                         if (lessons.Count() == 0)
                         {
@@ -1142,7 +1142,8 @@ namespace TeacherJournal.database
                     foreach (DbDataRecord record in reader)
                     {
                         typesOfLesson.Add(new TypeOfLesson(record.GetInt64(0),
-                            record.GetString(1)));
+                            record.GetString(1),
+                            record.GetString(2)));
                     }
                 }
                 connection.Close();

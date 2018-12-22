@@ -95,7 +95,8 @@ namespace TeacherJournal.database
             String dayOfWeek = "CREATE TABLE DayOfWeek (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
                 "name TEXT NOT NULL);";
             String typeOfLesson = "CREATE TABLE TypeOfLesson (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
-                "name TEXT NOT NULL);";
+                "name TEXT NOT NULL," +
+                "strForWord TEXT NOT NULL);";
             String typeOfWeek = "CREATE TABLE TypeOfWeek (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
                 "name TEXT NOT NULL);";
             String schedule = "CREATE TABLE Schedule (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
@@ -167,14 +168,24 @@ namespace TeacherJournal.database
             new SQLiteCommand("INSERT INTO TypeOfWeek (name) VALUES ('Щотижня')", connection).ExecuteNonQuery();
 
             //Заполняем словарь видов занятий
-            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Лекція')", connection).ExecuteNonQuery();
-            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Лабораторне заняття')", connection).ExecuteNonQuery();
-            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Практичне заняття')", connection).ExecuteNonQuery();
-            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Семінарське заняття')", connection).ExecuteNonQuery();
-            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Індивідуальне заняття')", connection).ExecuteNonQuery();
-            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Консультація')", connection).ExecuteNonQuery();
-            new SQLiteCommand("INSERT INTO TypeOfLesson (name) VALUES ('Екзамінаційна консультація')", connection).ExecuteNonQuery();
-
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Лекція', 'Читання лекцій')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Практичне заняття', 'Проведення практичних занять')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Лабораторне заняття', 'Проведення лабораторних занять')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Семінарське заняття', 'Проведення семінарських занять')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Індивідуальне заняття', 'Проведення індивідуальних занять')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Консультація', 'Проведення консультацій протягом семестра')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Екзамінаційна консультація', 'Проведення екзаменаційних консультацій')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Перевірка контрольних робіт', 'Перевірка контрольних (модульних) робіт, що виконуються під час самостійної роботи')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Приймання рефератів, аналітичних оглядів, перекладів', 'Рефератів, аналітичних оглядів, перекладів')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Приймання розрахункових, графічних, розрахунково-графічних робіт', 'Розрахункових, графічних, розрахунково-графічних робіт')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Приймання курсових проектів, робіт', 'Курсових проектів, робіт')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Залік', 'Проведення заліку')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Семестровий екзамен', 'Проведення семестрових екзаменів')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Керівництво навчальною/виробничою практикою', 'Керівництво навчальною і виробничою практикою')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Атестація', 'Проведення атестації')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Керівництво, консультування, рецензування, захист дипломних проектів', 'Керівництво, консультування, рецензування та проведення захисту дипломних проектів (робіт)')", connection).ExecuteNonQuery();
+            new SQLiteCommand("INSERT INTO TypeOfLesson (name, strForWord) VALUES ('Керівництво аспірантами', 'Керівництво аспірантами, здобувачами та стажуванням викладачів')", connection).ExecuteNonQuery();
+            
             //Создаем запись с информацией преподавателя
             new SQLiteCommand("INSERT INTO Teacher (institute, faculty, department, fullName,headFullName, academicRank, post) VALUES (' ', ' ', ' ', ' ', ' ', ' ',' ')", connection).ExecuteNonQuery();
         }

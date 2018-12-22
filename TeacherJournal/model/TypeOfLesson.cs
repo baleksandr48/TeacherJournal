@@ -10,11 +10,13 @@ namespace TeacherJournal.model
     {
         public long id { get; set; }
         public String name { get; set; }
+        public String strForWord { get; set; }
 
-        public TypeOfLesson(long id, String name)
+        public TypeOfLesson(long id, String name, String strForWord)
         {
             this.id = id;
             this.name = name;
+            this.strForWord = strForWord;
         }
     }
 }
