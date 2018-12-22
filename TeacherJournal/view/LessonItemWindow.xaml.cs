@@ -30,7 +30,7 @@ namespace TeacherJournal.view
         private List<Subject> subjects;
         private List<TypeOfLesson> typesOfLesson;
 
-        private int[] numsOfLessons = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        private int[] numsOfLessons = new int[8] { 1, 2, 3, 4, 5, 6, 7, 8};
 
         public LessonItemWindow()
         {

@@ -55,6 +55,16 @@ namespace TeacherJournal.view
 
         private void btAcceptAndClose_Click(object sender, RoutedEventArgs e)
         {
+            if (tbHeadFullName.Text.Split(' ').Length < 3)
+            {
+                MessageBox.Show("Помилка", "ПІБ некоректний!");
+                return;
+            }
+            if (tbTeacherFullName.Text.Split(' ').Length < 3)
+            {
+                MessageBox.Show("Помилка", "ПІБ некоректний!");
+                return;
+            }
             if ((tbAcademicRank.Text != "") && (tbDepartment.Text != "") && (tbFaculty.Text != "") && (tbHeadFullName.Text != "")
                 && (tbInstitute.Text != "") && (tbPost.Text != "") && (tbTeacherFullName.Text != ""))
             {

@@ -17,9 +17,9 @@ namespace TeacherJournal
         private  String[] ColumnsNameOfSchedule = { "Пара", "Номер тижня", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя" };
         private  String[] RowsNumberOfSchedule = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" };
         private  String[] ColumnsNameOfLessons = { "Дата","Шифр потоку (академічної групи)","Назва навчальної дисципліни", "Тема заняття","Вид заняття", "К-ть годин"};
-        private  String[] TypeOfLesson = { "Лекція", "Практичне заняття", "Лабораторне заняття ", "Семінарське заняття", "Індивідуальне заняття", "Консультація", "Екзамінаційна консультація" };
+        private List<TypeOfLesson> typeOfLesson = DBHelper.selectTypesOfLesson(); 
         private  String[] Month = { "Вересень", "Жовтень", "Листопад", "Грудень", "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень" };
-        private  String[] nameColumns = { "Місяць", "Читання лекцій", "Проведення практичних занять", "Проведення лабораторних занять", "Проведення семінарських занять", "Проведення індивідуальних занять", "Проведення консультацій протягом семестра", "Проведення екзаменаційних консультацій", "Перевірка контрольних (модульних) робіт, що виконуються під час самостійної роботи", "Рефератів, аналітичних оглядів, перекладів", "Розрахункових, графічних, розрахунково-графічних робіт", "Курсових проектів, робіт", "Проведення заліку", "Проведення семестрових екзаменів", "Керівництво навчальною і виробничою практикою", "Проведення атестації", "Керівництво, консуль - тування, рецензування та проведення захисту дипломних проектів(робіт)", "Керівництво аспірантами, здобувачами та стажуванням викладачів", "Усього" };
+        //private  String[] nameColumns = { "Місяць", "Читання лекцій", "Проведення практичних занять", "Проведення лабораторних занять", "Проведення семінарських занять", "Проведення індивідуальних занять", "Проведення консультацій протягом семестра", "Проведення екзаменаційних консультацій", "Перевірка контрольних (модульних) робіт, що виконуються під час самостійної роботи", "Рефератів, аналітичних оглядів, перекладів", "Розрахункових, графічних, розрахунково-графічних робіт", "Курсових проектів, робіт", "Проведення заліку", "Проведення семестрових екзаменів", "Керівництво навчальною і виробничою практикою", "Проведення атестації", "Керівництво, консуль - тування, рецензування та проведення захисту дипломних проектів(робіт)", "Керівництво аспірантами, здобувачами та стажуванням викладачів", "Усього" };
 
         private object _filename;
 
@@ -158,9 +158,9 @@ namespace TeacherJournal
         {
            
             table.Columns[1].Cells[rows].Range.InsertAfter(nameMonth);
-            for (int i = 0; i < TypeOfLesson.Length; i++)
+            for (int i = 0; i < typeOfLesson.Count; i++)
             {
-                fillCellOfReport(lessons, table, month, TypeOfLesson[i], i+2, rows);
+                fillCellOfReport(lessons, table, month, typeOfLesson[i].name, i+2, rows);
             }
             amountHoursInMonth(lessons, table, month, 19, rows);
 
@@ -698,14 +698,14 @@ namespace TeacherJournal
             fillRowsOfReport(lessons1Term, tableOfReport, 11, "Листопад", 6);
             fillRowsOfReport(lessons1Term, tableOfReport, 12, "Грудень", 7);
 
-            int[] sum = new int[TypeOfLesson.Length];
+            int[] sum = new int[typeOfLesson.Count];
 
 
-            for (int i = 0; i < TypeOfLesson.Length; i++)
+            for (int i = 0; i < typeOfLesson.Count; i++)
             {
-                amountOfHoursInTerm(lessons1Term, tableOfReport, TypeOfLesson[i], i + 2, 9);
-                amountOfHoursInTerm(lessons2Term, tableOfReport, TypeOfLesson[i], i + 2, 17);
-                tableOfReport.Columns[i + 2].Cells[18].Range.InsertAfter(Convert.ToString(amountOfHoursInTerm(lessons1Term, tableOfReport, TypeOfLesson[i], i + 2, 9) + amountOfHoursInTerm(lessons2Term, tableOfReport, TypeOfLesson[i], i + 2, 17)));
+                amountOfHoursInTerm(lessons1Term, tableOfReport, typeOfLesson[i].name, i + 2, 9);
+                amountOfHoursInTerm(lessons2Term, tableOfReport, typeOfLesson[i].name, i + 2, 17);
+                tableOfReport.Columns[i + 2].Cells[18].Range.InsertAfter(Convert.ToString(amountOfHoursInTerm(lessons1Term, tableOfReport, typeOfLesson[i].name, i + 2, 9) + amountOfHoursInTerm(lessons2Term, tableOfReport, typeOfLesson[i].name, i + 2, 17)));
 
             }
             for (int i = 1; i <= 3; i++)
@@ -726,12 +726,12 @@ namespace TeacherJournal
             tableOfReport.Columns[1].Cells[18].Range.InsertAfter("Всього за навчальний рік");
             tableOfReport.Columns[19].Cells[17].Range.InsertAfter(Convert.ToString(sumMonth[1]));
             tableOfReport.Columns[19].Cells[18].Range.InsertAfter(Convert.ToString(sumMonth[0] + sumMonth[1]));
-            for (int i=1;i<19;i++)
+            for (int i=0;i<17;i++)
             {
-                tableOfReport.Rows[3].Cells[i+1].Range.InsertAfter(nameColumns[i]);
-                tableOfReport.Rows[3].Cells[i+1].Range.Orientation = Word.WdTextOrientation.wdTextOrientationUpward;
+                tableOfReport.Rows[3].Cells[i+2].Range.InsertAfter(typeOfLesson[i].strForWord);
+                tableOfReport.Rows[3].Cells[i+2].Range.Orientation = Word.WdTextOrientation.wdTextOrientationUpward;
             }
-            tableOfReport.Rows[3].Cells[1].Range.InsertAfter(nameColumns[0]);
+            tableOfReport.Rows[3].Cells[1].Range.InsertAfter("Місяць");
             SetStyleOfTable(tableOfReport, 1, 3, 1, 10, Word.WdParagraphAlignment.wdAlignParagraphCenter);
             for(int i=13;i<=19;i++)
             {

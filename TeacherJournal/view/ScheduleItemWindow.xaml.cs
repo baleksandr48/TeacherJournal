@@ -38,7 +38,7 @@ namespace TeacherJournal.view
         // Объект Schedule который передается для редактирование. Он же потом используется для разветвления кода при сохранении результатов работы окна.
         private Schedule currentSchedule;
 
-        private int[] numsOfLessons = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        private int[] numsOfLessons = new int[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
         public ScheduleItemWindow()
         {
