@@ -586,7 +586,7 @@ namespace TeacherJournal
             wordparagraphs[2].Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
 
             adoc.Paragraphs.Add();
-            wordparagraphs[3].Range.Text = "Інститут, факультет: "+ teacher.institute + ","+ teacher.faculty;
+            wordparagraphs[3].Range.Text = "Інститут, факультет: "+ teacher.institute + ", "+ teacher.faculty;
             wordparagraphs[3].Range.Bold = 1;
             wordparagraphs[3].Range.Font.Size = (float)12.5;
             wordparagraphs[3].Range.Font.Name = "Times New Roman";
